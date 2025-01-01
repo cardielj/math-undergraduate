@@ -1,0 +1,510 @@
+\section{Teoria de Hodge sobre varietats kählerianes}
+Sigui $M$ una $2n$-varietat amb un atles holomorf.
+\subsection{$\partial$ i $\overline{\partial}$}
+Direm que una estructura quasi complexa en $M$ és un endomorfisme $J:TM\rightarrow TM$ tal que $J^{2}=-Id_{TM}$. El parell $(M,J)$ s'anomenarà $2n$-varietat quasi complexa. Fixem-nos que $J$ dota a $TM$ (i per tant a $TM^{*}$) d'una estructura de $\mathbb{C}$-mòdul.\newline
+Considerem la complexificació de $TM^{*}$, $TM^{*}\otimes_{\mathbb{R}}\mathbb{C}$. Podem estendre $J^{*}$ a $TM^{*}\otimes_{\mathbb{R}}\mathbb{C}$ via $J^{*}\otimes_{\mathbb{R}}Id_{\mathbb{C}}$. Per definició de $J^{*}$, $i\otimes_{\mathbb{R}}1_{\mathbb{C}}$ i $-i\otimes_{\mathbb{R}}1_{\mathbb{C}}$ són els valors propis de $J^{*}\otimes_{\mathbb{R}}Id_{\mathbb{C}}$, deduïm la descomposició
+\begin{equation*}
+    TM^{*}\otimes_{\mathbb{R}}\mathbb{C}
+    =\ker((J^{*}-iId_{TM^{*}})\otimes_{\mathbb{R}}Id_{\mathbb{C}})
+    \oplus\ker((J^{*}+iId_{TM^{*}})\otimes_{\mathbb{R}}Id_{\mathbb{C}})
+\end{equation*}
+Tenim que, si $\{v_{1},\ldots,v_{n}\},\{w_{1},\ldots,w_{n}\}$ $\mathbb{C}$-bases de $\ker((J^{*}-iId_{TM^{*}})\otimes_{\mathbb{R}}Id_{\mathbb{C}}),\ker((J^{*}+iId_{TM^{*}})\otimes_{\mathbb{R}}Id_{\mathbb{C}})$ respectivament,
+\begin{equation*}
+    \{v_{i_{1}}\wedge\ldots\wedge v_{i_{p}}\otimes_{\mathbb{C}}w_{j_{1}}\wedge\ldots\wedge w_{j_{q}}:1\leq i_{1}<\ldots i_{p}\leq n\land1\leq j_{1}<\ldots j_{q}\leq n\}
+\end{equation*}
+és una base de
+\begin{equation*}
+    \bigwedge^{p}\ker((J^{*}-iId_{TM^{*}})\otimes_{\mathbb{R}}Id_{\mathbb{C}})\otimes_{\mathbb{C}}\bigwedge^{q}\ker((J^{*}+iId_{TM^{*}})\otimes_{\mathbb{R}}Id_{\mathbb{C}})
+\end{equation*}
+d'on deduïm que té dimensió $\binom{n}{p}\binom{n}{q}$. Aleshores, d'una banda tenim que $\dim_{\mathbb{C}}(TM^{*}\otimes_{R}\mathbb{C})=\binom{2n}{k}$ i de l'altra
+\begin{align*}
+    \binom{2n}{k}
+    &=\sum_{p=0}^{k}\binom{n}{p}\binom{n}{k-p}\\
+    &=\sum_{p+q=k}\binom{n}{p}\binom{n}{q}\\
+    &=\sum_{p+q=k}\dim_{\mathbb{C}}\Big(\bigwedge^{p}\ker((J^{*}-iId_{TM^{*}})\otimes_{\mathbb{R}}Id_{\mathbb{C}})
+    \otimes_{\mathbb{C}}
+    \bigwedge^{q}\ker((J^{*}+iId_{TM^{*}})\otimes_{\mathbb{R}}Id_{\mathbb{C}})\Big)\\
+    &=\dim_{\mathbb{C}}\Big(\bigoplus_{p+q=k}\bigwedge^{p}\ker((J^{*}-iId_{TM^{*}})\otimes_{\mathbb{R}}Id_{\mathbb{C}})\otimes_{\mathbb{C}}\bigwedge^{q}\ker((J^{*}+iId_{TM^{*}})\otimes_{\mathbb{R}}Id_{\mathbb{C}})\Big)
+\end{align*}
+d'on deduïm la descomposició
+\begin{equation*}
+    TM^{*}\otimes_{\mathbb{R}}\mathbb{C}
+    =\bigoplus_{p+q=k}\bigwedge^{p}\ker((J^{*}-iId_{TM^{*}})\otimes_{\mathbb{R}}Id_{\mathbb{C}})\otimes_{\mathbb{C}}\bigwedge^{q}\ker((J^{*}+iId_{TM^{*}})\otimes_{\mathbb{R}}Id_{\mathbb{C}})
+\end{equation*}
+Aquest argument serveix per qualsevol $\mathbb{C}$-mòdul finitament generat amb una estructura quasi complexa. La darrera descomposició indueix una descomposició en les seccions, és a dir, les $k$-formes $\mathbb{C}$-diferenciables:
+\begin{equation*}
+    \Omega^{k}(M)\otimes_{\mathbb{R}}\mathbb{C}
+    =\bigoplus_{p+q=K}\Omega^{p}(\ker((J^{*}-iId_{TM^{*}})\otimes_{\mathbb{R}}Id_{\mathbb{C}}))\otimes_{\mathbb{C}}\Omega^{q}(\ker((J^{*}+iId_{TM^{*}})\otimes_{\mathbb{R}}Id_{\mathbb{C}}))
+\end{equation*}
+Escriurem $\mathcal{A}^{p,q}(M):=\Omega^{p}(\ker((J^{*}-iId_{TM^{*}})\otimes_{\mathbb{R}}Id_{\mathbb{C}}))\otimes_{\mathbb{C}}\Omega^{q}(\ker((J^{*}+iId_{TM^{*}})\otimes_{\mathbb{R}}Id_{\mathbb{C}}))$.\newline
+Recordem que $d$ és la derivada exterior.
+\begin{definicio}
+    Definim els operadors $\partial$ i $\overline{\partial}$ per
+    \begin{align*}
+        \partial_{p,q}
+        &:=\pi^{p+1,q}\circ (d\otimes_{\mathbb{R}}id_{\mathbb{C}})\circ\iota^{p,q}:
+        \mathcal{A}^{p,q}(M)
+        \hookrightarrow
+        \Omega^{k}(M)\otimes_{\mathbb{R}}\mathbb{C}
+        \rightarrow
+        \Omega^{k+1}(X)\otimes_{\mathbb{R}}\mathbb{C}
+        \twoheadrightarrow
+        \mathcal{A}^{p+1,q}(M)\\
+        \overline{\partial}_{p,q}
+        &:=\pi^{p,q+1}\circ (d\otimes_{\mathbb{R}}id_{\mathbb{C}})\circ\iota^{p,q}:
+        \mathcal{A}^{p,q}(M)
+        \hookrightarrow
+        \Omega^{k}(M)\otimes_{\mathbb{R}}\mathbb{C}
+        \rightarrow
+        \Omega^{k+1}(X)\otimes_{\mathbb{R}}\mathbb{C}
+        \twoheadrightarrow
+        \mathcal{A}^{p,q+1}(M)
+    \end{align*}
+\end{definicio}
+Es demostra que per una $2n$-varietat quasi complexa $(M,J)$, $M$ és $n$-varietat complexa si i només si $d=\partial+\overline{\partial}$. De $d^{2}=0$, es dedueix que $\partial^{2}=\overline{\partial}^{2}=0$ i $\partial\overline{\partial}+\overline{\partial}\partial=0$. Obtenim el bicomplex de cocadenes $\mathcal{A}^{\bullet,\bullet}$:
+\begin{equation*}
+\begin{tikzcd}
+    &0
+    \arrow{d}
+    &0
+    \arrow{d}
+    &0
+    \arrow{d}\\
+    0
+    \arrow{r}
+    &\mathcal{A}^{0,0}(M)
+    \arrow{r}{\overline{\partial}}
+    \arrow{d}{\partial}
+    &\mathcal{A}^{0,1}(M)
+    \arrow{r}{\overline{\partial}}
+    \arrow{d}{\partial}
+    &\mathcal{A}^{0,2}(M)
+    \arrow{r}
+    \arrow{d}{\partial}
+    &
+    \cdots\\
+    0
+    \arrow{r}
+    &\mathcal{A}^{1,0}(M)
+    \arrow{r}{\overline{\partial}}
+    \arrow{d}{\partial}
+    &\mathcal{A}^{1,1}(M)
+    \arrow{r}{\overline{\partial}}
+    \arrow{d}{\partial}
+    &\mathcal{A}^{1,2}(M)
+    \arrow{r}
+    \arrow{d}{\partial}
+    &
+    \cdots\\
+    0
+    \arrow{r}
+    &\mathcal{A}^{2,0}(M)
+    \arrow{r}{\overline{\partial}}
+    \arrow{d}
+    &\mathcal{A}^{2,1}(M)
+    \arrow{r}{\overline{\partial}}
+    \arrow{d}
+    &\mathcal{A}^{2,2}(M)
+    \arrow{r}
+    \arrow{d}
+    &
+    \cdots\\
+    &\vdots
+    &\vdots
+    &\vdots
+\end{tikzcd}
+\end{equation*}
+De cada fila i cada columna podem definir una cohomologia:
+\begin{definicio}
+    Definim els grups de cohomologia de Dolbeault i anti-Dolbeault com $H^{q}(\mathcal{A}^{p,\bullet}(M),\overline{\partial})$ i $H^{p}(\mathcal{A}^{\bullet,q}(M),\partial)$ respectivament.
+\end{definicio}
+Es pot comprovar que $H^{q}(\mathcal{A}^{p,\bullet}(M),\overline{\partial})=H^{q}(\mathcal{A}^{\bullet,p}(M),\partial)$ ja que $\partial$ i $\overline{\partial}$ són conjugats.\newline
+Volem ara recuperar els operadors de la secció anterior. Podem estendre $\star$ a $\mathcal{A}^{p,q}(M)$ completant el següent diagrama:
+\begin{center}
+\begin{tikzcd}
+    \Omega^{k}(M)
+    \arrow[hook]{rr}
+    \arrow{dd}{\star}
+    &&
+    \Omega^{k}(M)\otimes_{R}\mathbb{C}
+    \arrow[two heads]{rr}{\pi^{p,q}}
+    \arrow{dd}{\star\otimes_{\mathbb{R}}id_{\mathbb{C}}}
+    &&
+    \mathcal{A}^{p,q}(M)\\
+    \\
+    \Omega^{2n-k}(M)
+    \arrow[hook]{rr}
+    &&
+    \Omega^{2n-k}(M)\otimes_{R}\mathbb{C}
+    \arrow[two heads]{rr}{\pi^{n-p,n-q}}
+    &&
+    \mathcal{A}^{n-p,n-q}(M)
+\end{tikzcd}
+\end{center}
+Es comprova que el morfisme que fa commutatiu el diagrama és $\pi^{n-p,n-q}\circ(\star_{k}\otimes_{\mathbb{R}}id_{\mathbb{C}})\circ\iota^{p,q}$. El denotem per $\star_{p,q}$. De forma similar a la secció anterior, obtenim que
+\begin{align*}
+    \partial_{p,q}^{*}
+    =-\star_{2n-p+1,2n-q}^{-1}\circ\partial_{2n-p,2n-q}\circ\star_{p,q}
+    :\mathcal{A}^{p,q}(M)\rightarrow\mathcal{A}^{p-1,q}(M)\\
+    \overline{\partial}_{p,q}^{*}
+    =-\star_{2n-p,2n-q+1}^{-1}\circ\overline{\partial}_{2n-p,2n-q}\circ\star_{p,q}
+    :\mathcal{A}^{p,q}(M)\rightarrow\mathcal{A}^{p,q-1}(M)
+\end{align*}
+són els operadors adjunts amb el producte escalar
+\begin{equation*}
+    \langle\alpha,\beta\rangle
+    =\int_{M}\alpha\wedge\overline{\star_{p,q}\beta},\,\,\alpha,\beta\in\mathcal{A}^{p,q}(M)
+\end{equation*}
+de $\partial,\overline{\partial}$. Ara, podem definir els operadors de Laplace-Beltrami sobre $\partial,\overline{\partial}$ com
+\begin{align*}
+    \Delta_{p,q}^{\partial}
+    &:=\partial_{p-1,q}\circ\partial_{p,q}^{*}+\partial_{p+1,q}^{*}\circ\partial_{p,q}
+    :\mathcal{A}^{p,q}(M)\rightarrow\mathcal{A}^{p,q}(M)\\
+    \Delta_{p,q}^{\overline{\partial}}
+    &:=\overline{\partial}_{p,q-1}\circ\overline{\partial}_{p,q}^{*}+\overline{\partial}_{p,q+1}^{*}\circ\overline{\partial}_{p,q}
+    :\mathcal{A}^{p,q}(M)\rightarrow\mathcal{A}^{p,q}(M)
+\end{align*}
+Per definir $\Delta_{d}$ sobre $\mathcal{A}^{p,q}(M)$, el pensem com $\pi^{p,q}\circ(\Delta_{k}^{p}\otimes_{\mathbb{R}}id_{\mathbb{C}})\circ\iota^{p,q}$:
+\begin{center}
+\begin{tikzcd}
+    \mathcal{A}^{p,q}(M)
+    \arrow[hook]{rr}{\iota^{p,q}}
+    &&\Omega^{k}(M)\otimes_{R}\mathbb{C}
+    \arrow{rr}{d_{k}^{*}\otimes_{\mathbb{R}}id_{\mathbb{C}}}
+    \arrow{dd}{d_{k}\otimes_{\mathbb{R}}id_{\mathbb{C}}}
+    \arrow{rrdd}{\Delta_{k}^{d}\otimes_{\mathbb{R}}id_{\mathbb{C}}}
+    &&\Omega^{k-1}(M)\otimes_{R}\mathbb{C}
+    \arrow{dd}{d_{k-1}\otimes_{\mathbb{R}}id_{\mathbb{C}}}\\\\
+    &&\Omega^{k+1}(M)\otimes_{R}\mathbb{C}
+    \arrow{rr}{d_{k+1}^{*}\otimes_{\mathbb{R}}id_{\mathbb{C}}}
+    &&\Omega^{k}(M)\otimes_{R}\mathbb{C}
+    \arrow[two heads]{rr}{\pi^{p,q}}
+    &&\mathcal{A}^{p,q}(M)
+\end{tikzcd}
+\end{center}
+Tots els resultats de la secció anterior es compleixen amb aquests nous operadors. Cometrem abusos de notació i escriurem $\Delta_{p,q}^{\partial}=\Delta_{\partial}$ i viceversa.
+\subsection{Estructura hermítica i kähleriana}
+\begin{definicio}
+    Sigui $(M,J)$ una $2n$-varietat quasi complexa i $g$ mètrica de Riemann en $M$. $g$ és compatible amb l'estructura quasi complexa $J$ si $\forall p(p\in M\Rightarrow\forall u\forall v(u,v\in T_{p}M\Rightarrow g_{p}(v,w)=g_{p}(J(v),J(w))))$. En aquest cas, direm que $g$ és una estructura hermítica en $M$, que $(M,J)$ dotada d'una estructura hermítica és una varietat hermítica i anomenarem $\omega:=g(J(\cdot),\cdot)$ la forma fonamental. 
+\end{definicio}
+Fixem-nos que tota varietat quasi complexa és una varietat hermítica: admet una estructura hermítica via $h_{p}(v,w):=g_{p}(v,w)+g_{p}(J(v),J(w))$, on $g$ és una mètrica riemanniana de $M$ arbitrària.\newline
+En coordenades holomorfes $(z_{1},\ldots,z_{n})$, la forma fonamental s'escriu com
+\begin{equation*}
+    \omega
+    =\frac{i}{2}\sum_{i,j=1}^{n}h_{i,j}\textrm{d}z_{i}\wedge\textrm{d}\overline{z}_{j}
+\end{equation*}
+Ara, considerem varietats complexes.
+\begin{definicio}
+    Una estructura kähleriana és una estructura hermítica tal que la seva forma fonamental és tancada. Anomenarem $n$-varietat kähleriana a una $n$-varietat complexa equipada amb una estructura kähleriana.
+\end{definicio}
+\begin{lema}
+    Sigui $(M,g,J)$ una $n$-varietat kähleriana. Aleshores, en tot entorn de $p\in M$ existeixen coordenades $z_{1}',\ldots,z_{n}'$ tals que $h=Id+O(\|z\|^{2})$.
+    \begin{proof}
+        Considerem coordenades holomorfes $(z_{1}\ldots,z_{n})$ centrades en $p\in M$. Llevat d'un canvi de coordenades lineal, podem suposar que $(h_{ij})(0)=Id_{n}$. Si $\partial_{z_{k}}:=\frac{\partial}{\partial z_{k}},\partial_{\overline{z}_{k}}:=\frac{\partial}{\partial\overline{z}_{k}}$, per holomorfia,
+        \begin{align*}
+            g_{ij}
+            =\delta_{ij}
+            +\sum_{k=1}^{n}\big(\partial_{z_{k}}h_{ij}(0)z_{k}+\partial_{\overline{z}_{k}}h_{ij}(0)\overline{z}_{k}\big)
+            +O(\|h\|^{2})
+            &\quad&\textrm{($(h_{ij})(0)=Id_{n}$)}
+        \end{align*}
+        Fixem-nos que
+        \begin{align*}
+            \partial_{\overline{z}_{k}}g_{i,j}
+            \textrm{d}\overline{z}_{k}
+            \wedge\textrm{d}z_{i}
+            \wedge\textrm{d}\overline{z}_{j}
+            &=\partial_{z_{k}}\overline{g_{i,j}}
+            \textrm{d}\overline{z}_{k}
+            \wedge\textrm{d}z_{i}
+            \wedge\textrm{d}\overline{z}_{j}
+            &\quad&\textrm{($\partial_{\overline{z}}f=\partial_{z}\overline{f}$)}\\
+            &=\partial_{z_{k}}g_{j,i}
+            \textrm{d}\overline{z}_{k}
+            \wedge\textrm{d}z_{i}
+            \wedge\textrm{d}\overline{z}_{j}
+            &\quad&\textrm{($g$ hermítica)}\\
+            &=-\partial_{z_{k}}g_{j,i}
+            \textrm{d}z_{i}
+            \wedge\textrm{d}\overline{z}_{k}
+            \wedge\textrm{d}\overline{z}_{j}
+            &\quad&\textrm{($\wedge$ alternada)}\\
+            &=-\partial_{z_{i}}g_{j,k}
+            \textrm{d}z_{k}
+            \wedge\textrm{d}\overline{z}_{i}
+            \wedge\textrm{d}\overline{z}_{j}
+            &\quad&\textrm{($i:=k,k:=i$)}\\
+            &=-\partial_{\overline{z}_{i}}g_{j,k}
+            \textrm{d}z_{k}
+            \wedge\textrm{d}z_{i}
+            \wedge\textrm{d}\overline{z}_{j}
+            &\quad&\textrm{($z_{i}:=\overline{z}_{i},\overline{z}_{i}:=z_{i}$)}\\
+            &=-\partial_{z_{i}}\overline{g_{j,k}}
+            \textrm{d}z_{k}
+            \wedge\textrm{d}z_{i}
+            \wedge\textrm{d}\overline{z}_{j}
+            &\quad&\textrm{($\partial_{\overline{z}}f=\partial_{z}\overline{f}$)}\\
+            &=-\partial_{z_{i}}g_{k,j}
+            \textrm{d}z_{k}
+            \wedge\textrm{d}z_{i}
+            \wedge\textrm{d}\overline{z}_{j}
+            &\quad&\textrm{($g$ hermítica)}
+        \end{align*}
+        Tenim que $d\omega=0$ ja que $M$ és kähleriana. A més,
+        \begin{align*}
+            d\omega
+            &=(\partial+\overline{\partial})
+            \Big(\frac{i}{2}\sum_{i,j=1}^{n}h_{i,j}\textrm{d}z_{i}\wedge\textrm{d}\overline{z}_{j}\Big)
+            &\quad&\textrm{($M$ varietat complexa i $\omega$ en coord.)}\\
+            &=\frac{i}{2}
+            \sum_{i,j,k=1}^{n}\partial_{z_{k}}h_{i,j}\textrm{d}z_{k}\wedge\textrm{d}z_{i}\wedge\textrm{d}\overline{z}_{j}+
+            \partial_{\overline{z}_{k}}h_{i,j}\textrm{d}\overline{z}_{k}\wedge\textrm{d}z_{i}\wedge\textrm{d}\overline{z}_{j}
+            &\quad&\textrm{($\partial,\overline{\partial}$ en coordenades)}\\
+            &=\frac{i}{2}
+            \sum_{i,j,k=1}^{n}(\partial_{z_{k}}h_{i,j}-\partial_{z_{i}}g_{k,j})
+            \textrm{d}z_{k}
+            \wedge\textrm{d}z_{i}
+            \wedge\textrm{d}\overline{z}_{j}
+            &\quad&\textrm{\Big(\,$\begin{matrix}
+                \partial_{\overline{z}_{k}}g_{i,j}
+            \textrm{d}\overline{z}_{k}
+            \wedge\textrm{d}z_{i}
+            \wedge\textrm{d}\overline{z}_{j}\\
+            =-\partial_{z_{i}}g_{k,j}
+            \textrm{d}z_{k}
+            \wedge\textrm{d}z_{i}
+            \wedge\textrm{d}\overline{z}_{j}
+            \end{matrix}$\Big)}
+        \end{align*}
+        d'on deduïm que $\partial_{z_{k}}h_{i,j}=\partial_{z_{i}}g_{k,j}$. Definim $z_{j}':=z_{j}+\frac{1}{2}\sum_{i,k=1}^{n}\partial_{z_{k}}g_{i,j}(0)z_{i}z_{k}$. Aleshores,
+        \begin{align*}
+            &\textrm{d}z_{j}'
+            \wedge\textrm{d}\overline{z}_{j}'\\
+            =\,
+            &\textrm{d}\Big(z_{j}+\frac{1}{2}\sum_{i,k=1}^{n}\partial_{z_{k}}g_{i,j}(0)z_{i}z_{k}\Big)
+            \wedge\textrm{d}\Big(\overline{z}_{j}+\frac{1}{2}\sum_{i,k=1}^{n}\partial_{\overline{z}_{k}}g_{j,i}(0)\overline{z}_{i}\overline{z}_{k}\Big)\\
+            =\,
+            &\Big(\textrm{d}z_{j}
+            +\frac{1}{2}\sum_{i,k=1}^{n}(\partial_{z_{k}}g_{i,j}(0)+\partial_{z_{i}}g_{k,j}(0))z_{k}\textrm{d}z_{i}\Big)
+            \wedge\Big(\textrm{d}\overline{z}_{j}
+            +\frac{1}{2}\sum_{i,k=1}^{n}(\partial_{\overline{z}_{k}}g_{j,i}(0)+\partial_{\overline{z}_{i}}g_{j,k}(0))\overline{z}_{k}\textrm{d}\overline{z}_{i}\Big)\\
+            =\,
+            &\Big(\textrm{d}z_{j}
+            +\sum_{i,k=1}^{n}\partial_{z_{k}}g_{i,j}(0)z_{k}\textrm{d}z_{i}\Big)
+            \wedge\Big(\textrm{d}\overline{z}_{j}
+            +\sum_{i,k=1}^{n}\partial_{\overline{z}_{k}}g_{j,i}(0)\overline{z}_{k}\textrm{d}\overline{z}_{i}\Big)\\
+            =\,
+            &\textrm{d}z_{j}\wedge\textrm{d}\overline{z}_{j}
+            +\sum_{i,k=1}^{n}\partial_{z_{k}}g_{i,j}(0)z_{k}\textrm{d}z_{i}\wedge\textrm{d}\overline{z}_{j}
+            +\sum_{i,k=1}^{n}\partial_{\overline{z}_{k}}g_{j,i}(0)\overline{z}_{k}\textrm{d}z_{j}\wedge\textrm{d}\overline{z}_{i}
+            +O(\|z\|^{2})
+        \end{align*}
+        d'on deduïm que
+        \begin{align*}
+            \omega
+            &=\frac{i}{2}\sum_{i,j=1}^{n}\Big(\delta_{ij}
+            +\sum_{k=1}^{n}\big(\partial_{z_{k}}h_{ij}(0)z_{k}+\partial_{\overline{z}_{k}}h_{ij}(0)\overline{z}_{k}\big)
+            +O(\|h\|^{2})\Big)\textrm{d}z_{i}\wedge\textrm{d}\overline{z}_{j}\\
+            &=\frac{i}{2}\sum_{j=1}^{n}\Big(\textrm{d}z_{j}\wedge\textrm{d}\overline{z}_{j}
+            +\sum_{i,k=1}^{n}\partial_{z_{k}}g_{i,j}(0)z_{k}\textrm{d}z_{i}\wedge\textrm{d}\overline{z}_{j}
+            +\sum_{i,k=1}^{n}\partial_{\overline{z}_{k}}g_{j,i}(0)\overline{z}_{k}\textrm{d}z_{j}\wedge\textrm{d}\overline{z}_{i}
+            \Big)+O(\|z\|^{2})\\
+            &=\frac{i}{2}\sum_{j=1}^{n}
+            \textrm{d}z_{i}'\wedge\textrm{d}\overline{z}_{j}'
+        \end{align*}
+        com volíem veure.
+    \end{proof}
+\end{lema}
+\subsection{Identitats de Kähler i descomposició de Hodge}
+Sigui $M$ $n$-varietat kähleriana amb forma fonamental $\omega$. Definim l'operador de Lefschetz $L_{k}:\Omega^{k}(M)\rightarrow\Omega^{k+2}(M)$ via $L_{k}(\alpha):=\omega\wedge\alpha$. Es comprova que els seu operador autoadjunt és $\Lambda_{k}:\Omega^{k}(M)\rightarrow\Omega^{k-2}(M)$ definit via $\Lambda_{k}:=\star_{2n-k+2}^{-1}\circ L_{2n-k}\circ\star_{k}$. Escriurem $L$ i $\Lambda$.
+\begin{proposicio}
+    $[\overline{\partial}^{*},L]=i\partial$, $[\partial^{*},L]=-i\overline{\partial}$, $[\Lambda,\overline{\partial}]=-i\partial^{*}$ i $[\Lambda,\partial]=i\overline{\partial}^{*}$.
+    \begin{proof}
+        Demostrem només $[\overline{\partial}^{*},L]=i\partial$. Les altres igualtats resulten de la propietat d'adjunció i per conjugació.\newline
+        Donat $p\in M$, podem escollir coordenades holomorfes $(z_{1},\ldots,z_{n})$ tals que $\omega=\sum_{\ell=1}^{n}\textrm{d}z_{\ell}\wedge\textrm{d}\overline{z}_{\ell}$. En coordenades, podem veure que
+        \begin{equation*}
+            \overline{\partial}^{*}\alpha
+            =-\sum_{j=1}^{n}\partial_{z_{j}}\lrcorner\partial_{z_{j}}\alpha
+        \end{equation*}
+        on $\lrcorner$ és el producte interior. Fixem-nos que, si $\ell=j$,
+        \begin{align*}
+            \partial_{z_{j}}\lrcorner(\textrm{d}z_{\ell}\wedge\textrm{d}\overline{z}_{\ell}\wedge\partial_{z_{j}}\alpha)
+            &=\partial_{z_{j}}\lrcorner(\textrm{d}z_{\ell}\wedge\textrm{d}\overline{z}_{\ell})\wedge\partial_{z_{j}}\alpha
+            +
+            \textrm{d}z_{\ell}\wedge\textrm{d}\overline{z}_{\ell}\wedge
+            \partial_{z_{j}}\lrcorner\partial_{z_{j}}\alpha
+            &\quad&\textrm{($\lrcorner$ derivació)}\\
+            &=\big(\partial_{z_{j}}\lrcorner\textrm{d}z_{\ell}\wedge\textrm{d}\overline{z}_{\ell}
+            -\textrm{d}z_{\ell}\wedge\partial_{z_{\ell}}\lrcorner\textrm{d}\overline{z}_{\ell}\big)\wedge\partial_{z_{j}}\alpha
+            +\textrm{d}z_{\ell}\wedge\textrm{d}\overline{z}_{\ell}\wedge
+            \partial_{z_{j}}\lrcorner\partial_{z_{j}}\alpha
+            &\quad&\textrm{($\lrcorner$ derivació)}\\
+            &=-\textrm{d}z_{\ell}\wedge\partial_{z_{\ell}}\lrcorner\textrm{d}\overline{z}_{\ell}\wedge
+            \partial_{z_{j}}\alpha
+            +\textrm{d}z_{\ell}\wedge\textrm{d}\overline{z}_{\ell}\wedge\partial_{z_{j}}\lrcorner\partial_{z_{j}}\alpha
+            &\quad&\textrm{($\partial_{z_{j}}\lrcorner\textrm{d}z_{j}=0$)}\\
+            &=-\textrm{d}z_{\ell}\wedge
+            \partial_{z_{j}}\alpha
+            +\textrm{d}z_{\ell}\wedge\textrm{d}\overline{z}_{\ell}\wedge\partial_{z_{j}}\lrcorner\partial_{z_{j}}\alpha
+            &\quad&\textrm{($\partial_{z_{j}}\lrcorner\textrm{d}\overline{z}_{j}=1$)}
+        \end{align*}
+        Aleshores,
+        \begin{align*}
+            [\overline{\partial}^{*},L]\alpha
+            &=\overline{\partial}^{*}(\omega\wedge\alpha)
+            -\omega\wedge\overline{\partial}^{*}\alpha\\
+            &=-\sum_{j=1}^{n}\partial_{z_{j}}\lrcorner\partial_{z_{j}}(\omega\wedge\alpha)
+            +\omega\wedge\sum_{j=1}^{n}\partial_{z_{j}}\lrcorner\partial_{z_{j}}\alpha\\
+            &=-\sum_{j=1}^{n}\partial_{z_{j}}\lrcorner\partial_{z_{j}}\Big(i\sum_{\ell=1}^{n}\textrm{d}z_{\ell}\wedge\textrm{d}\overline{z}_{\ell}\wedge\alpha\Big)
+            +i\sum_{\ell=1}^{n}\textrm{d}z_{\ell}\wedge\textrm{d}\overline{z}_{\ell}\wedge\sum_{j=1}^{n}\partial_{z_{j}}\lrcorner\partial_{z_{j}}\alpha\\
+            &=-\sum_{j=1}^{n}\Big(i\sum_{\ell=1}^{n}\partial_{z_{j}}\lrcorner\big(\textrm{d}z_{\ell}\wedge\textrm{d}\overline{z}_{\ell}\wedge\partial_{z_{j}}\alpha\big)\Big)
+            +\sum_{j=1}^{n}\Big(i\sum_{\ell=1}^{n}\textrm{d}z_{\ell}\wedge\textrm{d}\overline{z}_{\ell}\wedge\partial_{z_{j}}\lrcorner\partial_{z_{j}}\alpha\Big)\\
+            &=\sum_{j=1}^{n}\textrm{d}z_{\ell}\wedge
+            \partial_{z_{j}}\alpha\\
+            &=i\partial\alpha
+        \end{align*}
+        com volíem.
+    \end{proof}
+\end{proposicio}
+\begin{proposicio}
+    $\Delta_{d}=2\Delta_{\partial}=2\Delta_{\overline{\partial}}$.
+    \begin{proof}
+        Tenim que
+        \begin{align*}
+            \Delta_{d}
+            &=dd^{*}+d^{*}d
+            &\quad&\textrm{(Definició de $\Delta_{d}$)}\\
+            &=(\partial+\overline{\partial})(\partial^{*}+\overline{\partial}^{*})+(\partial^{*}+\overline{\partial}^{*})(\partial+\overline{\partial})
+            &\quad&\textrm{($d=\partial+\overline{\partial}$)}\\
+            &=(\partial+\overline{\partial})(\partial^{*}-i[\Lambda,\partial])+(\partial^{*}-i[\Lambda,\partial])(\partial+\overline{\partial})
+            &\quad&\textrm{($[\Lambda,\partial]=i\overline{\partial}^{*}$)}\\
+            &=\Delta_{\partial}
+            +\overline{\partial}\partial^{*}
+            -i\partial\Lambda\partial
+            -i\overline{\partial}\Lambda\partial
+            +i\partial^{2}\Lambda
+            +i\partial\overline{\partial}\Lambda
+            -i\Lambda\partial^{2}
+            +i\partial\Lambda\partial
+            -i\Lambda\partial\overline{\partial}
+            +i\partial\Lambda\overline{\partial}
+            +\partial^{*}\overline{\partial}
+            &\quad&\textrm{(Definició de $\Delta_{\partial}$)}\\
+            &=\Delta_{\partial}
+            +\overline{\partial}\partial^{*}
+            -i\overline{\partial}\Lambda\partial
+            +i\partial\overline{\partial}\Lambda
+            -i\Lambda\partial\overline{\partial}
+            +i\partial\Lambda\overline{\partial}
+            +\partial^{*}\overline{\partial}
+            &\quad&\textrm{($\partial^{2}=0$)}
+        \end{align*}
+        Fixem-nos que
+        \begin{align*}
+            \partial^{*}\overline{\partial}
+            &=i[\Lambda,\overline{\partial}]\overline{\partial}
+            &\quad&\textrm{($[\Lambda,\overline{\partial}]=-i\partial^{*}$)}\\
+            &=i\Lambda\overline{\partial}\overline{\partial}
+            -i\overline{\partial}\Lambda\overline{\partial}\\
+            &=-i\overline{\partial}\Lambda\overline{\partial}
+            &\quad&\textrm{($\overline{\partial}^{2}=0$)}\\
+            &=-i\overline{\partial}\Lambda\overline{\partial}
+            +i\overline{\partial}\overline{\partial}\Lambda
+            &\quad&\textrm{($\overline{\partial}^{2}=0$)}\\
+            &=-\overline{\partial}(i[\Lambda,\overline{\partial}])\\
+            &=-\overline{\partial}\partial^{*}
+            &\quad&\textrm{($[\Lambda,\overline{\partial}]=-i\partial^{*}$)}
+        \end{align*}
+        Aleshores,
+        \begin{align*}
+            \Delta_{d}
+            &=\Delta_{\partial}
+            +\overline{\partial}\partial^{*}
+            -i\overline{\partial}\Lambda\partial
+            +i\partial\overline{\partial}\Lambda
+            -i\Lambda\partial\overline{\partial}
+            +i\partial\Lambda\overline{\partial}
+            +\partial^{*}\overline{\partial}\\
+            &=\Delta_{\partial}
+            -i\overline{\partial}\Lambda\partial
+            +i\partial\overline{\partial}\Lambda
+            -i\Lambda\partial\overline{\partial}
+            +i\partial\Lambda\overline{\partial}
+            &\quad&\textrm{($\partial^{*}\overline{\partial}=-\overline{\partial}\partial^{*}$)}\\
+            &=\Delta_{\partial}
+            +\partial(i[\Lambda,\overline{\partial}])
+            +i[\Lambda,\overline{\partial}]\partial\\
+            &=\Delta_{\partial}
+            +\partial\partial^{*}
+            +\partial^{*}\partial
+            &\quad&\textrm{($[\Lambda,\overline{\partial}]=-i\partial^{*}$)}\\
+            &=2\Delta_{\partial}
+            &\quad&\textrm{(Definició de $\Delta_{\partial}$)}
+        \end{align*}
+        La igualtat $\Delta_{d}=2\Delta_{\overline{\partial}}$ és similar, d'on obtenim el resultat.
+    \end{proof}
+\end{proposicio}
+\begin{corolari}
+    $\Delta_{d}(\mathcal{A}^{p,q}(M))\subset\mathcal{A}^{p,q}(M)$.
+    \begin{proof}
+        Donat $\omega\in\mathcal{A}^{p,q}(M)$, $\Delta_{d}\omega=2\Delta_{\partial}\omega\in\mathcal{A}^{p,q}(M)$.
+    \end{proof}
+\end{corolari}
+\begin{corolari}
+    Si $\alpha\in\Omega^{k}(M)\otimes_{\mathbb{R}}\mathbb{C}$ és harmònic, les seves components $\alpha^{p,q}\in\mathcal{A}^{p,q}(M)$ són harmòniques.
+    \begin{proof}
+        Recordem la descomposició $\Omega^{k}(M)\otimes_{\mathbb{R}}\mathbb{C}=\bigoplus_{p+q=k}\mathcal{A}^{p,q}(M)$. Com $\ker{\Delta_{d}}\subset\Omega^{k}(M)\otimes_{\mathbb{R}}\mathbb{C}$, donat $\alpha\in\ker{\Delta_{d}}$, escrivim $\alpha=\sum_{p+q=k}\alpha^{p,q}$, on $\alpha^{p,q}\in\mathcal{A}^{p,q}(M)$. Aleshores, $0=\Delta_{d}\alpha=\sum_{p+q=k}\Delta_{d}\alpha^{p,q}$. Com $\Delta_{d}(\mathcal{A}^{p,q}(M))\subset\mathcal{A}^{p,q}(M)$, deduïm que $\forall p\forall q(p+q=k\Rightarrow\alpha^{p,q}=0)$.
+    \end{proof}
+\end{corolari}
+El recíproc és cert. En particular tenim la descomposició $\ker{\Delta_{k}^{d}}=\bigoplus_{p+q=k}\ker{\Delta_{p,q}^{\overline{\partial}}}$.
+\begin{teorema}
+    Donada $M$ una varietat kähleriana compacte, $H^{k}(\Omega^{\bullet}(M;\mathbb{C}))=\bigoplus_{p+q=k}H^{q}(\mathcal{A}^{p,\bullet}(M),\overline{\partial})$.
+    \begin{proof}
+        Per el·lipticitat de $\Delta_{p,q}^{\overline{\partial}}$, deduïm que $\ker{\Delta_{p,q}^{\overline{\partial}}}\cong H^{q}(\mathcal{A}^{p,\bullet}(M),\overline{\partial})$ de forma similar a \ref{1.12}. Per tant,
+        \begin{align*}
+            H^{k}(\Omega^{\bullet}(M;\mathbb{C}))
+            =H^{k}(\Omega^{\bullet}(M;\mathbb{R}))\otimes_{\mathbb{R}}\mathbb{C}
+            \cong\ker{\Delta_{k}^{d}}
+            =\bigoplus_{p+q=k}\ker{\Delta_{p,q}^{\overline{\partial}}}
+            \cong\bigoplus_{p+q=k}H^{q}(\mathcal{A}^{p,\bullet}(M),\overline{\partial})
+        \end{align*}
+        La igualtat vindrà donada pel fet que l'isomorfisme és canònic, en el sentit que no depèn de la mètrica de Kähler (veure \cite{Voisin_2002}, 6.11.: la idea és considerar el $\mathbb{C}$-submòdul $K^{p,q}\subset H^{k}(\Omega^{\bullet}(M;\mathbb{C}))$ que consisteix en les classes de cohomologia representables per una forma tancada de tipus $(p,q)$ i veure que $K^{p,q}=H^{q}(\mathcal{A}^{p,\bullet}(M),\overline{\partial})$. Com $K^{p,q}$ no depèn de la mètrica, haurem acabat).
+    \end{proof}
+\end{teorema}
+%\begin{corolari}
+%    $\overline{H^{p,q}}=H^{q,p}$
+%    \begin{proof}
+        
+%    \end{proof}
+%\end{corolari}
+%\begin{lema}
+%    Sigui $X$ una varietat kähleriana i $\omega$ una forma tancada per $\partial$ i $\overline{\partial}$. Si $\omega$ és exacta per $d$, $\partial$ o $\overline{\partial}$, existeix una forma $\chi$ tal que $\partial\overline{\partial}\chi$.
+%    \begin{proof}
+        
+%    \end{proof}
+%\end{lema}
+%\begin{lema}
+%    $H^{p,q}(X)$ és canònicament isomorf a $H^{q}(X,\Omega^{p}(X))$.
+%    \begin{proof}
+        
+%    \end{proof}
+%\end{lema}
+%\subsection{Descomposició de Lefschetz}
+%\begin{lema}
+%    $[L,\Lambda]=(k-n)id$.
+%    \begin{proof}
+        
+%    \end{proof}
+%\end{lema}
+%\begin{lema}
+%    $L^{n-k}:\Omega^{k}(X)\rightarrow\Omega^{2n-k}(X)$ és un isomorfisme.
+%    \begin{proof}
+        
+%    \end{proof}
+%\end{lema}
+%\begin{proposicio}
+%    Sigui $X$ és una $n$-varietat kähleriana compacte. Aleshores, per tot $0\leq k\leq n$, $L^{n-k}:H^{k}(\Omega^{\bullet}(X;\mathbb{R}),d)\cong H^{2n-k}(\Omega^{\bullet}(X;\mathbb{R}),d)$ és un isomorfisme.
+%    \begin{proof}
+        
+%    \end{proof}
+%\end{proposicio}

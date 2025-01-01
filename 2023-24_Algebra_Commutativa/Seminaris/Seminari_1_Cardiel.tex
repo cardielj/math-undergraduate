@@ -1,0 +1,694 @@
+\documentclass[compress]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{tikz-cd}
+\usepackage{fancyhdr}
+\usepackage[catalan]{babel}
+\usepackage[document]{ragged2e}
+\usepackage{appendix}
+
+\usepackage{silence}
+%\WarningFilter{latex}{Citation}
+%\WarningFilter{latex}{Reference}
+%\WarningFilter{latex}{There were undefined references}
+\WarningFilter{newunicodechar}{Redefining Unicode character}
+\WarningFilter{hyperref}{Token not allowed in a PDF string}
+\overfullrule=5pt
+
+\usepackage[margin=0.9in]{geometry}
+
+\usepackage[T1]{fontenc}
+\usepackage{newunicodechar}
+\usepackage[mathscr]{euscript}
+\usepackage{adjustbox}
+
+%% Definicions, proposicions, etc. %%
+\newtheorem{definicio}{Definició}
+\newtheorem{lema}{Lema}[section]
+\newtheorem{proposicio}{Proposició}[section]
+\newtheorem{corolari}{Corol·lari}
+\newtheorem{teorema}{Teorema}
+\newtheorem{problema}{Problema}
+\newtheorem*{claim}{Claim}
+\newtheorem{enunciat}{}
+\theoremstyle{definition}
+\newtheorem{idea}{\color{gray}Idea}
+\newtheorem{exemple}{Exemple}
+
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\Spec}{Spec}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\car}{car}
+\DeclareMathOperator{\Gal}{Gal}
+\DeclareMathOperator{\Obj}{Obj}
+\DeclareMathOperator{\Ann}{Ann}
+\DeclareMathOperator{\Bil}{Bil}
+
+\fancyhead[L]{\textbf{100112. Àlgebra Commutativa.}}
+
+\fancyhead[R]{\textit{Jordi Cardiel}}
+
+\usepackage{mathrsfs}
+\usepackage[scr=rsfs,cal=boondox]{mathalfa}
+%\usepackage{lineno}
+%\linenumbers
+
+\begin{document}
+\pagestyle{fancy}
+\begin{problema}
+     Proveu que:
+     \begin{enumerate}
+         \item Si $A$ és una $R$-àlgebra, el producte $A\times A\rightarrow A$ donat per $(a,a')\mapsto aa'$ és bilineal.
+         \begin{proof}
+             Sigui $\varphi:A\times A\rightarrow A$ definit per $\varphi(a,a'):=aa'$. Fixem $a\in A$. Veiem que $\varphi(a,-):A\rightarrow A$ definit per $\varphi(a,-)(a'):=\varphi(a,a')$ és un morfisme de $R$-mòduls. Donats $a_{1},a_{2}\in A$,
+             \begin{align*}
+                 \varphi(a,-)(a_{1}+a_{2})
+                 &=\varphi(a,a_{1}+a_{2})
+                 &\quad&\textrm{(Per definició de $\varphi(a,-)$)}\\
+                 &=a(a_{1}+a_{2})
+                 &\quad&\textrm{(Per definició de $\varphi$)}\\
+                 &=aa_{1}+aa_{2}
+                 &\quad&\textrm{($A$ $R$-àlgebra)}\\
+                 &=\varphi(a,a_{1})+\varphi(a,a_{2})
+                 &\quad&\textrm{(Per definició de $\varphi$)}\\
+                 &=\varphi(a,-)(a_{1})+\varphi(a,-)(a_{2})
+                 &\quad&\textrm{(Per definició de $\varphi(a,-)$)}
+             \end{align*}
+             Donats $r\in R$, $a'\in A$,
+             \begin{align*}
+                 \varphi(a,-)(ra')
+                 &=\varphi(a,ra')
+                 &\quad&\textrm{(Per definició de $\varphi(a,-)$)}\\
+                 &=a(ra')
+                 &\quad&\textrm{(Per definició de $\varphi$)}\\
+                 &=r(aa')
+                 &\quad&\textrm{($A$ $R$-àlgebra)}\\
+                 &=r\varphi(a,a')
+                 &\quad&\textrm{(Per definició de $\varphi$)}\\
+                 &=r\varphi(a,-)(a')
+                 &\quad&\textrm{(Per definició de $\varphi(a,-)$)}
+             \end{align*}
+             Aleshores, $\forall a(a\in A\Rightarrow\varphi(a,-)\in\Hom_{R}(A,A))$. Simètricament, $\forall a'(a'\in A\Rightarrow\varphi(-,a')\in\Hom_{R}(A,A))$, on $\varphi(-,a')(a):=\varphi(a,a')$. Per tant, $\varphi\in\Bil_{R}(A\times A,A)$.
+         \end{proof}
+         \item Si $M$ i $N$ són $R$-mòduls, llavors el conjunt $\Hom_{R}(M,N)$ és també un $R$-mòdul amb estructura natural. Deduïu que l'aplicació $ev:M\times\Hom_{R}(M,N)\rightarrow N$ donada per $(m,\varphi)\mapsto\varphi(m)$ és bilineal.
+         \begin{proof}
+             Siguin $f_{1},f_{2}\in\Hom_{R}(M,N)$. Definim $(f_{1}+f_{2}):M\rightarrow N$ per $(f_{1}+f_{2})(m):=f_{1}(m)+f_{2}(m)$. Siguin $r\in R$, $f\in\Hom_{R}(M,N)$. Definim $rf:M\rightarrow N$ per $rf(m):=r(f(m))$. Clarament $(f_{1}+f_{2}),(rf)\in\Hom_{R}(M,N)$.\newline
+             Veiem que $\Hom_{R}(M,N)$ és un $R$-mòdul. Clarament $(\Hom_{R}(M,N),+)$ és un grup abelià. Veiem que $\mu:R\times\Hom_{R}(M,N)\rightarrow\Hom_{R}(M,N)$ definit per $\mu(r,f):=rf$ satisfà els axiomes necessaris. Siguin $r,r_{1},r_{2}\in R$, $f,f_{1},f_{2}\in\Hom_{R}(M,N)$ i $m\in M$. Aleshores,
+             \begin{align*}
+                 (r(f_{1}+f_{2}))(m)
+                 &=r(f_{1}+f_{2})(m)
+                 &\quad&\textrm{(Per definició de $rf$)}\\
+                 &=r(f_{1}(m)+f_{2}(m))
+                 &\quad&\textrm{(Per definició de $(f_{1}+f_{2})$)}\\
+                 &=r(f_{1}(m))+r(f_{2}(m))
+                 &\quad&\textrm{($N$ $R$-mòdul)}\\
+                 &=(rf_{1})(m)+(rf_{2})(m)
+                 &\quad&\textrm{(Per definició de $rf$)}\\
+                 &=(rf_{1}+rf_{2})(m)
+                 &\quad&\textrm{(Per definició de $(f_{1}+f_{2})$)}
+             \end{align*}
+             d'on deduïm $r(f_{1}+f_{2}))=rf_{1}+rf_{2}$.
+             \begin{align*}
+                 ((r_{1}+r_{2})f)(m)
+                 &=(r_{1}+r_{2})(f(m))
+                 &\quad&\textrm{(Per definició de $rf$)}\\
+                 &=r_{1}(f(m))+r_{2}(f(m))
+                 &\quad&\textrm{($N$ $R$-mòdul)}\\
+                 &=(r_{1}f)(m)+(r_{2}f)(m)
+                 &\quad&\textrm{(Per definició de $rf$)}\\
+                 &=(r_{1}f+r_{2}f)(m)
+                 &\quad&\textrm{(Per definició de $(f_{1}+f_{2})$)}
+             \end{align*}
+             d'on deduïm $(r_{1}+r_{2})f=r_{1}f+r_{2}f$.
+             \begin{align*}
+                 ((r_{1}r_{2})f)(m)
+                 &=(r_{1}r_{2})(f(m))
+                 &\quad&\textrm{(Per definició de $rf$)}\\
+                 &=r_{1}(r_{2}(f(m)))
+                 &\quad&\textrm{($N$ $R$-mòdul)}\\
+                 &=r_{1}((r_{2}f)(m))
+                 &\quad&\textrm{(Per definició de $rf$)}\\
+                 &=(r_{1}(r_{2}f))(m)
+                 &\quad&\textrm{(Per definició de $rf$)}\\
+             \end{align*}
+             d'on deduïm $(r_{1}r_{2})f=r_{1}(r_{2}f)$.
+             \begin{align*}
+                 (1_{R}f)(m)
+                 &=1_{R}(f(m))
+                 &\quad&\textrm{(Per definició de $rf$)}\\
+                 &=f(m)
+                 &\quad&\textrm{($1_{R}$ element neutre de $R$)}
+             \end{align*}
+             d'on deduïm $1_{R}f=f$. Aleshores, $\mu$ satisfà els axiomes de $R$-mòdul, d'on $\Hom_{R}(M,N)$ és $R$-mòdul.\newline
+             Comprovem que $ev$ és $R$-bilineal. Fixem $m\in M$. Veiem que $ev(m,-):\Hom_{R}(M,N)\rightarrow N$ definit per $ev(m,-)(\varphi):=ev(m,\varphi)$ és un morfisme de $R$-mòduls. Donats $\varphi_{1},\varphi_{2}\in\Hom_{R}(M,N)$,
+             \begin{align*}
+                 ev(m,-)(\varphi_{1}+\varphi_{2})
+                 &=ev(m,\varphi_{1}+\varphi_{2})
+                 &\quad&\textrm{(Per definició de $ev(m,-)$)}\\
+                 &=(\varphi_{1}+\varphi_{2})(m)
+                 &\quad&\textrm{(Per definició de $ev$)}\\
+                 &=\varphi_{1}(m)+\varphi_{2}(m)
+                 &\quad&\textrm{(Per definició de $(\varphi_{1}+\varphi_{2})$)}\\
+                 &=ev(m,\varphi_{1})+ev(m,\varphi_{2})
+                 &\quad&\textrm{(Per definició de $ev$)}\\
+                 &=ev(m,-)(\varphi_{1})+ev(m,-)(\varphi_{2})
+                 &\quad&\textrm{(Per definició de $ev(m,-)$)}
+             \end{align*}
+             Donats $r\in R$, $\varphi\in\Hom_{R}(M,N)$,
+             \begin{align*}
+                 ev(m,-)(r\varphi)
+                 &=ev(m,r\varphi)
+                 &\quad&\textrm{(Per definició de $ev(m,-)$)}\\
+                 &=(r\varphi)(m)
+                 &\quad&\textrm{(Per definició de $ev$)}\\
+                 &=r(\varphi(m))
+                 &\quad&\textrm{(Per definició de $r\varphi$)}\\
+                 &=r\cdot ev(m,\varphi)
+                 &\quad&\textrm{(Per definició de $ev$)}\\
+                 &=r\cdot ev(m,-)(\varphi)
+                 &\quad&\textrm{(Per definició de $ev(m,-)$)}
+             \end{align*}
+             Per tant, $\forall m(m\in M\Rightarrow ev(m,-)\in\Hom_{R}(\Hom_{R}(M,N),N))$. Fixem $\varphi\in\Hom_{R}(M,N)$. Veiem que $ev(-,\varphi):M\rightarrow N$ definit per $ev(-,\varphi)(m):=ev(m,\varphi)$ és un morfisme de $R$-mòduls. Donats $m_{1},m_{2}\in M$,
+             \begin{align*}
+                 ev(-,\varphi)(m_{1}+m_{2})
+                 &=ev(m_{1}+m_{2},\varphi)
+                 &\quad&\textrm{(Per definició de $ev(-,\varphi)$)}\\
+                 &=\varphi(m_{1}+m_{2})
+                 &\quad&\textrm{(Per definició de $ev$)}\\
+                 &=\varphi(m_{1})+\varphi(m_{2})
+                 &\quad&\textrm{($\varphi\in\Hom_{R}(M,N)$)}\\
+                 &=ev(m_{1},\varphi)+ev(m_{2},\varphi)
+                 &\quad&\textrm{(Per definició de $ev$)}\\
+                 &=ev(-,\varphi)(m_{1})+ev(-,\varphi)(m_{2})
+                 &\quad&\textrm{(Per definició de $ev(-,\varphi)$)}
+             \end{align*}
+             Donats $r\in R$, $m\in M$,
+             \begin{align*}
+                 ev(-,\varphi)(rm)
+                 &=ev(rm,\varphi)
+                 &\quad&\textrm{(Per definició de $ev(-,\varphi)$)}\\
+                 &=\varphi(rm)
+                 &\quad&\textrm{(Per definició de $ev$)}\\
+                 &=r\varphi(m)
+                 &\quad&\textrm{($\varphi\in\Hom_{R}(M,N)$)}\\
+                 &=r\cdot ev(m,\varphi)
+                 &\quad&\textrm{(Per definició de $ev$)}\\
+                 &=r\cdot ev(-,\varphi)(m)
+                 &\quad&\textrm{(Per definició de $ev(-,\varphi)$)}
+             \end{align*}
+             Per tant, $\forall\varphi(\varphi\in\Hom_{R}(M,N)\Rightarrow ev(-,\varphi)\in\Hom_{R}(M,N))$. Aleshores, $ev\in\Bil_{R}(M\times\Hom_{R}(M,\newline N),N)$.
+         \end{proof}
+     \end{enumerate}
+\end{problema}
+\begin{problema}
+    Denotem per $\Bil_{R}(M\times N,L)$ el conjunt d'aplicacions bilineals de $M\times N$ a $L$. Proveu que
+    \begin{enumerate}
+        \item Donats $R$-mòduls $M,N$, aleshores existeix un $R$-mòdul $M\otimes_{R}N$ amb una aplicació bilineal $t:M\times N\rightarrow M\otimes_{R}N$ tal que compleix la propietat (universal) següent: “Per a tot $R$-mòdul L i tota aplicació $f:M\times N\rightarrow L$ bilineal, existeix una única $\Tilde{f}:M\otimes_{R}N\rightarrow L$ tal que $f=\Tilde{f}\circ t$.” És a dir, el diagrama
+        \begin{equation*}
+        \begin{tikzcd}
+            M\times N
+            \arrow{rr}{t}
+            \arrow{d}{f}
+            &&M\otimes_{R}N
+            \arrow[dotted]{dll}{\Tilde{f}}\\
+            L
+        \end{tikzcd}
+        \end{equation*}
+        és commutatiu. Escrivim $t(m,n)=m\otimes_{R}n$ i diem que és un tensor elemental. Diem que $M\otimes_{R}N$ és el producte tensorial de $M$ i $N$.
+        \begin{proof}
+            Denotem per $F_{R}(M\times N)$ el $R$-mòdul lliure generat per $M\times N$ i considerem el $R$-submòdul de $F_{R}(M\times N)$
+            \begin{align*}
+                E&:=\langle(m+m',n)-(m,n)-(m',n),(m,n+n')-(m,n)-(m,n'),\\
+                &\,\,\,\,\,\,\,\,\,\,\,\,(rm,n)-r(m,n),(m,rn)-r(m,n)\rangle_{m,m'\in M,n,n'\in N}
+            \end{align*}
+            Veiem que $F_{R}(M\times N)/E$ satisfà la propietat universal del producte tensorial. Sigui $L$ $R$-mòdul i $f\in\Bil_{R}(M\times N,L)$. Definim $\Tilde{f}:F_{R}(M\times N)/E\rightarrow L$ per $\Tilde{f}((m,n)+E):=f(m,n)$ i estenem per linealitat. Si $\Tilde{f}$ esta ben definida, clarament $\Tilde{f}\in\Hom_{R}(F_{R}(M\times N)/E,L)$ i és única (unívocament determinada per $f$). Veiem que esta ben definida. Siguin $(m,n)+E,(m',n')+E\in F_{R}(M\times N)/E$ tal que $(m,n)+E=(m',n')+E$. Aleshores,
+            \begin{align*}
+                \Tilde{f}((m,n)+E)
+                &=f(m,n)
+                &\quad&\textrm{(Per definició de $\Tilde{f}$)}\\
+                &=f((m',n')+e)
+                &\quad&\textrm{($(m,n)+E=(m',n')+E\Rightarrow\exists e(e\in E\land (m,n)=(m',n')+e)$)}\\
+                &=f(m',n')+f(e)
+                &\quad&\textrm{($f\in\Bil_{R}(M\times N,L)$)}\\
+                &=f(m',n')
+                &\quad&\textrm{($\forall e(e\in E\Rightarrow f(e)=0_{L})$)}\\
+                &=\Tilde{f}((m',n')+E)
+                &\quad&\textrm{(Per definició de $\Tilde{f}$)}
+            \end{align*}
+            Ara, si $\iota:M\times N\hookrightarrow F_{R}(M\times N)$ és la inclusió i $\pi:F_{R}(M\times N)\twoheadrightarrow F_{R}(M\times N)/E$ és la projecció, considerem $t:\pi\circ\iota$. Fixem $m\in M$. Veiem que $t(m,-):N\rightarrow F_{R}(M\times N)/E$ és un morfisme de $R$-mòduls. Donats $n_{1},n_{2}\in N$,
+            \begin{align*}
+                t(m,-)(n_{1}+n_{2})
+                &=t(m,n_{1}+n_{2})
+                &\quad&\textrm{(Per definició de $t(m,-)$)}\\
+                &=(m,n_{1}+n_{2})+E
+                &\quad&\textrm{(Per definició de $t$)}\\
+                &=((m,n_{1})+(m,n_{2}))+E\\
+                &=((m,n_{1})+E)+((m,n_{2})+E)\\
+                &=t(m,n_{1})+t(m,n_{2})
+                &\quad&\textrm{(Per definició de $t$)}\\
+                &=t(m,-)(n_{1})+t(m,-)(n_{2})
+                &\quad&\textrm{(Per definició de $t(m,-)$)}
+            \end{align*}
+            Donats $r\in R$, $n\in N$,
+            \begin{align*}
+                t(m,-)(rn)
+                &=t(m,rn)
+                &\quad&\textrm{(Per definició de $t(m,-)$)}\\
+                &=(m,rn)+E
+                &\quad&\textrm{(Per definició de $t$)}\\
+                &=r(m,n)+E\\
+                &=r((m,n)+E)
+                &\quad&\textrm{(Per definició d'$E$)}\\
+                &=r\cdot t(m,n)
+                &\quad&\textrm{(Per definició de $t$)}\\
+                &=r\cdot t(m,-)(n)
+                &\quad&\textrm{(Per definició de $t(m,-)$)}
+            \end{align*}
+            Aleshores, $\forall m(m\in M\Rightarrow t(m,-)\in\Hom_{R}(N,F_{R}(M\times N)/E))$. Simètricament, $\forall n(n\in N\Rightarrow t(-,n)\in\Hom_{R}(M,F_{R}(M\times N)/E))$ on $t(-,n)(m):=t(m,n)$. Per tant, $t\in\Bil_{R}(M\times N,F_{R}(M\times N)/E)$. Ara,
+            \begin{align*}
+                \Tilde{f}(t(m,n))
+                &=\Tilde{f}((m,n)+E)
+                &\quad&\textrm{(Per definició de $t:=\pi\circ\iota$)}\\
+                &=f(m,n)
+                &\quad&\textrm{(Per definició de $\Tilde{f}$)}
+            \end{align*}
+            Doncs, existeix un $R$-mòdul $F_{R}(M\times N)/E$ amb una aplicació bilineal $t\in\Bil_{R}(M\times N,F_{R}(M\times N)/E)$ que compleix la propietat universal del producte tensorial.
+        \end{proof}
+        \item Deduïu que el parell $(M\otimes_{R}N,t)$ és únic tret d'isomorfisme i que a més $\Bil_{R}(M\otimes_{R} N,L)\cong\Hom_{R}(M\newline\otimes_{R}N,L)$.
+        \begin{proof}
+            Siguin $F,F'$ $R$-mòduls amb $t\in\Bil_{R}(M\times N,F),t'\in\Bil_{R}(M\times N,F')$ tals que satisfan la propietat universal del producte tensorial. De la propietat universal del producte tensorial, obtenim el diagrama commutatiu
+            \begin{equation*}
+            \begin{tikzcd}
+                F
+                \arrow[dotted]{rr}{id_{F}}
+                &&F
+                &&F'
+                \arrow[dotted]{rr}{id_{F'}}
+                &&F'\\\\
+                &&&M\times N
+                \arrow[swap]{ddlll}{t}
+                \arrow[swap]{ddl}{t'}
+                \arrow{ddr}{t}
+                \arrow{ddrrr}{t'}
+                \arrow{uulll}{t}
+                \arrow{uul}{t}
+                \arrow[swap]{uur}{t'}
+                \arrow[swap]{uurrr}{t'}&&&\\
+                \\
+                F
+                \arrow[dotted]{rr}{\exists!\Tilde{t}'}
+                \arrow[dotted, bend right=20, swap]{rrrr}{\exists!(\Tilde{t}\circ\Tilde{t}')}
+                &&F'
+                \arrow[dotted]{rr}{\exists!\Tilde{t}}
+                \arrow[dotted, bend right=20, crossing over, swap]{rrrr}{\exists!(\Tilde{t}'\circ\Tilde{t})}
+                &&F
+                \arrow[dotted]{rr}{\exists!\Tilde{t}'}&&F'
+            \end{tikzcd}
+            \end{equation*}
+            d'on deduïm que $\Tilde{t}\circ\Tilde{t}'=id_{F}$ i $\Tilde{t}'\circ\Tilde{t}=id_{F'}$. Per tant, $F\cong F'$.
+        \end{proof}
+     \end{enumerate}
+\end{problema}
+\begin{problema}
+    Calculeu els productes següents de grups abelians:
+    \begin{enumerate}
+        \item $\mathbb{Z}/(n)\otimes_{\mathbb{Z}}\mathbb{Z}/(n)$.
+        \begin{proof}[Solució]
+            Tenim que $\mathbb{Z}/(n)\otimes_{\mathbb{Z}}\mathbb{Z}/(n)\cong\mathbb{Z}/((n)+(m))=\mathbb{Z}/(\gcd\{n,m\})$.
+        \end{proof}
+        \item $\mathbb{Z}/(n)\otimes_{\mathbb{Z}}\mathbb{Q}$.
+        \begin{proof}[Solució]
+            Sigui $f\in\Hom_{\mathbb{Z}}(\mathbb{Z},\mathbb{Z})$ definida per $f(x):=nx$. Considerem la successió exacta
+            \begin{equation*}
+            \begin{tikzcd}
+                0
+                \arrow{r}
+                &\mathbb{Z}
+                \arrow{r}{f}
+                &\mathbb{Z}
+                \arrow[two heads]{r}{\pi}
+                &\mathbb{Z}/(n)
+                \arrow{r}
+                &0
+            \end{tikzcd}
+            \end{equation*}
+            Apliquem $-\otimes_{Z}\mathbb{Q}$ a la successió exacta curta, d'on obtenim la successió exacta curta
+            \begin{equation*}
+            \begin{tikzcd}
+                0
+                \arrow{r}
+                &\mathbb{Z}\otimes_{\mathbb{Z}}\mathbb{Q}
+                \arrow{rr}{f\otimes_{\mathbb{Z}}id_{\mathbb{Q}}}
+                &&\mathbb{Z}\otimes_{\mathbb{Z}}\mathbb{Q}
+                \arrow[two heads]{rr}{\pi\otimes_{\mathbb{Z}}id_{\mathbb{Q}}}
+                &&\mathbb{Z}/(n)\otimes_{Z}\mathbb{Q}
+                \arrow{r}
+                &0
+            \end{tikzcd}
+            \end{equation*}
+            Com $\mathbb{Z}\otimes_{Z}\mathbb{Q}\cong\mathbb{Q}$, tenim la successió exacta curta
+            \begin{equation*}
+            \begin{tikzcd}
+                0
+                \arrow{r}
+                &\mathbb{Q}
+                \arrow{rr}{f'}
+                &&\mathbb{Q}
+                \arrow[two heads]{rr}{\pi\otimes_{\mathbb{Z}}id_{\mathbb{Q}}}
+                &&\mathbb{Z}/(n)\otimes_{Z}\mathbb{Q}
+                \arrow{r}
+                &0
+            \end{tikzcd}
+            \end{equation*}
+            on $f'(\frac{a}{b})=n\frac{a}{b}$. Fixem-nos que $f'$ és un isomorfisme, d'on, per exactitud, deduïm que $\mathbb{Z}/(n)\otimes_{\mathbb{Z}}\mathbb{Q}=0$.
+        \end{proof}
+        \item $\mathbb{Q}\otimes_{\mathbb{Z}}\mathbb{Q}$.
+        \begin{proof}[Solució]
+            Tenim $f\in\Bil_{\mathbb{Z}}(\mathbb{Q}\times\mathbb{Q},\mathbb{Q})$ definida per $f(a,b):=ab$. Per la propietat universal del producte tensorial, $\exists!\Tilde{f}(\Tilde{f}\in\Hom_{\mathbb{Z}}(\mathbb{Q}\otimes_{\mathbb{Z}}\mathbb{Q},\mathbb{Q}))$ definida per $\Tilde{f}(a\otimes_{Z}b):=ab$. Considerem $g\in\Hom_{\mathbb{Z}}(\mathbb{Q},\mathbb{Q}\otimes_{Z}\mathbb{Q})$ definida per $g(a):=a\otimes_{\mathbb{Z}}1_{\mathbb{Q}}$. Es comprova que $g$ és la inversa de $\Tilde{f}$, d'on deduïm que $\mathbb{Q}\otimes_{\mathbb{Z}}\mathbb{Q}\cong\mathbb{Q}$.
+        \end{proof}
+    \end{enumerate}
+\end{problema}
+\begin{problema}
+    Proveu les propietats següents:
+    \begin{enumerate}
+        \item $R\otimes_{R}M\cong M$.
+        \begin{proof}
+            Considerem $f:\Bil_{R}(R\times M,M)$ definit per $f(r,m):=rm$. Aleshores, $\exists!\Tilde{f}(\Tilde{f}\in\Hom_{R}(R\otimes_{R}M,M))$ definit per $\Tilde{f}(r\otimes_{R}m):=rm$. Considerem $g\in\Hom_{R}(M,R\otimes_{R}M)$ definit per $g(m):=1_{R}\otimes_{R}m$. Tenim que
+            \begin{align*}
+                g(\Tilde{f}(r\otimes_{R}m))
+                &=g(rm)
+                &\quad&\textrm{(Per definició de $\Tilde{f}$)}\\
+                &=1_{R}\otimes_{R}(rm)
+                &\quad&\textrm{(Per definició de $g$)}\\
+                &=r(1_{R}\otimes_{R}m)\\
+                &=r\otimes_{R}m
+            \end{align*}
+            i
+            \begin{align*}
+                \Tilde{f}(g(m))
+                &=\Tilde{f}(1_{R}\otimes_{R}m)
+                &\quad&\textrm{(Per definició de $g$)}\\
+                &=1_{R}m
+                &\quad&\textrm{(Per definició de $\Tilde{f}$)}\\
+                &=m
+            \end{align*}
+            d'on $g\circ\Tilde{f}=id_{R\otimes_{R}M}$ i $\Tilde{f}\circ g=id_{M}$. Per tant, $R\otimes_{R}M\cong M$.
+        \end{proof}
+        \item $(M\oplus M')\otimes_{R}N\cong(M\otimes_{R}N)\oplus(M'\otimes_{R}N)$.
+        \begin{proof}
+            Per la propietat universal de la suma directa (és un límit), $\exists!f(f\in\Hom_{R}((M\times N)\oplus(M'\times N),(M\otimes_{R}N)\oplus(M'\otimes_{R}N)))$ definit per $f((m,n),(m',n')):=(m\otimes_{R}n,m'\otimes_{R}n')$ tal que el següent diagrama commuta:
+            \begin{equation*}
+            \begin{tikzcd}
+                M\times N
+                \arrow{dd}
+                \arrow[hook]{rr}
+                &&(M\times N)\oplus(M'\times N)
+                \arrow[dotted]{dd}{f}
+                &&M'\times N
+                \arrow{dd}
+                \arrow[hook]{ll}\\\\
+                M\otimes_{R}N
+                \arrow[hook]{rr}
+                &&(M\otimes_{R}N)\oplus(M'\otimes_{R}N)
+                &&M'\otimes_{R}N
+                \arrow[hook]{ll}
+            \end{tikzcd}
+            \end{equation*}
+            Considerem $g\in\Hom_{R}((M\oplus M')\times N,(M\times N)\oplus(M'\times N))$ definit per $g((m,m'),n):=((m,n),(m',\newline n))$. Per la propietat universal del producte tensorial,
+            \begin{equation*}
+            \begin{tikzcd}
+                (M\oplus M')\times N
+                \arrow{rr}{g}
+                \arrow{dd}
+                &&(M\times N)\oplus(M'\times N)
+                \arrow{rr}{f}
+                &&(M\otimes_{R}N)\oplus(M'\otimes_{R}N)\\\\
+                (M\oplus M')\otimes_{R}N
+                \arrow[swap, dotted]{uurrrr}{\exists!\varphi}
+            \end{tikzcd}
+            \end{equation*}
+            on $\varphi\in\Hom_{R}((M\oplus M')\otimes_{R}N,(M\otimes_{R}N)\oplus(M'\otimes_{R}N))$ vindrà definida per $\varphi((m,m')\otimes_{R}n):=(m\otimes_{R}n,m'\otimes_{R}n)$. Novament per la propietat universal de la suma directa,
+            \begin{equation*}
+            \begin{tikzcd}
+                M\times N
+                \arrow{r}
+                \arrow[hook]{ddr}
+                &M\otimes_{R}N
+                \arrow[hook]{r}
+                &(M\otimes_{R}N)\oplus(M'\otimes_{R}N)
+                \arrow[dotted]{dd}{\exists!\psi}
+                &M'\otimes_{R}N
+                \arrow[hook]{l}
+                &M'\times N
+                \arrow{l}
+                \arrow[hook]{ddl}\\\\
+                &(M\oplus M')\times N
+                \arrow{r}
+                &(M\oplus M')\otimes_{R}N
+                &(M\oplus M')\times N
+                \arrow{l}&
+            \end{tikzcd}    
+            \end{equation*}
+            on $\psi\in\Hom_{R}((M\otimes_{R}N)\oplus(M'\otimes_{R}N),(M\oplus M')\otimes_{R}N)$ vindrà definida per $\psi(m\oplus_{R}n,m'\oplus_{R}n'):=(m,0_{M'})\otimes_{R}n+(0_{M},m')\otimes_{R}n'$. Tenim que
+            \begin{align*}
+                \psi(\varphi((m,m')\otimes_{R}n))
+                &=\psi(m\otimes_{R}n,m'\otimes_{R}n)
+                &\quad&\textrm{(Per definició de $\varphi$)}\\
+                &=(m,0_{M'})\otimes_{R}n+(0_{M},m')\otimes_{R}n
+                &\quad&\textrm{(Per definició de $\psi$)}\\
+                &=((m,0_{M'})+(0_{M},m'))\otimes_{R}n\\
+                &=(m,m')\otimes_{R}n
+            \end{align*}
+            i
+            \begin{align*}
+                \varphi(\psi(m\otimes_{R}n,m'\otimes_{R}n'))
+                &=\varphi((m,0_{M'})\otimes_{R}n+(0_{M},m')\otimes_{R}n')
+                &\quad&\textrm{(Per definició de $\psi$)}\\
+                &=\varphi((m,0_{M'})\otimes_{R}n)+\varphi((0_{M},m')\otimes_{R}n')
+                &\quad&\textrm{($\varphi$ morfisme de $R$-mòduls)}\\
+                &=(m\otimes_{R}n,0_{M'}\otimes_{R}n)+(0_{M}\otimes_{R}n,m'\otimes_{R}n')
+                &\quad&\textrm{(Per definició de $\varphi$)}\\
+                &=(m\otimes_{R}n,m'\otimes_{R}n')
+            \end{align*}
+            d'on $\psi\circ\varphi=id_{(M\oplus M')\otimes_{R}N}$ i $\varphi\circ\psi=id_{(M\oplus N)\otimes_{R}(M'\oplus N)}$. Per tant, $(M\oplus M')\otimes_{R}N\cong(M\otimes_{R}N)\oplus(M'\otimes_{R}N)$.
+        \end{proof}
+        \item $M\otimes_{R}N\cong N\otimes_{R}M$.
+        \begin{proof}
+            Sense fer els detalls, per la propietat universal del producte tensorial i la commutativitat del següent diagrama
+            \begin{equation*}
+            \begin{tikzcd}
+                (m,n)
+                \arrow[shift left, mapsto]{dd}
+                &M\times N
+                \arrow[shift left]{dd}
+                \arrow{rr}
+                \arrow{rrdd}
+                &&M\otimes_{R}N
+                \arrow[shift left, dotted]{dd}
+                &m\otimes_{R}n
+                \arrow[shift left, mapsto, dotted]{dd}\\\\
+                (n,m)
+                \arrow[shift left, mapsto]{uu}
+                &N\times M
+                \arrow[crossing over]{rruu}
+                \arrow[shift left]{uu}
+                \arrow{rr}
+                &&N\otimes_{R}M
+                \arrow[shift left, dotted]{uu}
+                &n\otimes_{R}m
+                \arrow[shift left, mapsto, dotted]{uu}
+            \end{tikzcd}
+            \end{equation*}
+            deduïm que $M\otimes_{R}N\cong N\otimes_{R}M$.
+        \end{proof}
+        \item $M\otimes_{R}(N\otimes_{R}L)\cong(M\otimes_{R}N)\otimes_{R}L$.
+        \begin{proof}
+            Per la propietat universal de la suma directa tenim els morfismes de $R$-mòduls $((-\otimes_{R}-)\otimes_{R}-)$ i $(-\otimes_{R}(-\otimes_{R}-))$ tals que
+            \begin{equation*}
+            \begin{tikzcd}
+                (M\otimes_{R}N)\times L
+                \arrow[hook]{d}
+                &M\otimes_{R}N
+                \arrow[hook]{l}
+                &M\times N
+                \arrow{l}
+                \arrow[hook]{d}
+                &M
+                \arrow[hook]{d}
+                \arrow[hook]{rr}
+                &&M\times(N\otimes_{R}L)
+                \arrow[hook]{d}\\
+                (M\otimes_{R}N)\otimes_{R}L
+                &&(M\times N)\times L
+                \arrow[shift left]{r}{\alpha}
+                \arrow[dotted, swap]{ll}{((-\otimes_{R}-)\otimes_{R}-)}
+                &M\times(N\times L)
+                \arrow[shift left]{l}{\beta}
+                \arrow[dotted]{rr}{(-\otimes_{R}(-\otimes_{R}-))}
+                &&M\otimes_{R}(N\otimes_{R}L)
+                \\
+                (M\otimes_{R}N)\times L
+                \arrow[hook]{u}
+                &&L
+                \arrow[hook]{u}
+                \arrow[hook]{ll}
+                &N\times L
+                \arrow{r}
+                \arrow[hook]{u}
+                &N\otimes_{R}L
+                \arrow[hook]{r}
+                &M\times(N\otimes_{R}L)
+                \arrow[hook]{u}
+            \end{tikzcd}
+            \end{equation*}
+            on $((-\otimes_{R}-)\otimes_{R}-)((m,n),l):=(m\otimes_{R}n)\otimes_{R}l$ i $(-\otimes_{R}(-\otimes_{R}-))(m,(n,l)):=m\otimes_{R}(n\otimes_{R}l)$. Per la propietat universal del producte tensorial, com $(-\otimes_{R}(-\otimes_{R}-))$ i $(-\otimes_{R}(-\otimes_{R}-))$ són $R$-bilineals, tenim nous morfismes de $R$-mòduls
+             \begin{equation*}
+            \begin{tikzcd}
+                (M\otimes_{R}N)\times L
+                \arrow[hook]{d}
+                &M\otimes_{R}N
+                \arrow[hook]{l}
+                &M\times N
+                \arrow{l}
+                \arrow[hook]{d}
+                &M
+                \arrow[hook]{d}
+                \arrow[hook]{rr}
+                &&M\times(N\otimes_{R}L)
+                \arrow[hook]{d}\\
+                (M\otimes_{R}N)\otimes_{R}L
+                \arrow[crossing over, dotted, bend left=30]{rrrrr}{\exists!\overline{(-\otimes_{R}(-\otimes_{R}-))\circ\alpha}}
+                &&(M\times N)\times L
+                \arrow[shift left]{r}{\alpha}
+                \arrow[dotted, swap]{ll}{((-\otimes_{R}-)\otimes_{R}-)}
+                &M\times(N\times L)
+                \arrow[shift left]{l}{\beta}
+                \arrow[dotted]{rr}{(-\otimes_{R}(-\otimes_{R}-))}
+                &&M\otimes_{R}(N\otimes_{R}L)
+                \arrow[crossing over, dotted, bend left=30]{lllll}{\exists!\overline{((-\otimes_{R}-)\otimes_{R}-)\circ\beta}}
+                \\
+                (M\otimes_{R}N)\times L
+                \arrow[hook]{u}
+                &&L
+                \arrow[hook]{u}
+                \arrow[hook]{ll}
+                &N\times L
+                \arrow{r}
+                \arrow[hook]{u}
+                &N\otimes_{R}L
+                \arrow[hook]{r}
+                &M\times(N\otimes_{R}L)
+                \arrow[hook]{u}
+            \end{tikzcd}
+            \end{equation*}
+            on $\overline{(-\otimes_{R}(-\otimes_{R}-)\circ\alpha}((m\otimes_{R}n)\otimes_{R}l):=m\otimes_{R}(n\otimes_{R}l)$ i $\overline{((-\otimes_{R}-)\otimes_{R}-)\circ\beta}(m\otimes_{R}(n\otimes_{R}l)):=(m\otimes_{R}n)\otimes_{R}l$. D'aquí deduïm que $M\otimes_{R}(N\otimes_{R}L)\cong(M\otimes_{R}N)\otimes_{R}L$.
+        \end{proof}
+        \item Què val $R^{n}\otimes_{R}R^{m}$?
+        \begin{proof}[Solució]
+            Volem veure que $R^{n}\otimes_{R}R^{m}\cong R^{nm}$. Procedim per inducció en $n$. Si $n=1$, clarament $R\otimes_{R}R^{m}\cong R^{m}$. Suposem que per $n-1$ és cert. Tenim que
+            \begin{align*}
+                R^{n}\otimes_{R}R^{m}
+                &=(R\oplus R^{n-1})\otimes_{R}R^{m}\\
+                &\cong(R\otimes_{R}R^{m})\oplus(R^{n-1}\otimes_{R}R^{m})
+                &\quad&\textrm{($(M\oplus M')\otimes_{R}N\cong(M\otimes_{R}N)\oplus(M'\otimes_{R}N)$)}\\
+                &\cong R^{m}\oplus R^{m(n-1)}
+                &\quad&\textrm{(Hipòtesi d'inducció)}\\
+                &=R^{nm}
+            \end{align*}
+            com volíem veure.
+        \end{proof}
+        \item Si $P$ i $P'$ són projectius finitament generats, ho és $P\otimes_{R}P'$?
+        \begin{proof}
+            Com $P,P'$ projectius, $P\cong\bigoplus_{i\in\mathscr{I}}P_{i},P'\cong\bigoplus_{j\in\mathscr{J}}P'_{j}$ on $P_{i},P'_{j}$ lliures i podem suposar $\mathscr{I},\mathscr{J}$ finits ja que $P,P'$ finitament generats. Aleshores,
+            \begin{align*}
+                P\otimes_{R}P'
+                &\cong\big(\bigoplus_{i\in\mathscr{I}}P_{i}\big)
+                \otimes_{R}\big(\bigoplus_{j\in\mathscr{J}}P'_{j}\big)\\
+                &\cong\bigoplus_{(i,j)\in\mathscr{I}\times\mathscr{J}}(P_{i}\otimes_{R}P'_{j})
+            \end{align*}
+            Com $P_{i},P'_{j}$ lliures, $P_{i}\otimes_{R}P'_{j}$ lliures, d'on deduïm que $P\otimes_{R}P'$ és projectiu (suma directa de $R$-mòduls lliures). \textcolor{red}{Nota: Aquest exercici esta fatal perquè anava fatal i no em sabia ni la definició de projectiu}
+        \end{proof}
+    \end{enumerate}
+\end{problema}
+\begin{problema}
+    \begin{enumerate}
+        \item Donades $R$-àlgebres $A$ i $B$, deduïu que $A\otimes_{R}B$ també és una $R$-àlgebra amb $(a\otimes_{R}b)(a'\otimes_{R}b')=aa'\otimes_{R}bb'$.
+        \begin{proof}
+            Veiem que $\mu:(A\otimes_{R}B)\times(A\otimes_{R}B)\rightarrow A\otimes_{R}B$ definida per $\mu(a\otimes_{R}b,a'\otimes_{R}b'):=aa'\otimes_{R}bb'$ esta ben definida. Considerem $f:A\times B\times A\times B\rightarrow A\otimes_{R}B$ definida per $f(a,b,a',b'):=aa'\otimes_{R}bb'$ la qual és morfisme de $R$-mòduls component a component. Aleshores, obtenim un morfisme de $R$-mòduls $\Tilde{f}:A\otimes_{R} B\otimes_{R} A\otimes_{R}B\rightarrow A\otimes_{R}B$. Com $A\otimes_{R}B\otimes_{R}A\otimes_{R} B\cong(A\otimes_{R}B)\otimes_{R}(A\otimes_{R}B):h$, tenim una correspondència de $h\circ\Tilde{f}$ amb un element de $\Bil_{R}((A\otimes_{R}B)\times(A\otimes_{R}B),A\otimes_{R}B)$, que és justament $\mu$.\newline
+            Veiem que $A\otimes_{R}B$ és una $R$-àlgebra. Com $A,B$ són $R$-àlgebres, en particular són $R$-mòduls, d'on $A\otimes_{R}B$ és $R$-mòdul. Sigui $r\in R$, $a,a'\in A$, $b,b'\in B$. Aleshores,
+            \begin{align*}
+                r((a\otimes_{R}b)(a'\otimes_{R}b'))
+                &=r(aa'\otimes_{R}bb')
+                &\quad&\textrm{($(x\otimes_{R}y)(x'\otimes_{R}y')=xx'\otimes_{R}yy'$)}\\
+                &=r(aa')\otimes_{R}bb'\\
+                &=(ra)a'\otimes_{R}bb'
+                &\quad&\textrm{($A$ $R$-àlgebra)}\\
+                &=(ra\otimes_{R}b)(a'\otimes_{R}b')
+                &\quad&\textrm{($(x\otimes_{R}y)(x'\otimes_{R}y')=xx'\otimes_{R}yy'$)}\\
+                &=(r(a\otimes_{R}b))(a'\otimes_{R}b')
+            \end{align*}
+            Similarment, $r((a\otimes_{R}b)(a'\otimes_{R}b'))=(a\otimes_{R}b)(r(a'\otimes_{R}b'))$. Per tant, $A\otimes_{R}B$ és $R$-àlgebra.
+        \end{proof}
+        \item Proveu que si $I,J$ són ideals d'un anell $R$, aleshores $R/I\otimes_{R}R/J\cong R/(I + J)$ (com $R$-àlgebres).
+        \begin{proof}
+            Sigui $\varphi:R/I\times R/J\rightarrow R/(I+J)$ definida per $\varphi(r+I,r+J):=rr'+(I+J)$. Fixem $r+I\in R/I$. Aleshores,
+            \begin{align*}
+                \varphi(r+I,-)((r_{1}+J)+(r_{2}+J))
+                &=\varphi(r+I,(r_{1}+J)+(r_{2}+J))
+                &\quad&\textrm{(Def. de $\varphi(r+I,-)$)}\\
+                &=\varphi(r+I,(r_{1}+r_{2})+J)\\
+                &=r(r_{1}+r_{2})+(I+J)
+                &\quad&\textrm{(Per definició de $\varphi$)}\\
+                &=rr_{1}+rr_{2}+(I+J)\\
+                &=(rr_{1}+J)+(rr_{2}+J)\\
+                &=\varphi(r+I,r_{1}+J)+\varphi(r+I,r_{2}+J)
+                &\quad&\textrm{(Per definició de $\varphi$)}\\
+                &=\varphi(r+I,-)(r_{1}+J)+\varphi(r+I,-)(r_{2}+J)
+                &\quad&\textrm{(Def. de $\varphi(r+I,-)$)}
+            \end{align*}
+            Donat $r'\in R$,
+            \begin{align*}
+                \varphi(r+I,-)(r'(r''+J))
+                &=\varphi(r+I,r'(r''+J))
+                &\quad&\textrm{(Per definició de $\varphi(r+I,-)$)}\\
+                &=\varphi(r+I,r'r''+J)\\
+                &=r(r'r'')+(I+J)
+                &\quad&\textrm{(Per definició de $\varphi$)}\\
+                &=r'(rr'')+(I+J)\\
+                &=r'(rr''+(I+J))\\
+                &=r'\varphi(r+I,r''+J)
+                &\quad&\textrm{(Per definició de $\varphi$)}\\
+                &=r'\varphi(r+I,-)(r''+J)
+                &\quad&\textrm{(Per definició de $\varphi(r+I,-)$)}\\
+            \end{align*}
+            d'on deduïm que $\forall r+I(r+I\in R/I\Rightarrow\varphi(r+I,-)\in\Hom_{R}(R/J,R/(I+J)))$. Simètricament, $\forall r+J(r+J\in R/J\Rightarrow\varphi(-,r+J)\in\Hom_{R}(R/i,R/(I+J)))$. Per tant, $\varphi\in\Bil_{R}(R/I\times R/J,R/(I+J))$. Per la propietat universal del producte tensorial, $\exists!f(f\in\Hom_{R}(R/I\otimes_{R}R/J,R/(I+J)))$ definit per $f((r+I)\otimes_{R}(r+J)):=rr'+(I+J)$. Considerem $g\in\Hom_{R}(R/(I+J),R/I\otimes_{R}R/J)$ definit per $g(r+(I+J)):=(r+I)\otimes_{R}(1_{R}+J)$. Tenim que
+            \begin{align*}
+                f(g(r+(I+J)))
+                &=f((r+I)\otimes_{R}(1_{R}+J))
+                &\quad&\textrm{(Per definició de $g$)}\\
+                &=r1_{R}+(I+J)
+                &\quad&\textrm{(Per definició de $f$)}\\
+                &=R+(I+J)
+            \end{align*}
+            i
+            \begin{align*}
+                g(f((r+I)\otimes_{R}(r'+J)))
+                &=g(rr'+(I+J))
+                &\quad&\textrm{(Per definició de $f$)}\\
+                &=(rr'+I)\otimes_{R}(1_{R}+J)
+                &\quad&\textrm{(Per definició de $g$)}\\
+                &=r'((r+I)\otimes_{R}(1_{R}+J))\\
+                &=(r+I)\otimes_{R}(r'1_{R}+J)\\
+                &=(r+I)\otimes_{R}(r'+J)
+            \end{align*}
+            d'on deduïm que $R/I\otimes_{R}R/J\cong R/(I + J)$.
+        \end{proof}
+        \item Proveu que $R[x,y]\cong R[x]\otimes_{R}R[y]$.
+        \begin{proof}
+            Definim $f\in\Hom_{R}(R[x]\times R[y],R[x,y])$ per $f(x^{\alpha},y^{\beta}):=x^{\alpha}y^{\beta}$ i estenem per linealitat. A aquestes alçades és evident que és $R$-bilineal. Per la propietat universal del producte tensorial, $\exists!\Tilde{f}(\Tilde{f}\in\Hom_{R}(R[x]\otimes_{R}R[y],R[x,y]))$ definida per $\Tilde{f}(x^{\alpha}\otimes_{R}y^{\beta}):=x^{\alpha}y^{\beta}$ i estenem per linealitat. Si considerem $g\in\Hom_{R}(R[x,y],R[x]\otimes_{R}R[y])$ definida per $g(x^{\alpha}y^{\beta}):=x^{\alpha}\otimes_{R}y^{\beta}$. $g$ és l'invers de $\Tilde{f}$. Per tant, $R[x,y]\cong R[x]\otimes_{R}R[y]$.
+        \end{proof}
+    \end{enumerate}
+\end{problema}
+\end{document}

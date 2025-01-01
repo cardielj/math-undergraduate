@@ -1,0 +1,317 @@
+\section{Injectivitat}
+En aquesta secció introduïm tota la maquinària d'àlgebra commutativa per arribar als resultats que desitgem.
+\subsection{Mòduls injectius}
+Recordem que $I$ $R$-mòdul és injectiu si per tot monomorfisme de $R$-mòduls $g:A\rightarrow B$ i per tot morfisme de $R$-mòduls $h:A\rightarrow I$ existeix un morfisme de $R$-mòduls $h':B\rightarrow I$ tal que el següent diagrama
+\begin{center}
+\begin{tikzcd}
+    &&I
+    &&\\
+    \\
+    0
+    \arrow{rr}
+    &&A
+    \arrow[hook]{rr}{g}
+    \arrow{uu}{h}
+    &&B
+    \arrow[swap,dotted]{uull}{h'}
+\end{tikzcd}
+\end{center}
+és commutatiu.\newline
+La injectivitat de $I$ es pot expressar com a una propietat del functor contravariant $\Hom_{R}(-,I):\textrm{Mod}_{R}\rightarrow\textrm{Mod}_{R}$, on $\textrm{Mod}_{R}$ denota la categoria de $R$-mòduls. En general, si
+\begin{center}
+\begin{tikzcd}
+    0
+    \arrow{r}
+    &A
+    \arrow{r}{g}
+    &B
+    \arrow{r}{f}
+    &C
+    \arrow{r}
+    &0
+\end{tikzcd}
+\end{center}
+és una successió exacta curta en $\textrm{Mod}_{R}$, aleshores, per tot $I$ $R$-mòdul
+\begin{center}
+\begin{tikzcd}
+    0
+    \arrow{rr}
+    &&\Hom_{R}(C,I)
+    \arrow{rr}{\Hom_{R}(f,I)}
+    &&\Hom_{R}(B,I)
+    \arrow{rr}{\Hom_{R}(g,I)}
+    &&\Hom_{R}(A,I)
+\end{tikzcd}
+\end{center}
+és exacte. La condició d'injectivitat ens diu que $\Hom_{R}(g,I)$ és exhaustiu, és a dir, que la successió curta
+\begin{center}
+\begin{tikzcd}
+    0
+    \arrow{rr}
+    &&\Hom_{R}(C,I)
+    \arrow{rr}{\Hom_{R}(f,I)}
+    &&\Hom_{R}(B,I)
+    \arrow{rr}{\Hom_{R}(g,I)}
+    &&\Hom_{R}(A,I)
+    \arrow{rr}
+    &&0
+\end{tikzcd}
+\end{center}
+és exacte. Deduïm que $I$ $R$-mòdul sigui injectiu és equivalent a que $\Hom_{R}(-,I)$ és exacte (és a dir, que la darrera successió curta és exacte).
+\begin{lema}
+    Sigui $R\rightarrow S$ un morfisme d'anells. Si $E$ és un $R$-mòdul injectiu, aleshores $\Hom_{R}(S,E)$ és un $S$-mòdul injectiu.
+    \begin{proof}
+        Sigui $S$-mòdul $M$ i, $M_{R}$, $M$ pensat com a $R$-mòdul. Tenim la correspondència
+        \begin{center}
+        \begin{tikzcd}
+            \Hom_{R}(M_{R},E)
+            \arrow[leftrightarrow]{rr}
+            &&
+            \Hom_{S}(M,\Hom_{R}(S,E)),
+        \end{tikzcd}
+        \end{center}
+        donada per
+        \begin{center}
+        \begin{tikzcd}
+            \alpha
+            \arrow[mapsto]{rr}
+            &&
+            (m\mapsto(s\mapsto\alpha(sm)))
+        \end{tikzcd}
+        \end{center}
+        amb inversa
+        \begin{center}
+        \begin{tikzcd}
+            \beta
+            \arrow[mapsto]{rr}
+            &&
+            (m\mapsto\beta(m)(1_{S}))
+        \end{tikzcd}
+        \end{center}
+        Com $E$ és $R$-mòdul injectiu, $\Hom_{R}(-,E)$ és exacte. Per la correspondència,
+        \begin{equation*}
+            \Hom_{R}(-,E)=\Hom_{S}(-,\Hom_{R}(S,E)),
+        \end{equation*}
+        d'on deduïm que $\Hom_{S}(-,\Hom_{R}(S,E))$ és exacte i, per tant, $\Hom_{R}(S,E)$ és $S$-mòdul injectiu.
+    \end{proof}
+\end{lema}
+\subsection{Extensió essencial}
+Introduïm la següent definició que farem servir en aquesta secció.
+\begin{definicio}
+    Siguin $M\subset E$ $R$-mòduls. $M\subset E$ és una extensió essencial si tot $R$-submòdul no trivial d'$E$ interseca $M$ no trivialment.
+\end{definicio}
+\begin{lema}\label{equivalent-ext-essencial}
+    Siguin $M\subset E$ $R$-mòduls. Són equivalents:
+    \begin{enumerate}
+        \item $M\subset E$ és una extensió essencial.
+        \item $\forall x(x\in E-\{0\}\Rightarrow\exists r(r\in R\land rx\in M-\{0\}))$.
+        \begin{proof}
+            Suposem que $M\subset E$ és una extensió essencial. Sigui $x\in E-\{0\}$. Per essencialitat, $(x)\cap M\neq\{0\}$. Aleshores, $\exists r(r\in R\land rx\in M-\{0\})$.\newline
+            Suposem que $\forall x(x\in E-\{0\}\Rightarrow\exists r(r\in R\land rx\in M-\{0\}))$. Sigui $E'\subset E$ $R$-submòdul no trivial d'$E$. Sigui $x\in E'-\{0\}$ (existeix per no trivialitat). Com $E'\subset E$, $x\in E-\{0\}$, d'on $\exists r(r\in R\land rx\in M-\{0\}))$ per hipòtesi. Com $rx\in E'\cap M$ i $rx\neq0$, deduïm que $E'\cap M\neq\{0\}$. Per tant, $E$ és una extensió essencial.
+        \end{proof}
+    \end{enumerate}
+\end{lema}
+Tenim el següent resultat sobre $R$-mòduls injectius i extensions essencials.
+\begin{lema}\label{equivalent-injectiu}
+    Sigui $I$ $R$-mòdul injectiu, $E\subset I$ $R$-submòdul. Són equivalents:
+    \begin{enumerate}
+        \item $E$ injectiu.
+        \item Per tot $E\subset E'\subset I$ amb $E\subset E'$ extensió essencial, $E=E'$.
+    \end{enumerate}
+    \begin{proof}
+        Suposem $E$ injectiu. Sigui $E'\subset I$ amb $E\subset E'$ extensió essencial. Per injectivitat d'$E$,
+        \begin{center}
+        \begin{tikzcd}
+            &&E
+            &&\\
+            \\
+            0
+            \arrow{rr}
+            &&E
+            \arrow[hook]{rr}
+            \arrow{uu}{id_{E}}
+            &&E'
+            \arrow[swap,dotted]{uull}{\exists\alpha}
+        \end{tikzcd}
+        \end{center}
+        Suposem que $\ker{\alpha}\neq\{0\}$. Com $E\subset E'$ és una extensió essencial i $\ker{\alpha}$ $R$-submòdul d'$E'$ no trivial, $\ker{\alpha}\cap E\neq\{0\}$. Però, $\ker{\alpha}\cap E=\ker{id_{E}}$ i $\ker{id_{E}}=\{0\}$, contradicció. Per tant, $\ker{\alpha}=\{0\}$. Aleshores, $E'\cong E'/\ker{\alpha}\cong\im{\alpha}\subset E$, d'on deduïm que $E=E'$ per doble inclusió (ja que $E\subset E'$).\newline
+        Suposem que per tot $E\subset E'\subset I$ amb $E\subset E'$ extensió essencial, $E=E'$. Siguin $M\subset N$ $R$-mòduls i $\varphi\in\Hom_{R}(M,E)$. Sigui
+        \begin{equation*}
+            \mathcal{S}:=\{(M',\varphi')\in\Obj(\textrm{Mod}_{R})\times\Hom_{R}(M',J):M\subset M'\subset N\land\varphi'|_{M}=\varphi\}
+        \end{equation*}
+        conjunt parcialment ordenat per l'ordre $\leq$ definit per
+        \begin{equation*}
+            (M',\varphi')\leq(M'',\varphi''):\iff M'\subset M''\land\varphi''|_{M'}=\varphi'
+        \end{equation*}
+        $\mathcal{S}\neq\emptyset$, ja que $(M,\varphi)\in\mathcal{S}$. Considerem una cadena $\{(M_{i},\varphi_{i}):i\in\mathscr{I}\}$ de $\mathcal{S}$. Tenim que $(\bigcup_{i\in\mathscr{I}}M_{i},\varphi)\in\mathcal{S}$ és una cota superior de $\{(M_{i},\varphi_{i}):i\in\mathscr{I}\}$, on $\varphi\in\Hom_{R}(\bigcup_{i\in\mathscr{I}}A_{i},J)$ ve definida per $\varphi(x):=\varphi_{i}(x)$ si $x\in M_{i}$. Aleshores, pel lema de Zorn, $\mathcal{S}$ té un element maximal $(M',\varphi')\in\mathcal{S}$.\newline
+        Sigui $\iota:E\hookrightarrow I$ la inclusió. Per injectivitat d'$I$,
+        \begin{center}
+        \begin{tikzcd}
+            &&I
+            &&\\
+            \\
+            0
+            \arrow{rr}
+            &&M'
+            \arrow[hook]{rr}
+            \arrow{uu}{\iota\circ\varphi'}
+            &&N
+            \arrow[swap,dotted]{uull}{\exists\psi}
+        \end{tikzcd}
+        \end{center}
+        Suposem que $\psi(N)\not\subset E$. Tenim $E\subsetneq E+\psi(N)\subset I$, d'on $E\subset E+\psi(N)$ no és essencial. Aleshores, existeix $K\subset E+\psi(N)$ no trivial tal que $K\cap E=\{0\}$. Com $M'\subset\psi^{-1}(E)\subsetneq\psi^{-1}(E+K)$,
+        \begin{equation*}
+            \pi\circ\psi|_{\psi^{-1}(E+K)}:\psi^{-1}(E+K)\rightarrow E+K\twoheadrightarrow E
+        \end{equation*}
+        és tal que $(\pi\circ\psi|_{\psi^{-1}(E+K)})|_{M'}=\varphi'$ i $\psi^{-1}(E+K)\subset N$. Aleshores, $(M',\varphi')\leq(\psi^{-1}(E+K),\pi\circ\psi|_{\psi^{-1}(E+K)})\in\mathcal{S}$, contradicció amb la maximalitat de $(M',\varphi')$.\newline
+        Per tant, $\psi(N)\subset E$. Tenim que $\psi:N\rightarrow\psi(N)\hookrightarrow E$ i $\psi|_{M}=(\iota\circ\varphi')|_{M}=\varphi'|_{M}=\varphi$, d'on deduïm que $E$ és injectiu ($\psi\in\Hom_{R}(N,E)$ estén $\varphi\in\Hom_{R}(M,E)$).
+    \end{proof}
+\end{lema}
+Recordem que un $R$-mòdul $M$ és noetherià si i només si tot $R$-submòdul de $M$ és finitament generat. Denotem per $(0:_{R}x)$ l'aniquil·lador de $x\in R$; similarment, $(0:_{R}I)$ és l'aniqul·lador de $I$, $I\subset R$ ideal.
+\begin{lema}\label{lema-tecnic-noetheria-injectiu}
+    Sigui $R$ anell noetherià, $I$ $R$-mòdul injectiu.
+    \begin{enumerate}
+        \item Sigui $f\in R$. Aleshores, $\bigcup_{n>0}(0:_{I}f^{n})$ $R$-submòdul injectiu de $I$.
+        \begin{proof}
+            Sigui $E'\subset I$ amb $\bigcup_{n>0}(0:_{I}f^{n})\subset E'$ extensió essencial. Suposem que $\bigcup_{n>0}(0:_{I}f^{n})\newline\subsetneq E'$ i volem arribar a contradicció. Aleshores, $\exists x(x\in E'-\bigcup_{n>0}(0:_{I}f^{n}))$. Considerem l'ideal $\bigcup_{n>0}(0:_{R}f^{n}x)\subset R$. Com $R$ és noetherià,
+            \begin{equation*}
+                \exists g_{1}\ldots\exists g_{t}\Big(g_{1},\ldots,g_{t}\in R\land\bigcup_{n>0}(0:_{R}f^{n}x)=(g_{1},\ldots,g_{t})\Big)
+            \end{equation*}
+            Com $g_{1},\ldots,g_{t}\in\bigcup_{n>0}(0:_{R}f^{n}x)$, $\exists n_{1}\ldots\exists n_{t}(n_{1},\ldots,n_{t}>0\land\forall i(g_{i}f^{n_{i}}x=0))$. Definim
+            \begin{equation*}
+                x':=f^{\max\{n_{i}\}}x\in E'-\bigcup_{n>0}(0:_{I}f^{n})
+            \end{equation*}
+            Sigui $r\in(g_{1},\ldots,g_{t})$. Aleshores, $\exists a_{1}\ldots\exists a_{t}(a_{1},\ldots,a_{t}\in R\land r=\sum_{i=1}^{t}a_{i}g_{i})$. Per tant,
+            \begin{align*}
+                rx'
+                &=\sum_{i=1}^{t}a_{i}(g_{i}f^{\max\{n_{i}\}}x)
+                &\quad&\textrm{(Per definició de $x'$)}\\
+                &=\sum_{i=1}^{t}a_{i}0
+                \,(=0)
+                &\quad&\textrm{($\forall i(g_{i}f^{n_{i}}x=0)$)}
+            \end{align*}
+            Per tant, $r\in(0:_{R}x')$ i $(g_{1},\ldots,g_{t})\subset(0:_{R}x')$. Com
+            \begin{align*}
+                (0:_{R}x')
+                &=(0:_{R}f^{\max\{n_{i}\}}x)
+                &\quad&\textrm{(Per definició de $x'$)}\\
+                &\subset\bigcup_{n>0}(0:_{R}f^{n}x)
+                &\quad&\textrm{($\max\{n_{i}\}>0$)}
+            \end{align*}
+            deduïm per doble inclusió que
+            \begin{equation*}
+                (0:_{R}x')
+                =\bigcup_{n>0}(0:_{R}f^{n}x)
+            \end{equation*}
+            Sigui $r\in(g_{1},\ldots,g_{t})$. Aleshores, $\exists a_{1}\ldots\exists a_{t}(a_{1},\ldots,a_{t}\in R\land r=\sum_{i=1}^{t}a_{i}g_{i})$, d'on
+            \begin{equation*}
+                r(f^{n}x')=\sum_{i=1}^{t}a_{i}g_{i}f^{n}f^{\max\{n_{i}\}}x=0
+                \implies
+                r\in\bigcap_{n>0}(0:_{R}f^{n}x')\subset\bigcup_{n>0}(0:_{R}f^{n}x')
+            \end{equation*}
+            Per tant, $(g_{1},\ldots,g_{t})\subset\bigcup_{n>0}(0:_{R}f^{n}x')$. Com
+            \begin{align*}
+                \bigcup_{n>0}(0:_{R}f^{n}x')
+                &=\bigcup_{n>0}(0:_{R}f^{n+\max\{n_{i}\}}x)\\
+                &\subset\bigcup_{n>0}(0:_{R}f^{n}x)
+            \end{align*}
+            deduïm que
+            \begin{equation*}
+                \bigcup_{n>0}(0:_{R}f^{n}x)
+                =\bigcup_{n>0}(0:_{R}f^{n}x')
+            \end{equation*}
+            Per transitivitat de $=$,
+            \begin{equation*}
+                (0:_{R}x')
+                =\bigcup_{n>0}(0:_{R}f^{n}x')
+            \end{equation*}
+            Sigui $y\in(x')\cap\bigcup_{n>0}(0:_{I}f^{n})$. Aleshores, $\exists n(n>0\land yf^{n}=0)$ i $\exists r'(r'\in R\land r'x'=y)$, d'on
+            \begin{align*}
+                r'f^{n}x'
+                &=yf^{n}
+                &\quad&\textrm{($r'x'=y$)}\\
+                &=0
+                &\quad&\textrm{($yf^{n}=0$)}
+            \end{align*}
+            Aleshores,
+            \begin{align*}
+                r'\in\bigcup_{n>0}(0:_{R}f^{n}x')
+                &\implies
+                r'\in(0:_{R}x')
+                &\quad&\textrm{\Big($(0:_{R}x')
+                =\bigcup_{n>0}(0:_{R}f^{n}x')$\Big)}\\
+                &\implies
+                y=r'x'=0
+                &\quad&\textrm{($r'x'=y$)}
+            \end{align*}
+            Per tant, $(x')\cap\bigcup_{n>0}(0:_{I}f^{n})=\{0\}$, d'on deduïm que $\bigcup_{n>0}(0:_{I}f^{n})\subset E'$ no és una extensió essencial, contradicció. Per tant, $\bigcup_{n>0}(0:_{I}f^{n})=E'$ i, per \ref{equivalent-injectiu}, $\bigcup_{n>0}(0:_{I}f^{n})$ és $R$-submòdul injectiu de $I$.
+        \end{proof}
+        \item Sigui $J\subset R$ ideal. Aleshores, $\bigcup_{n>0}(0:_{I}J^{n})$ $R$-submòdul injectiu de $I$.
+        \begin{proof}
+            Com $R$ és noetherià, $\exists f_{1}\ldots\exists f_{t}(f_{1},\ldots f_{t}\in R\land J=(f_{1},\ldots,f_{t}))$. Aleshores, com
+            \begin{equation*}
+                \bigcup_{n>0}(0:_{I}J^{n})
+                =\bigcup_{n>0}(0:_{\bigcup_{n>0}(0:_{\cdots_{(\bigcup_{n>0}(0:_{(\bigcup_{n>0}(0:_{I}f_{1}^{n})}f_{2}^{n}))}\cdots}f_{t-1}^{n})}f_{t}^{n})
+            \end{equation*}
+            ens reduïm al cas anterior i procedim per inducció.
+        \end{proof}
+    \end{enumerate}
+\end{lema}
+\subsection{Envolvent injectiu}
+Introduïm la noció d'envolvent injectiu, que utilitzarem en la següent secció. La idea és barrejar les dos nocions anteriors.
+\begin{definicio}
+    Siguin $M\subset I$ $R$-mòduls. Direm que $I$ és l'envolvent injectiu de $M$ si $I$ és injectiu i $M\subset I$ és una extensió essencial.
+\end{definicio}
+Enunciem el següent resultat sense demostració, el qual dona altres caracteritzacions i la unicitat llevat isomorfisme de l'envolvent injectiu.
+\begin{proposicio}
+    Sigui $M\subset I$ $R$-mòduls. Són equivalents:
+    \begin{enumerate}
+        \item $M\subset I$ és l'extensió essencial maximal.
+        \item $I$ és injectiu i $M\subset I$ és una extensió essencial.
+        \item $I$ és injectiu minimal sobre $M$.
+    \end{enumerate}
+    A més, tot $R$-mòdul té un envolvent injectiu i donats $I,I'$ envolvents injectius de $M$, existeix un isomorfisme $g:I\rightarrow I'$ tal que $g|_{M}=id_{M}$.
+    \begin{proof}
+        Veure \cite{Lam1999}, 3.29., 3.30. i 3.32.
+    \end{proof}
+\end{proposicio}
+Escriurem per $E_{R}(M)$ l'envolvent injectiu del $R$-mòdul $M$. Necessitarem el següent resultat per la següent resultat per la següent secció.
+\begin{lema}\label{env-inj-aniquillador}
+    Sigui $R$ anell, $\mathfrak{a}$ ideal de $R$ i $M$ $R$-mòdul tal que $\mathfrak{a}M=\{0\}$. Aleshores, $E_{R/\mathfrak{a}}(M)\cong(0:_{E}\mathfrak{a})$.
+    \begin{proof}
+        Tenim que $\mathfrak{a}M,\mathfrak{a}(0:_{E}\mathfrak{a})=\{0\}$. Aleshores, considerem $M$ i $(0:_{E_{R}(M)}\mathfrak{a})$ com $R/\mathfrak{a}$-mòduls. Com $M\subset E_{R}(M)$ i $\mathfrak{a}M=\{0\}$, deduïm que $M\subset(0:_{E_{R}(M)}\mathfrak{a})$. Com tot $R/\mathfrak{a}$-submodul de $(0:_{E_{R}(M)}\mathfrak{a})$ és $R$-submòdul de $E_{R}(M)$, necessàriament $M\subset(0:_{E_{R}(M)}\mathfrak{a})$ és una extensió essencial.\newline
+        Veiem que podem completar el diagrama de $R/\mathfrak{a}$-mòduls
+        \begin{center}
+        \begin{tikzcd}
+            &&(0:_{E_{R}(M)}\mathfrak{a})
+            &&\\
+            \\
+            0
+            \arrow{rr}
+            &&A
+            \arrow[hook]{rr}{g}
+            \arrow{uu}{h}
+            &&B
+            %\arrow[swap,dotted]{uull}
+        \end{tikzcd}
+        \end{center}
+        En efecte, si els pensem com $R$-mòduls, per injectivitat de $E_{R}(M)$ tenim que
+        \begin{center}
+        \begin{tikzcd}
+            &&E_{R}(M)
+            &&\\\\
+            &&(0:_{E_{R}(M)}\mathfrak{a})
+            \arrow[hook]{uu}{\iota}
+            &&\\\\
+            0
+            \arrow{rr}
+            &&A
+            \arrow[hook]{rr}{g}
+            \arrow{uu}{h}
+            &&B
+            \arrow[swap,dotted]{uuuull}{\exists(\iota\circ h)'}
+        \end{tikzcd}
+        \end{center}
+        commuta. De la commutativitat es comprova que $\im{(\iota\circ h')}\subset(0:_{E_{R}(M)}\mathfrak{a})$, d'on deduïm que $(0:_{E_{R}(M)}\mathfrak{a})$ és injectiu.
+    \end{proof}
+\end{lema}

@@ -1,0 +1,387 @@
+\documentclass[compress]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{tikz-cd}
+\usepackage{fancyhdr}
+\usepackage[catalan]{babel}
+\usepackage[document]{ragged2e}
+\usepackage{appendix}
+
+\usepackage{silence}
+%\WarningFilter{latex}{Citation}
+%\WarningFilter{latex}{Reference}
+%\WarningFilter{latex}{There were undefined references}
+\WarningFilter{newunicodechar}{Redefining Unicode character}
+\WarningFilter{hyperref}{Token not allowed in a PDF string}
+\overfullrule=5pt
+
+\usepackage[margin=1in]{geometry}
+
+\usepackage[T1]{fontenc}
+\usepackage{newunicodechar}
+\usepackage[mathscr]{euscript}
+\usepackage{adjustbox}
+
+%% Definicions, proposicions, etc. %%
+\newtheorem{definicio}{Definició}
+\newtheorem{lema}{Lema}[section]
+\newtheorem{proposicio}{Proposició}[section]
+\newtheorem{corolari}{Corol·lari}
+\newtheorem{teorema}{Teorema}
+\newtheorem{problema}{\color{blue}Problema}[section]
+\newtheorem*{claim}{Claim}
+\newtheorem{enunciat}{}
+\theoremstyle{definition}
+\newtheorem{idea}{\color{gray}Idea}
+\newtheorem{exemple}{Exemple}
+
+\fancyhead[L]{\textbf{100114. Topologia de varietats.}\\
+\textbf{Treball Final de Curs. Models acíclics.}}
+
+\fancyhead[R]{\textit{Jordi Cardiel}}
+
+% Letter fonts
+\usepackage{mathrsfs}
+\usepackage[scr=rsfs,cal=boondox]{mathalfa}
+
+%% Operadors pel math mode de LaTeX %%
+\DeclareMathOperator{\rel}{rel}
+% colímit (Categories)
+\DeclareMathOperator{\coker}{coker}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\Tor}{Tor}
+
+\title{\large{\textsc{\textbf{Teorema dels models acíclics}}}}
+\author{\textsc{Jordi Cardiel}}
+\date{}
+
+\begin{document}
+\maketitle
+Denotarem per $\mathscr{T},\mathscr{K}$ les categories d'espais topològics i de complexos de cadenes (no-negatius). L'objectiu és generalitzar les idees de la demostració de l'axioma d'homotopia (per homologia singular) en un context categòric.\newline
+Per demostrar l'axioma d'homotopia, és suficient veure que existeix una homotopia de cadenes $D=\{D_{n}^{X}:C_{n}(X)\rightarrow C_{n+1}(X\times\mathbb{I})\}$ entre $C_{\bullet}(\iota_{0}^{X}),C_{\bullet}(\iota_{1}^{X}):C_{\bullet}(X)\rightarrow C_{\bullet}(X\times\mathbb{I})$, on $\iota_{i}^{X}(x)=(x,i)$. L'aciclicitat de $H_{\bullet}(\Delta^{n}\times\mathbb{I})$, estendre per linealitat de $\mathscr{T}(\Delta^{n},X)$ a $C_{n}(X)$ i la naturalitat dels morfismes de $\mathscr{K}$ són els detalls tècnics cabdals per la construcció de l'homotopia de cadenes natural entre $C_{\bullet}(\iota_{0}^{X})$, $C_{\bullet}(\iota_{1}^{X})$. Donem una formulació més general.
+\begin{definicio}
+    Sigui $\mathscr{C}$ una categoria, $\mathscr{M}$ una col·lecció  d'objectes de $\mathscr{C}$ i $F:\mathscr{C}\rightarrow\mathscr{K}$ un functor covariant.
+    \begin{enumerate}
+        \item $F$ és acíclic en $\mathscr{M}$ si $F(M)$ és acíclic per tot $M\in\mathscr{M}$.
+        \item $F$ és lliure en $\mathscr{M}$ si existeixen $M_{j}\in\mathscr{M}$ i $m_{j}\in F(M_{j})$ tals que $\mathscr{B}=\{F(f)(m_{j}):f\in\mathscr{C}(M_{j},X)\}$ és una base de $F(X)$ per tot $X\in\mathscr{C}$.
+    \end{enumerate}
+\end{definicio}
+Direm que $\mathscr{C}$ és una categoria amb models $\mathscr{M}$ si $\mathscr{M}$ és una col·lecció d'objectes de $\mathscr{C}$. La condició d'aciclicitat ve motivada per l'aciclicitat de $H_{\bullet}(\Delta^{n}\times\mathbb{I})$; la condició de llibertat, per l'extensió per linealitat de $\mathscr{T}(\Delta^{n},X)$ a $C_{n}(X)$.
+\begin{exemple}
+    Sigui $\mathscr{C}=\mathscr{T}$, $\mathscr{M}=\{\Delta^{n}:n\geq0\}$ i $F=C_{\bullet}$. Com $\Delta^{n}$ són contràctils per tot $n\geq0$, $H_{\bullet}(\Delta^{n})$ és acíclic. Aleshores, $C_{\bullet}$ és acíclic en $\mathscr{M}$. Sigui $id_{\Delta^{n}}\in C_{\bullet}(\Delta^{n})$ la identitat. Tenim que
+    \begin{align*}
+        \mathscr{B}
+        &=\{C_{\bullet}(f)(id_{\Delta^{n}}): f\in\mathscr{T}(\Delta^{n},X)\}\\
+        &=\{f\circ id_{\Delta^{n}}:f\in\mathscr{T}(\Delta^{n},X)\}\\
+        &=\{f:f\in\mathscr{T}(\Delta^{n},X)\}\\
+        &=\mathscr{T}(\Delta^{n},X)
+    \end{align*}
+    Per tant, $\mathscr{B}$ són bases de $C_{\bullet}(X)$ i $C_{\bullet}$ és lliure en $\mathscr{M}$.
+\end{exemple}
+El resultat principal és el teorema dels models acíclics.
+\begin{teorema}
+    Sigui $\mathscr{C}$ una categoria amb models $\mathscr{M}$ i $F,G:\mathscr{C}\rightarrow\mathscr{K}$ functors covariants tals que $F$ és lliure en $\mathscr{M}$ i $G$ és acíclic en $\mathscr{M}$. Tota transformació natural $H_{0}(F)\rightarrow H_{0}(G)$ ve induïda per una única transformació natural $F\rightarrow G$ llevat d'una homotopia de cadenes (natural).
+\end{teorema}
+Veiem que l'axioma d'homotopia per homologia singular és conseqüència del teorema dels models acíclics.
+\begin{corolari}[Axioma d'homotopia]
+    Siguin $X,Y$ espais topològics, $f,g:X\rightarrow Y$ aplicacions contínues homòtopes. Aleshores, $f,g$ indueixen el mateix morfisme en homologia (singular).
+\end{corolari}
+\begin{proof}
+    %És suficient veure que existeix una homotopia de cadenes $D=\{D_{n}^{X}:C_{n}(X)\rightarrow C_{n+1}(X\times\mathbb{I})\}$ entre $C_{\bullet}(\iota_{0}^{X}),C_{\bullet}(\iota_{1}^{X})$. 
+    Considerem els functors covariants $C_{\bullet},G:\mathscr{T}\rightarrow\mathscr{K}$, $G$ definit per $G(X)=C_{\bullet}(X\times\mathbb{I})$ i $G(f)=f\times id_{\mathbb{I}}$. $C_{\bullet}$ és lliure en $\{\Delta^{n}:n\geq0\}$ i $G$ és acíclic en $\{\Delta^{n}\times\mathbb{I}:n\geq0\}$. $C_{\bullet}(\iota_{0}^{X}),C_{\bullet}(\iota_{1}^{X})$ indueixen la mateixa transformació natural $H_{0}(C_{\bullet})\rightarrow H_{0}(G)$. En efecte, si $\gamma:\mathbb{I}\rightarrow X\times\mathbb{I}$ és el camí definit per $\gamma(t)=(x,t)$, aleshores,
+    \begin{align*}
+        C_{0}(\iota_{0}^{X})(x)+\im{d_{1}^{X\times\mathbb{I}}}
+        &=(x,0)+\im{d_{1}^{X\times\mathbb{I}}}
+        &\quad&\textrm{(Per definició de $H_{0}(\iota_{0}^{X})$)}\\
+        &=(x,0)+d_{1}^{X\times\mathbb{I}}\gamma+\im{d_{1}^{X\times\mathbb{I}}}
+        &\quad&\textrm{($d_{1}^{X\times\mathbb{I}}\gamma\in\im{d_{1}^{X\times\mathbb{I}}}$)}\\
+        &=(x,0)+(x,1)-(x,0)+\im{d_{1}^{X\times\mathbb{I}}}
+        &\quad&\textrm{($d_{1}^{X\times\mathbb{I}}\gamma=(x,1)-(x,0)$)}\\
+        &=(x,1)+\im{d_{1}^{X\times\mathbb{I}}}\\
+        &=C_{0}(\iota_{1}^{X})(x)+\im{d_{1}^{X\times\mathbb{I}}}
+        &\quad&\textrm{(Per definició de $H_{0}(\iota_{1}^{X})$)}
+    \end{align*}
+    La naturalitat és deu a la functorialitat de $H_{0}$ i que $f\times id_{\mathbb{I}}\circ\iota_{0}^{X}=\iota_{0}^{Y}\circ f$, $f\in\mathscr{T}(X,Y)$. Pel teorema dels models acíclics, existeix una homotopia de cadenes natural entre $C_{\bullet}(\iota_{0}^{X})$ i $C_{\bullet}(\iota_{1}^{X})$. Si existeix una homotopia de cadenes entre $C_{\bullet}(\iota_{0}^{X}),C_{\bullet}(\iota_{1}^{X})$ i $F:X\times\mathbb{I}\rightarrow Y$ és l'homotopia entre $f$ i $g$,
+    \begin{align*}
+        H_{\bullet}(f)
+        &=H_{\bullet}(F\circ\iota_{0}^{X})
+        &\quad&\textrm{($f=F\circ\iota_{0}^{X}$)}\\
+        &=H_{\bullet}(F)\circ H_{\bullet}(\iota_{0}^{X})
+        &\quad&\textrm{(Per functorialitat de $H_{\bullet}$)}\\
+        &=H_{\bullet}(F)\circ H_{\bullet}(\iota_{1}^{X})
+        &\quad&\textrm{($H_{\bullet}(\iota_{0}^{X})=H_{\bullet}(\iota_{1}^{X})$ ja que $C_{\bullet}(\iota_{0}^{X})\simeq C_{\bullet}(\iota_{1}^{X})$)}\\
+        &=H_{\bullet}(F\circ\iota_{1}^{X})
+        &\quad&\textrm{(Per functorialitat de $H_{\bullet}$)}\\
+        &=H_{\bullet}(g)&\quad&\textrm{($g=F\circ\iota_{1}^{X}$)}
+    \end{align*}
+    que és el que volíem veure.
+\end{proof}
+Ara, veiem una conseqüència dels models acíclics que estableix una relació entre els grups d'homologia del producte d'espais topològics amb els grups d'homologia dels espais topològics.
+\begin{corolari}[Eilenberg-Zilber]
+    Sigui $X,Y$ espais topològics. Existeix una equivalència de cadenes natural entre $C_{\bullet}(X\times Y)$ i $C_{\bullet}(X)\otimes C_{\bullet}(Y)$   
+\end{corolari}
+\begin{proof}
+    Considerem la categoria $\mathscr{T}\times\mathscr{T}$ de parells d'espais topològics i $\mathscr{M}=\{(\Delta^{n},\Delta^{m}):n,m\geq0\}$.\newline Considerem $F:\mathscr{T}\times\mathscr{T}\rightarrow\mathscr{K}$ el functor covariants definit per $F(X,Y)=C_{\bullet}(X,Y),F(f,g)=C_{\bullet}(f\times g)$. $F$ és acíclic i lliure en $\mathscr{M}$. En efecte, $H_{\bullet}(\Delta^{n}\times\Delta^{m})$ és acíclic ja que $\Delta^{n}\times\Delta^{m}$ és contràctil i, si $\delta_{n}\in C_{\bullet}(\Delta^{n}\times\Delta^{n})$ és el morfisme diagonal,
+    \begin{align*}
+        \mathscr{B}
+        &=\{F(f,g)(\delta_{n}):(f,g)\in\mathscr{T}\times\mathscr{T}((\Delta^{n},\Delta^{n}),(X,Y))\}\\
+        &=\{C_{\bullet}(f\times g)(\delta_{n}):(f,g)\in\mathscr{T}\times\mathscr{T}((\Delta^{n},\Delta^{n}),(X,Y))\}\\
+        &=\{(f,g):(f,g)\in\mathscr{T}\times\mathscr{T}((\Delta^{n},\Delta^{n}),(X,Y))\}\\
+        &=\mathscr{T}\times\mathscr{T}((\Delta^{n},\Delta^{n}),(X,Y))
+    \end{align*}
+    és base de $C_{\bullet}(X\times Y)$.\newline
+    Considerem $G:\mathscr{T}\times\mathscr{T}\rightarrow\mathscr{K}$ el functor covariants definit per $G(X,Y)=C_{\bullet}(X)\otimes C_{\bullet}(Y),G(f,g)=C_{\bullet}(f)\otimes C_{\bullet}(g)$. $G$ és acíclic i lliure en $\mathscr{M}$. En efecte, per tot $q>0$, $H_{q}(C_{\bullet}(\Delta^{n})\otimes C_{\bullet}(\Delta^{m}))\cong\bigoplus_{r+s=q}H_{r}(\Delta^{n})\otimes H_{s}(\Delta^{m})\oplus\bigoplus_{r+s=q-1}\Tor(H_{r}(\Delta^{n}),H_{s}(\Delta^{m}))=0$ pel teorema algebraic de Künneth i perquè $H_{r}(\Delta^{n})$, $H_{s}(\Delta^{m})=0$ i
+    \begin{align*}
+        \mathscr{B}
+        &=\{G(f,g)(id_{\Delta^{n}}\otimes id_{\Delta^{m}}):(f,g)\in\mathscr{T}\times\mathscr{T}((\Delta^{n},\Delta^{m}),(X,Y))\}\\
+        &=\{(C_{\bullet}(f)\otimes C_{\bullet}(g))(id_{\Delta^{n}}\otimes id_{\Delta^{m}}):(f,g)\in\mathscr{T}\times\mathscr{T}((\Delta^{n},\Delta^{m}),(X,Y))\}\\
+        &=\{f\otimes g:(f,g)\in\mathscr{T}\times\mathscr{T}((\Delta^{n},\Delta^{m}),(X,Y))\}\\
+        &=\mathscr{T}(\Delta^{n},X)\otimes\mathscr{T}(\Delta^{m},Y)
+    \end{align*}
+    és base de $C_{\bullet}(X)\otimes C_{\bullet}(Y)$.\newline
+    Siguin $X,Y\in\mathscr{T}$ i $\{X_{i},i\in\mathscr{I}\},\{Y_{j},j\in\mathscr{J}\}$ les famílies de components arc-connexes de $X,Y$, respectivament. Aleshores, $\{X_{i}\times Y_{j}:(i,j)\in\mathscr{I}\times\mathscr{J}\},\{X_{i}\otimes Y_{j}:(i,j)\in\mathscr{I}\times\mathscr{J}\}$ són bases de $H_{0}(X\times Y),H_{0}(C_{\bullet}(X)\otimes C_{\bullet}(Y))(\cong H_{0}(X)\otimes H_{0}(Y))$, respectivament. Definim les transformacions naturals $\rho_{-1}:H_{0}(X\times Y)\rightarrow H_{0}(C_{\bullet}(X)\otimes C_{\bullet}(Y)),\eta_{-1}:H_{0}(C_{\bullet}(X)\otimes C_{\bullet}(Y))\rightarrow H_{0}(X\times Y)$ com $\rho_{-1}(X_{i}\times Y_{j})=X_{i}\otimes Y_{j},\eta_{-1}(X_{i}\otimes Y_{j})=X_{i}\times Y_{j}$ i estenent per linealitat. Fixem-nos que $\eta_{-1}\circ\rho_{-1}=id_{H{0}(X\times Y)},\rho_{-1}\circ\eta_{-1}=id_{H_{0}(C_{\bullet}(X)\otimes C_{\bullet}(Y))}$.\newline
+    Pel teorema dels models acíclics, existeixen transformacions naturals $\rho:C_{\bullet}(X\times Y)\rightarrow C_{\bullet}(X)\otimes C_{\bullet}(Y),\eta:C_{\bullet}(X)\otimes C_{\bullet}(Y)\rightarrow C_{\bullet}(X\times Y)$ que indueixen $\rho_{-1},\eta_{-1}$, respectivament. A més, $\eta\circ\rho$ i $id_{C_{\bullet}(X\times Y)}$ indueixen $id_{H_{0}(X\times Y)}$ (similarment, $\rho\circ\eta$ i $id_{C_{\bullet}(X)\otimes C_{\bullet}(Y)}$ indueixen $id_{H_{0}(C_{\bullet}(X)\otimes C_{\bullet}(Y))}$). Aleshores, pel teorema dels models acíclics, existeix una homotopia de cadenes natural entre $\eta\circ\rho$ i $id_{C_{\bullet}(X\times Y)}$ (similarment, existeix una homotopia de cadenes natural entre $\rho\circ\eta$ i $id_{C_{\bullet}(X)\otimes C_{\bullet}(Y)}$), com volíem veure.
+\end{proof}
+Ara, demostrem el teorema del models acíclics. La idea és la següent: construirem nivell a nivell la transformació natural $F\rightarrow G$ mitjançant inducció, com si a un gratacel fiquéssim pas a pas cada pis. El següent diagrama potser ajuda al enteniment del pas inductiu:
+\begin{center}
+    \begin{tikzcd}[row sep=scriptsize, column sep=scriptsize]
+    &\vdots
+    \arrow[dashed]{dd}{d_{n+1}'}
+    &&\vdots
+    \arrow[dashed]{dd}{\Delta_{n+1}'}\\
+    \vdots
+    \arrow{dd}{d_{n+1}}
+    &&\vdots
+    \arrow{dd}[near start]{\,\Delta_{n+1}}&\\
+    %% Dimensió n %%
+    &F_{n}(M_{j})
+    \arrow[dashed]{dl}{F_{n}(f)}
+    \arrow[dashed, near start]{rr}{\phi_{n}(M_{j})} 
+    \arrow[dashed]{dd}[near end]{d_{n}'}
+    &&G_{n}(M_{j})
+    \arrow[dashed]{dl}{G_{n}(f)}
+    \arrow[dashed]{dd}{\Delta_{n}'}\\
+    F_{n}(X)
+    \arrow[crossing over]{rr}[near end]{\phi_{n}(X)}
+    \arrow{dd}{d_{n}}
+    &&G_{n}(X)
+    \arrow{dd}[near start]{\,\Delta_{n}}
+    \arrow[from=uu,crossing over]\\
+    %% Dimensió n-1 %%
+    &F_{n-1}(M_{j})
+    \arrow[dashed]{dl}{F_{n-1}(f)}
+    \arrow[dashed, near start]{rr}{\phi_{n-1}(M_{j})} 
+    \arrow[dashed]{dd}[near end]{d_{n-1}'}
+    &&G_{n-1}(M_{j})
+    \arrow[dashed]{dl}{G_{n-1}(f)}
+    \arrow[dashed]{dd}{\Delta_{n-1}'}\\
+    F_{n-1}(X)
+    \arrow[crossing over]{rr}[near end]{\phi_{n-1}(X)}
+    \arrow{dd}{d_{n-1}}
+    &&G_{n-1}(X)
+    \arrow{dd}[near start]{\,\Delta_{n-1}}
+    \arrow[from=uu,crossing over]\\
+    %% Dimensió n-2 %%
+    &F_{n-2}(M_{j})
+    \arrow[dashed]{dl}{F_{n-2}(f)}
+    \arrow[dashed, near start]{rr}{\phi_{n-2}(M_{j})} 
+    \arrow[dashed]{dd}[near end]{d_{n-2}'}
+    &&G_{n-2}(M_{j})
+    \arrow[dashed]{dl}{G_{n-2}(f)}
+    \arrow[dashed]{dd}{\Delta_{n-2}'}\\
+    F_{n-2}(X)
+    \arrow[crossing over]{rr}[near end]{\phi_{n-2}(X)}
+    \arrow{dd}{d_{n-2}}
+    &&G_{n-2}(X)
+    \arrow{dd}[near start]{\,\Delta_{n-2}}
+    \arrow[from=uu,crossing over]\\
+    &\vdots
+    \arrow[dashed]{dd}{d_{1}'}
+    &&\vdots
+    \arrow[dashed]{dd}{\Delta_{1}'}\\
+    \vdots
+    \arrow{dd}{d_{1}}
+    &&\vdots
+    \arrow{dd}[near start]{\,\Delta_{1}}&\\
+    &F_{0}(M_{j})
+    \arrow[dashed]{dl}{F_{0}(f)}
+    \arrow[dashed, near start]{rr}{\phi_{0}(M_{j})} 
+    \arrow[dashed]{dd}[near end]{\varepsilon_{F(M_{j})}}
+    &&G_{0}(M_{j})
+    \arrow[dashed]{dl}{G_{0}(f)}
+    \arrow[dashed]{dd}{\varepsilon_{G(M_{j})}}\\
+    F_{0}(X)
+    \arrow[crossing over]{rr}[near end]{\phi_{0}(X)}
+    \arrow{dd}{\varepsilon_{F(X)}}
+    &&G_{0}(X)
+    \arrow{dd}[near start]{\,\varepsilon_{G(X)}}
+    \arrow[from=uu,crossing over]
+    \\
+    &H_{0}(F(M_{j}))
+    \arrow[dashed]{dl}{H_{0}(F)(f)}
+    \arrow[dashed, swap]{rr}[near start]{\Phi(M_{j})}
+    &&H_{0}(G(M_{j}))
+    \arrow[dashed]{dl}{H_{0}(G)(f)}\\
+    H_{0}(F(X))
+    \arrow[swap]{rr}{\Phi(X)}
+    &&H_{0}(G(X))
+    \arrow[from=uu,crossing over]
+    \end{tikzcd}
+\end{center}
+\begin{proof}[Demostració (Models acíclics).]
+    Sigui $\Phi:H_{0}(F)\rightarrow H_{0}(G)$ una transformació natural. Com $F$ és lliure en $\mathscr{M}$, existeixen $M_{j}\in\mathscr{M}$ i $m_{j}\in F(M_{j})$ tals que $\mathscr{B}_{F(X)}$ és una base de $F(X)$. Sigui $m_{j}\in\mathscr{B}_{F(X)}\cap F_{0}(M_{j})$. Com $G$ és acíclic en $\mathscr{M}$, la successió $G_{0}(M_{j})\rightarrow H_{0}(G(M_{j}))\rightarrow0$ és exacta. Per exactitud, $\varepsilon_{G(M_{j})}:G_{0}(M_{j})\rightarrow H_{0}(G(M_{j}))$ és exhaustiva. Com $\Phi(M_{j})\varepsilon_{F(M_{j})}(m_{j})\in H_{0}(G(M_{j}))$, per exhaustivitat de $\varepsilon_{G(M_{j})}$,
+    \begin{equation*}
+        \exists m_{j}'(m_{j}'\in G_{0}(M_{j})\land\varepsilon_{G(M_{j})}(m_{j}')=\Phi(M_{j})\varepsilon_{F(M_{j})}(m_{j}))
+    \end{equation*}
+    %Considerem $\phi_{0}(M_{j}):F_{0}(M_{j})\rightarrow G_{0}(M_{j})$ definida per $\phi_{0}(M_{j})(m_{j})=m_{j}'$. Per construcció,
+    %\begin{align*}
+    %    \varepsilon_{G(M_{j})}\phi_{0}(M_{j})(m_{j})
+    %    &=\varepsilon_{G(M_{j})}(m_{j}')
+    %    &\quad&\textrm{(Per definició de $\phi_{0}(M_{j})$)}\\
+    %    &=\Phi(M_{j})\varepsilon_{F(M_{j})}(b_{j})
+    %    &\quad&\textrm{(Per definició de $m_{j}'$)}
+    %\end{align*}
+    Sigui $X$ un objecte de $\mathscr{C}$ i $f\in\mathscr{C}(M_{j},X)$. Definim $\phi_{0}(X):F_{0}(X)\rightarrow G_{0}(X)$ sobre $\mathscr{B}_{F_{0}(X)}$ com\newline
+    $\phi_{0}(X)(F_{0}(f)(m_{j}))=G_{0}(f)(m_{j}')$ i estenent a $F(X)$. Veiem que $\varepsilon_{G(X)}\phi_{0}(X)=\Phi(X)\varepsilon_{F(X)}$. En efecte,
+    \begin{align*}
+        \varepsilon_{G(X)}\phi_{0}(X)F_{0}(f)(m_{j})
+        &=\varepsilon_{G(X)}G_{0}(f)(m_{j}')
+        &\quad&\textrm{(Per definició de $\phi_{0}(X)$)}\\
+        &=H_{0}(G)(f)\varepsilon_{G(M_{j})}(m_{j}')
+        &\quad&\textrm{(Per naturalitat dels morfismes de $\mathscr{K}$)}\\
+        &=H_{0}(G)(f)\Phi(M_{j})\varepsilon_{F(M_{j})}(m_{j})
+        &\quad&\textrm{(Per definició de $m_{j}'$)}\\
+        &=\Phi(X)H_{0}(F)(f)\varepsilon_{F(M_{j})}(m_{j})
+        &\quad&\textrm{(Per naturalitat de $\Phi$)}\\
+        &=\Phi(X)\varepsilon_{F(X)}F_{0}(f)(m_{j})
+        &\quad&\textrm{(Per naturalitat dels morfismes de $\mathscr{K}$)}
+    \end{align*}
+    \begin{center}
+    \begin{tikzcd}[row sep=scriptsize, column sep=scriptsize]
+    &F_{0}(M_{j})
+    \arrow[dashed]{dl}{F_{0}(f)}
+    %\arrow[dashed, near start]{rr}{\phi_{0}(M_{j})} 
+    \arrow[dashed]{dd}[near end]{\varepsilon_{F(M_{j})}}
+    &&G_{0}(M_{j})
+    \arrow[dashed]{dl}{G_{0}(f)}
+    \arrow[dashed]{dd}{\varepsilon_{G(M_{j})}}\\
+    F_{0}(X)
+    \arrow[crossing over]{rr}[near end]{\phi_{0}(X)}
+    \arrow{dd}{\varepsilon_{F(X)}}
+    &&G_{0}(X)
+    \arrow{dd}[near start]{\,\varepsilon_{G(X)}}
+    \\
+    &H_{0}(F(M_{j}))
+    \arrow[dashed]{dl}{H_{0}(F)(f)}
+    \arrow[dashed, swap]{rr}[near start]{\Phi(M_{j})}
+    &&H_{0}(G(M_{j}))
+    \arrow[dashed]{dl}{H_{0}(G)(f)}\\
+    H_{0}(F(X))
+    \arrow[swap]{rr}{\Phi(X)}
+    &&H_{0}(G(X))
+    \arrow[from=uu,crossing over]
+    \end{tikzcd}
+    \end{center}
+    Sigui $g\in\mathscr{C}(X,Y)$. Veiem que $\phi_{0}$ és natural. En efecte,
+    \begin{align*}
+        G_{0}(g)\phi_{0}(X)F_{0}(f)(m_{j})
+        &=G_{0}(g)G_{0}(f)(m_{j}')
+        &\quad&\textrm{(Per definició de $\phi_{0}(X)$)}\\
+        &=G_{0}(g\circ f)(m_{j}')
+        &\quad&\textrm{(Per functorialitat de $G_{0}$)}\\
+        &=\phi_{0}(Y)F_{0}(g\circ f)(m_{j})
+        &\quad&\textrm{(Per definició de $\phi_{0}(Y)$ i perquè $g\circ f\in\mathscr{C}(M_{j},Y)$)}\\
+        &=\phi_{0}(Y)F_{0}(g)F_{0}(f)
+        &\quad&\textrm{(Per functorialitat de $F_{0}$)}
+    \end{align*}
+    Suposem que $\phi_{0},\ldots,\phi_{n-1}$ són transformacions naturals tals que $\Delta_{k}\phi_{k}(X)=\phi_{k-1}(X)d_{k}$ per $0<k<n$ i $\varepsilon_{G(X)}\phi_{0}(X)=\Phi(X)\varepsilon_{F(X)}$. Sigui $m_{j}\in\mathscr{B}_{F(X)}\cap F_{n}(M_{j})$. Tenim que
+    \begin{align*}
+        \Delta_{n-1}'\phi_{n-1}(M_{j})d_{n}'(m_{j})
+        &=\phi_{n-2}(M_{j})d_{n-1}'d_{n}'(m_{j})
+        &\quad&\textrm{(Per hipòtesi d'inducció)}\\
+        &=\phi_{n-2}(M_{j})(0)=0
+        &\quad&\textrm{($d_{n-1}'d_{n}'=0$)}
+    \end{align*}
+    Aleshores, $\phi_{n-1}(M_{j})d_{n}'(m_{j})\in\ker\Delta_{n-1}'$. Com $G$ és acíclic en $\mathscr{M}$, $\im\Delta_{n}'=\ker\Delta_{n-1}'$. Per tant,
+    \begin{equation*}
+        \exists m_{j}'(m_{j}'\in G_{n}(M_{j})\land\Delta_{n}'(m_{j}')=\phi_{n-1}(M_{j})d_{n}'(m_{j}))
+    \end{equation*}
+    Definim $\phi_{n}(X):F_{n}(X)\rightarrow G_{n}(X)$ sobre $\mathscr{B}_{F_{n}(X)}$ com $\phi_{n}(X)(F_{n}(f)(m_{j}))=G_{n}(f)(m_{j}')$ i estenent a $F_{n}(X)$. Veiem que $\Delta_{k}\phi_{k}(X)=\phi_{k-1}(X)d_{k}$. En efecte,
+    \begin{align*}
+        \Delta_{n}\phi_{n}(X)F_{n}(f)(m_{j})
+        &=\Delta_{n}G_{n}(f)(m_{j}')
+        &\quad&\textrm{(Per definició de $\phi_{n}(X)$)}\\
+        &=G_{n-1}(f)\Delta_{n}'(m_{j}')
+        &\quad&\textrm{(Per naturalitat dels morfismes de $\mathscr{K}$)}\\
+        &=G_{n-1}(f)\phi_{n-1}(M_{j})d_{n}'(m_{j})&\quad&\textrm{(Per definició de $m_{j}'$)}\\
+        &=\phi_{n-1}(X)F_{n-1}(f)d_{n}'(m_{j})&\quad&\textrm{(Per naturalitat $\phi_{n-1}$)}\\
+        &=\phi_{n-1}(X)d_{n}F_{n}(f)(m_{j})&\quad&\textrm{(Per naturalitat dels morfismes de $\mathscr{K}$)}
+    \end{align*}
+    \begin{center}
+    \begin{tikzcd}[row sep=scriptsize, column sep=scriptsize]
+    %% Dimensió n %%
+    &F_{n}(M_{j})
+    \arrow[dashed]{dl}{F_{n}(f)}
+    %\arrow[dashed, near start]{rr}{\phi_{n}(M_{j})} 
+    \arrow[dashed]{dd}[near end]{d_{n}'}
+    &&G_{n}(M_{j})
+    \arrow[dashed]{dl}{G_{n}(f)}
+    \arrow[dashed]{dd}{\Delta_{n}'}\\
+    F_{n}(X)
+    \arrow[crossing over]{rr}[near end]{\phi_{n}(X)}
+    \arrow{dd}{d_{n}}
+    &&G_{n}(X)
+    \arrow{dd}[near start]{\,\Delta_{n}}\\
+    %% Dimensió n-1 %%
+    &F_{n-1}(M_{j})
+    \arrow[dashed]{dl}{F_{n-1}(f)}
+    \arrow[dashed, near start, swap]{rr}{\phi_{n-1}(M_{j})}
+    &&G_{n-1}(M_{j})
+    \arrow[dashed]{dl}{G_{n-1}(f)}\\
+    F_{n-1}(X)
+    \arrow[crossing over, swap]{rr}{\phi_{n-1}(X)}
+    &&G_{n-1}(X)
+    \arrow[from=uu,crossing over]
+    \end{tikzcd}
+    \end{center}
+    La naturalitat de $\phi_{n}$ es comprova igual que la naturalitat de $\phi_{0}$.\newline
+    Sigui $\psi:F\rightarrow G$ una transformació natural que indueix $\Phi$. Definim una homotopia de cadenes natural inductivament. Sigui $m_{j}\in F_{0}(M_{j})$. Tenim que
+    \begin{align*}
+        &\varepsilon_{G(M_{j})}((\phi_{0}(M_{j})-\psi_{0}(M_{j}))(m_{j}))\\
+        =\,&\varepsilon_{G(M_{j})}(\phi_{0}(M_{j})(m_{j}))
+        -\varepsilon_{G(M_{j})}(\psi_{0}(M_{j})(m_{j}))\\
+        =\,&\Phi(M_{j})\varepsilon_{F(M_{j})}(m_{j})
+        -\Phi(M_{j})\varepsilon_{F(M_{j})}(m_{j})\\
+        =\,&0
+        &\quad&\textrm{($\phi,\psi$ indueixen $\Phi$)}
+    \end{align*}
+    Com $G$ és acíclic en $\mathscr{M}$, $\ker{\varepsilon_{G(M_{j})}}=\im{\Delta_{1}'}$, d'on $\exists m_{j}'(m_{j}'\in G_{1}(M_{j})\land\Delta_{1}'m_{j}'=(\phi_{0}(M_{j})-\psi_{0}(M_{j}))(m_{j}))$. Com $F$ és lliure en $\mathscr{M}$, definim $D_{0}^{X}:F_{0}(X)\rightarrow G_{1}(X)$ per $D_{0}^{X}(F_{0}(f)(m_{j}))=_{0}G(f)(m_{j}')$ i estenent per linealitat. Tenim que $\Delta_{1}D_{0}^{X}=\phi_{0}(X)-\psi_{0}(X)$.\newline
+    Suposem que $D_{0}^{X},\ldots,D_{n-1}^{X}$ són tals que $\Delta_{k+1}D_{k}^{X}+D_{k-1}^{X}d_{k}=\phi_{k}(X)-\psi_{k}(X)$ per $0<k<n$ i $\Delta_{1}D_{0}^{X}=\phi_{0}(X)-\psi_{0}(X)$. Sigui $m_{j}\in F_{n}(M_{j})$. Tenim que
+    \begin{align*}
+        &\Delta_{n}'(\phi_{n}(M_{j})-\psi_{n}(M_{j})-D_{n-1}^{M_{j}}d_{n}')(m_{j})\\
+        =\,&(\Delta_{n}'\phi_{n}(M_{j})
+        -\Delta_{n}'\psi_{n}(M_{j})
+        -\Delta_{n}'D_{n-1}^{M_{j}}d_{n}')(m_{j})\\
+        =\,&(\phi_{n-1}(M_{j})d_{n}'
+        -\psi_{n-1}(M_{j})d_{n}'
+        -(\phi_{n-1}(M_{j})
+        -\psi_{n-1}(M_{j})
+        -D_{n-2}^{M_{j}}d_{n-1}')d_{n}')(m_{j})
+        &\quad&\textrm{(Per inducció)}\\
+        =\,&(\phi_{n-1}(M_{j})d_{n}'
+        -\psi_{n-1}(M_{j})d_{n}'
+        -\phi_{n-1}(M_{j})d_{n}'
+        +\psi_{n-1}(M_{j})d_{n}'
+        +D_{n-2}^{M_{j}}d_{n-1}'d_{n}')(m_{j})
+        &\quad&\textrm{($d_{n-1}'d_{n}'=0$)}\\
+        =\,&0
+    \end{align*}
+    Com $G$ és acíclic en $\mathscr{M}$, $\ker{\Delta_{n}'}=\im{\Delta_{n+1}'}$, d'on 
+    \begin{equation*}
+        \exists m_{j}'(m_{j}'\in G_{n+1}(M_{j})\land\Delta_{n+1}'m_{j}'=(\phi_{n}(M_{j})-\psi_{n}(M_{j})-D_{n-1}^{M_{j}}d_{n}')(m_{j}))
+    \end{equation*}
+    Com $F$ és lliure en $\mathscr{M}$, definim $D_{n}^{X}:F_{n}(X)\rightarrow G_{n+1}(X)$ per $D_{n}^{X}(F_{n}(f)(m_{j}))=G_{n}(f)(m_{j}')$ i estenent per linealitat. Per definició, tenim que $\Delta_{n+1}D_{n}^{X}+D_{n-1}^{X}d_{n}=\phi_{n}(X)-\psi_{n}(X)$. 
+\end{proof}
+\end{document}

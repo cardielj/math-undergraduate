@@ -1,0 +1,227 @@
+\section{Envolvent injectiu sobre cossos residuals}
+Recordem que un anell $R$ és local si només té un ideal maximal $\mathfrak{m}$. En aquest cas, diem que $R/\mathfrak{m}$ és el cos residual de $R$.
+\subsection{Resultats sobre anells artinians locals}
+Sigui $M$ $R$-mòdul ($R$ no necessàriament local). Definim la longitud de $M$ com
+\begin{equation*}
+    \ell_{R}(M):=\sup\{n\in\mathbb{N}:\exists(0\subsetneq M_{1}\subsetneq\ldots\subsetneq M_{n}=M)\}
+\end{equation*}
+Es pot comprovar que $\ell_{R}$ és una funció additiva, és a dir, donada una successió exacta curta a $\textrm{Mod}_{R}$
+\begin{center}
+    \begin{tikzcd}
+    0
+    \arrow{r}
+    &A
+    \arrow{r}
+    &B
+    \arrow{r}
+    &C
+    \arrow{r}
+    &0
+\end{tikzcd}
+\end{center}
+tenim que $\ell_{R}(B)=\ell_{R}(A)+\ell_{R}(C)$.\newline
+Considerarem en aquesta secció anells artinians locals. D'aquestes condicions, es dedueix que l'anell artinià local és noetherià i té $R$ té longitud finita com a $R$-mòdul.
+\begin{lema}\label{artinian-local-lenght}
+    Sigui $(R,\mathfrak{m})$ anell artinià local, $M$ $R$-mòdul finitament generat. Aleshores,
+    \begin{equation*}
+        \ell_{R}(M)=\ell_{R}(\Hom_{R}(M,E_{R}(R/\mathfrak{m})))
+    \end{equation*}
+    \begin{proof}
+        Tenim que
+        \begin{align*}
+            \Hom_{R}(R/\mathfrak{m},E_{R}(R/\mathfrak{m}))
+            &\cong E_{R/\mathfrak{m}}(R/\mathfrak{m})
+            &\quad&\textrm{(Isomorfisme via $\varphi\mapsto\varphi(1_{R}+\mathfrak{m})$)}\\
+            &\cong R/\mathfrak{m}
+            &\quad&\textrm{(Tot mòdul sobre un cos és injectiu i $R/\mathfrak{m}$ és minimal)}
+        \end{align*}
+        Aleshores, 
+        \begin{equation*}
+            \ell_{R}(R/\mathfrak{m})=\ell_{R}(\Hom_{R}(M,E_{R}(R/\mathfrak{m})))
+        \end{equation*}
+        Procedim per inducció en $\ell_{R}(M)$, $M$ $R$-mòdul finitament generat. Tenim que existeix $\pi:M\twoheadrightarrow R/\mathfrak{m}$ morfisme de $R$-mòduls exhaustiu. Considerem la successió exacta curta
+        \begin{center}
+        \begin{tikzcd}
+            0
+            \arrow{r}
+            &\ker{\pi}
+            \arrow{r}{\iota}
+            &M
+            \arrow{r}{\pi}
+            &R/\mathfrak{m}
+            \arrow{r}
+            &0
+        \end{tikzcd}
+        \end{center}
+        Com $E_{R}(R/\mathfrak{m})$ és injectiu, obtenim la successió exacta curta
+        \begin{center}
+        \begin{tikzcd}
+            0
+            \arrow{r}
+            &\Hom_{R}(R/\mathfrak{m},E_{R}(R/\mathfrak{m}))
+            \arrow{r}{\pi_{*}}
+            &\Hom_{R}(M,E_{R}(R/\mathfrak{m}))
+            \arrow{r}{\iota_{*}}
+            &\Hom_{R}(\ker{\pi},E_{R}(R/\mathfrak{m}))
+            \arrow{r}
+            &0
+        \end{tikzcd}
+        \end{center}
+        De les darreres successions exactes curtes, deduïm que
+        \begin{align*}
+            &\ell_{R}(\Hom_{R}(M,E_{R}(R/\mathfrak{m})))\\
+            =\,
+            &\ell_{R}(\Hom_{R}(R/\mathfrak{m},E_{R}(R/\mathfrak{m})))
+            +\Hom_{R}(\ker{\pi},E_{R}(R/\mathfrak{m}))
+            &\quad&\textrm{(Per additivitat de $\ell_{R}$)}\\
+            =\,
+            &\ell_{R}(R/\mathfrak{m})
+            +\ell_{R}(\ker{\pi})
+            &\quad&\textrm{(Hipòtesi d'inducció)}\\
+            =\,
+            &\ell_{R}(M)
+            &\quad&\textrm{(Per additivitat de $\ell_{R}$)}
+        \end{align*}
+        com volíem veure.
+    \end{proof}
+\end{lema}
+\begin{corolari}\label{artinian-local-isomorphism}
+    Sigui $(R,\mathfrak{m})$ anell artinià local, $M$ $R$-mòdul finitament generat. Aleshores,
+    \begin{equation*}
+        M\cong\Hom_{R}(\Hom_{R}(M,E_{R}(R/\mathfrak{m})),E_{R}(R/\mathfrak{m}))
+    \end{equation*}
+    En particular, $R\cong\Hom_{R}(E_{R}(R/\mathfrak{m}),E_{R}(R/\mathfrak{m}))$.
+    \begin{proof}
+        Per tot $m\in M-\{0\}$, existeix un morfisme de $R$-mòduls no trivial $h_{m}:(m)\rightarrow R/\mathfrak{m}$. Com $E_{R}(R/\mathfrak{m})$ injectiu i $R/\mathfrak{m}\subset E_{R}(R/\mathfrak{m})$,
+        \begin{center}
+        \begin{tikzcd}
+            &&E_{R}(R/\mathfrak{m})
+            &&\\\\
+            &&R/\mathfrak{m}
+            \arrow[hook]{uu}{\iota'}
+            &&\\\\
+            0
+            \arrow{rr}
+            &&(m)
+            \arrow[hook]{rr}{\iota}
+            \arrow{uu}{h_{m}}
+            &&M
+            \arrow[swap,dotted]{uuuull}{\exists(\iota'\circ h_{m})'}
+        \end{tikzcd}
+        \end{center}
+        Per tant, el morfisme $M\rightarrow\Hom_{R}(\Hom_{R}(M,E_{R}(R/\mathfrak{m})),E_{R}(R/\mathfrak{m}))$ definit via $m\mapsto((\iota'\circ h_{m})'\mapsto(\iota'\circ h_{m})'(m))$ esta ben definit i és injectiu (ja que per construcció té nucli trivial). A més, com
+        \begin{align*}
+            \ell_{R}(\Hom_{R}(\Hom_{R}(M,E_{R}(R/\mathfrak{m})),E_{R}(R/\mathfrak{m})))
+            &=\ell_{R}(\Hom_{R}(M,E_{R}(R/\mathfrak{m})))
+            &\quad&\textrm{(Per \ref{artinian-local-lenght})}\\
+            &=\ell_{R}(M)
+            &\quad&\textrm{(Per \ref{artinian-local-lenght})}
+        \end{align*}
+        deduïm que és isomorfisme. El darrer isomorfisme resulta de
+        \begin{align*}
+            R
+            &\cong\Hom_{R}(\Hom_{R}(R,E_{R}(R/\mathfrak{m})),E_{R}(R/\mathfrak{m}))\\
+            &\cong
+            \Hom_{R}(E_{R}(R/\mathfrak{m}),E_{R}(R/\mathfrak{m}))
+            &\quad&\textrm{($E_{R}(R/\mathfrak{m})\cong\Hom_{R}(R,E_{R}(R/\mathfrak{m}))$)}
+        \end{align*}
+        on el darrer isomorfisme és general per tot $R$-mòdul.
+    \end{proof}
+\end{corolari}
+\subsection{Resultats sobre anells noetherians locals}
+Volem aplicar \ref{env-inj-aniquillador} al ideal $\mathfrak{m}^{n}$.
+\begin{proposicio}
+    Sigui $(R,\mathfrak{m})$ un anell noetherià local. Aleshores,
+    \begin{enumerate}
+        \item $E_{R/\mathfrak{m}^{n}}(R/\mathfrak{m})\cong(0:_{E_{R}(R/\mathfrak{m})}\mathfrak{m}^{n})$.
+        \begin{proof}
+            $\mathfrak{m}^{n}$ és un ideal de $R$ i $\mathfrak{m}^{n}(R/\mathfrak{m})=\{0\}$. Per \ref{env-inj-aniquillador}, $E_{R/\mathfrak{m}^{n}}(R/\mathfrak{m})\cong(0:_{E_{R}(R/\mathfrak{m})}\mathfrak{m}^{n})$.
+        \end{proof}
+        \item $E_{R}(R/\mathfrak{m})=\bigcup_{n>0}(0:_{E_{R}(R/\mathfrak{m})}\mathfrak{m}^{n})$.
+        \begin{proof}
+        Com $R$ és noetherià i $E_{R}(R/\mathfrak{m})$ és un $R$-mòdul injectiu, $\bigcup_{n>0}(0:_{E_{R}(R/\mathfrak{m})}\mathfrak{m}^{n})$ és un $R$-submòdul injectiu d'$E_{R}(R/\mathfrak{m})$ per \ref{lema-tecnic-noetheria-injectiu}. Fixem-nos que
+        \begin{equation*}
+            R/\mathfrak{m}\subset(0:_{E_{R}(R/\mathfrak{m})}\mathfrak{m}^{n})\subset E_{R}(R/\mathfrak{m})
+        \end{equation*}
+        Com $E_{R}(R/\mathfrak{m})$ és l'envolvent injectiu de $R/\mathfrak{m}$, $E_{R}(R/\mathfrak{m})$ és l'injectiu més petit que conté $R/\mathfrak{m}$, d'on resulta $E_{R}(R/\mathfrak{m})\subset\bigcup_{n>0}(0:_{E_{R}(R/\mathfrak{m})}\mathfrak{m}^{n})$ i, per tant, $E_{R}(R/\mathfrak{m})=\bigcup_{n>0}(0:_{E_{R}(R/\mathfrak{m})}\mathfrak{m}^{n})$.
+    \end{proof}
+    \end{enumerate}
+\end{proposicio}
+\begin{corolari}\label{lim-inj-envolvent-cos-residual}
+    Sigui $(R,\mathfrak{m})$ anell noetherià local. Aleshores, $\varinjlim E_{R/\mathfrak{m}^{n}}(R/\mathfrak{m})\cong E_{R}(R/\mathfrak{m})$.
+\end{corolari}
+En particular, tenim la filtració $\{E_{R/\mathfrak{m}^{n}}(R/\mathfrak{m}):n\in\mathbb{N}\}$. Els endomorfismes preserven la filtració, ja que
+\begin{equation*}
+    \im\Big(\varphi:(0:_{E_{R}(R/\mathfrak{m})}\mathfrak{m}^{n})\rightarrow\bigcup_{n>0}(0:_{E_{R}(R/\mathfrak{m})}\mathfrak{m}^{n})\Big)
+    \subset(0:_{E_{R}(R/\mathfrak{m})}\mathfrak{m}^{n})
+\end{equation*}
+En efecte, de forma heurística, tenim que $f((0:_{E_{R}(R/\mathfrak{m})}\mathfrak{m}^{n}))\mathfrak{m}^{n}=f((0:_{E_{R}(R/\mathfrak{m})}\mathfrak{m}^{n})\mathfrak{m}^{n})=f(\{0\})=\{0\}$, d'on es dedueix la inclusió. Aquesta preservació simplifica la demostració del resultat següent.
+\begin{teorema}\label{m-adic-isomorphism}
+    Sigui $(R,\mathfrak{m})$ anell noetherià local. Aleshores, $\Hom_{R}(E_{R}(R/\mathfrak{m}),E_{R}(R/\mathfrak{m}))\cong\varprojlim R/\mathfrak{m}^{n}$.
+    \begin{proof}
+        Tenim que
+        \begin{align*}
+            &\Hom_{R}(E_{R}(R/\mathfrak{m}),E_{R}(R/\mathfrak{m}))\\
+            \cong\,
+            &\Hom_{R}(\varinjlim E_{R/\mathfrak{m}^{n}}(R/\mathfrak{m}),\varinjlim E_{R/\mathfrak{m}^{n}}(R/\mathfrak{m}))
+            &\quad&\textrm{(Per \ref{lim-inj-envolvent-cos-residual})}\\
+            \cong\,
+            &\Hom_{R}(\varinjlim E_{R/\mathfrak{m}^{n}}(R/\mathfrak{m}), E_{R/\mathfrak{m}^{n}}(R/\mathfrak{m}))
+            &\quad&\textrm{(Endomorfismes preserven la filtració)}\\
+            \cong\,
+            &\varprojlim\Hom_{R}(E_{R/\mathfrak{m}^{n}}(R/\mathfrak{m}),E_{R/\mathfrak{m}^{n}}(R/\mathfrak{m}))
+            &\quad&\textrm{(Hom preserva els colímits)}\\
+            \cong\,
+            &\varprojlim R/\mathfrak{m}^{n}
+            &\quad&\textrm{(Per \ref{artinian-local-isomorphism})}
+        \end{align*}
+        com volíem veure.
+    \end{proof}
+\end{teorema}
+\subsection{$p$-grup de Prüfer}
+Considerem $\mathbb{Z}[\frac{1}{p}]/\mathbb{Z}$. Es una comprovacó rutinària veure que $\mathbb{Z}[\frac{1}{p}]/\mathbb{Z}\cong\varinjlim\mathbb{Z}/(p^{n})$. Amb \ref{m-adic-isomorphism}, serà suficient veure que $\mathbb{Z}[\frac{1}{p}]/\mathbb{Z}$ és l'envolvent injectiu de $\mathbb{Z}/(p)$ sobre $\mathbb{Z}$.
+\begin{definicio}
+    Un $\mathbb{Z}$-mòdul $G$ és divisible si $\forall x\forall n((x\in G\land n\in\mathbb{N})\Rightarrow\exists y(y\in G\land ny=x))$.
+\end{definicio}
+\begin{proposicio}\label{divisible-implica-injectiu}
+    Tot $\mathbb{Z}$-mòdul $J$ divisible és injectiu.
+    \begin{proof}
+        Siguin $A\subset B$ $\mathbb{Z}$-mòduls i $\varphi\in\Hom_{\mathbb{Z}}(A,J)$. Volem estendre $\varphi$ a un element de $\Hom_{\mathbb{Z}}(B,J)$. Sigui
+        \begin{equation*}
+            \mathcal{S}:=\{(A',\varphi')\in\Obj(\textrm{Mod}_{\mathbb{Z}})\times\Hom_{\mathbb{Z}}(A',J):A\subset A'\subset B\land\varphi'|_{A}=\varphi\}
+        \end{equation*}
+        conjunt parcialment ordenat per l'ordre $\leq$ definit per
+        \begin{equation*}
+            (A',\varphi')\leq(A'',\varphi''):\iff A'\subset A''\land\varphi''|_{A'}=\varphi'
+        \end{equation*} $\mathcal{S}\neq\emptyset$, ja que $(A,\varphi)\in\mathcal{S}$. Considerem una cadena $\{(A_{i},\varphi_{i}):i\in\mathscr{I}\}$ de $\mathcal{S}$. Tenim que $(\bigcup_{i\in\mathscr{I}}A_{i},\varphi)\in\mathcal{S}$ és una cota superior de $\{(A_{i},\varphi_{i}):i\in\mathscr{I}\}$, on $\varphi\in\Hom_{\mathbb{Z}}(\bigcup_{i\in\mathscr{I}}A_{i},J)$ ve definida per $\varphi(x):=\varphi_{i}(x)$ si $x\in A_{i}$. Aleshores, pel lema de Zorn, $\mathcal{S}$ té un element maximal $(A',\varphi')\in\mathcal{S}$.\newline
+        Volem veure que $A'=B$. Suposem que $A'\subsetneq B$. Sigui $x\in B-A'$. Suposem que $\forall n(n\in\mathbb{Z}\Rightarrow nx\notin A')$. Definim $\varphi''\in\Hom_{\mathbb{Z}}(A'+\mathbb{Z}x,J)$ per $\varphi''(a+nx):=\varphi(a)$. Tenim que $(A',\varphi')\leq(A'+\mathbb{Z}x,\varphi'')\in\mathcal{S}$, contradicció amb la maximalitat de $(A',\varphi')$. Suposem que $\exists n(n\in\mathbb{Z}\land nx\in A')$ A més, imposem que $n$ sigui mínima. Per divisibilitat de $J$, $\forall x(x\in A'\Rightarrow\exists y(y\in J\land ny=\varphi(nx)))$. Considerem $\varphi''\in\Hom_{\mathbb{Z}}(A'\oplus\mathbb{Z},J)$ definit per $\varphi''(a,m):=\varphi(a)+mny$. Considerem $\varphi_{0}\in\Hom_{\mathbb{Z}}(A'\oplus\mathbb{Z},B)$ definit per $\varphi_{0}(a,m):=a+mnx$. Si $(a,m)\in\ker{\varphi_{0}}$, $\varphi''(a,m)=\varphi(a)+mny=\varphi(a)+m\varphi(nx)=\varphi(a+mnx)=\varphi(0)=0$. Per tant, $\ker{\varphi_{0}}\subset\ker{\varphi''}$, d'on tenim la factorització
+        \begin{equation*}
+        \begin{tikzcd}
+            A'\oplus\mathbb{Z}
+            \arrow{rr}{\varphi''}
+            \arrow[swap]{rd}{\varphi_{0}}
+            &&J\\
+            &A'+x(n)
+            \arrow[dotted, swap]{ru}{\overline{\varphi}_{0}}
+        \end{tikzcd}
+        \end{equation*}
+        $\overline{\varphi}_{0}\in\Hom_{\mathbb{Z}}(A'+x(n),J)$ definida per $\overline{\varphi}_{0}(a+mnx):=\varphi(a)+mnz$. Obtenim $(A',\varphi')\leq(A'+x(n),\overline{\varphi}_{0})\in\mathcal{S}$, contradicció amb la maximalitat de $(A',\varphi')$. Per tant, $A'=B$.
+    \end{proof}
+\end{proposicio}
+El recíproc també és cert. És fàcil veure que $\mathbb{Z}[\frac{1}{p}]/\mathbb{Z}$ és $p$-divisible i, per tant, divisible. Com $\mathbb{Z}[\frac{1}{p}]/\mathbb{Z}$ és un $\mathbb{Z}$-mòdul, deduïm que $\mathbb{Z}[\frac{1}{p}]/\mathbb{Z}$ és injectiu per \ref{divisible-implica-injectiu}.\newline
+A més, $\mathbb{Z}[\frac{1}{p}]/\mathbb{Z}$ és essencial sobre $\mathbb{Z}/(p)$ ($\cong\mathbb{Z}_{(p)}/(p)\mathbb{Z}_{(p)}$) ja que (recordem \ref{equivalent-ext-essencial})
+\begin{equation*}
+    p\Big(\sum_{j=0}^{i}a_{j}p^{-j}+\mathbb{Z}\Big)=\sum_{j=0}^{i-1}a_{j-1}p^{-j}+(p^{i})\in\mathbb{Z}/(p)
+\end{equation*}
+Per tant,
+    \begin{align*}
+        \Hom_{\mathbb{Z}}(\mathbb{Z}[\tfrac{1}{p}]/\mathbb{Z},\mathbb{Z}[\tfrac{1}{p}]/\mathbb{Z})
+        &=\Hom_{\mathbb{Z}_{(p)}}(\mathbb{Z}[\tfrac{1}{p}]/\mathbb{Z},\mathbb{Z}[\tfrac{1}{p}]/\mathbb{Z})
+        &\quad&\textrm{(Hom-sets coincideixen)}\\
+        &\cong\varprojlim\mathbb{Z}_{(p)}/\big((p)\mathbb{Z}_{(p)}\big)^{n}
+        &\quad&\textrm{($(\mathbb{Z}_{(p)},\mathbb{Z}_{(p)}/(p)\mathbb{Z}_{(p)})$ anell noetherià local i \ref{m-adic-isomorphism})}\\
+        &\cong\varprojlim\mathbb{Z}/(p^{n})
+        &\quad&\textrm{($\mathbb{Z}_{(p)}/\big((p)\mathbb{Z}_{(p)}\big)^{n}\cong\mathbb{Z}/(p^{n})$)}\\
+        &\cong\mathbb{Z}_{p}
+    \end{align*}
+d'on resulta l'isomorfisme.

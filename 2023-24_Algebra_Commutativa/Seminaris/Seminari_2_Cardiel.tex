@@ -1,0 +1,522 @@
+\documentclass[compress]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{tikz-cd}
+\usepackage{fancyhdr}
+\usepackage[catalan]{babel}
+\usepackage[document]{ragged2e}
+\usepackage{appendix}
+
+\usepackage{silence}
+%\WarningFilter{latex}{Citation}
+%\WarningFilter{latex}{Reference}
+%\WarningFilter{latex}{There were undefined references}
+\WarningFilter{newunicodechar}{Redefining Unicode character}
+\WarningFilter{hyperref}{Token not allowed in a PDF string}
+\overfullrule=5pt
+
+\usepackage[margin=0.9in]{geometry}
+
+\usepackage[T1]{fontenc}
+\usepackage{newunicodechar}
+\usepackage[mathscr]{euscript}
+\usepackage{adjustbox}
+
+%% Definicions, proposicions, etc. %%
+\newtheorem{definicio}{Definició}
+\newtheorem{lema}{Lema}[section]
+\newtheorem{proposicio}{Proposició}[section]
+\newtheorem{corolari}{Corol·lari}
+\newtheorem{teorema}{Teorema}
+\newtheorem{problema}{Problema}
+\newtheorem*{claim}{Claim}
+\newtheorem{enunciat}{}
+\theoremstyle{definition}
+\newtheorem{idea}{\color{gray}Idea}
+\newtheorem{exemple}{Exemple}
+
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\Spec}{Spec}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\car}{car}
+\DeclareMathOperator{\Gal}{Gal}
+\DeclareMathOperator{\Obj}{Obj}
+\DeclareMathOperator{\ann}{ann}
+\DeclareMathOperator{\Bil}{Bil}
+\DeclareMathOperator{\Idem}{Idem}
+\DeclareMathOperator{\GL}{GL}
+
+\fancyhead[L]{\textbf{100112. Àlgebra Commutativa.}}
+
+\fancyhead[R]{\textit{Jordi Cardiel}}
+
+\usepackage{mathrsfs}
+\usepackage[scr=rsfs,cal=boondox]{mathalfa}
+%\usepackage{lineno}
+%\linenumbers
+
+\begin{document}
+\pagestyle{fancy}
+\begin{problema}
+    Sigui $(R_{n},f_{n})$ una successió d'anells i morfismes, on $f_{n}:R_{n}\rightarrow R_{n+1}$. Ho anomenem un sistema inductiu. Si $m<n$, posem $f_{mn}=f_{n-1}\circ\cdots\circ f_{m}:R_{m}\rightarrow R_{n}$. Posem també $f_{nn}=id_{R_{n}}$. Sigui $R=\bigsqcup_{n=1}^{\infty}R_{n}=\big(\bigcup_{n=1}^{\infty}(R_{n},n)\big)$ la unió disjunta dels $R_{n}$. Definim $(r,n)\sim(s,m)$ si i només si existeix $k\geq n,m$ tal que $f_{nk}(r)=f_{mk}(s)$.
+    \begin{enumerate}
+        \item Proveu que $\sim$ és una relació d'equivalència.
+        \begin{proof}
+            Per definició, $(r,n)\sim(s,m):\iff\exists k(k\geq n,m\land f_{nk}(r)=f_{mk}(s))$.\newline
+            Reflexivitat. Volem veure que $(r,n)\sim(r,n):\iff\exists k(k\geq n,n\land f_{nk}(r)=f_{nk}(r))$. $k=n$ garanteix l'existència ($f_{nn}:=id_{R_{n}}$).\newline
+            Simetria. Suposem que $(r,n)\sim(s,m):\iff\exists k(k\geq n,m\land f_{nk}(r)=f_{mk}(s))$. Volem veure que $(s,m)\sim(r,n):\iff\exists k'(k'\geq m,n\land f_{mk'}(s)=f_{nk'}(r))$. Si $k'=k$, ho tenim.\newline
+            Transitivitat. Suposem que $(r,n)\sim(r',n'):\iff\exists k(k\geq n,n'\land f_{nk}(r)=f_{n'k}(r'))$ i $(r',n')\sim(r'',n''):\iff\exists k'(k'\geq n',n''\land f_{n'k'}(r')=f_{n''k'}(r''))$. Volem veure que $(r,n)\sim(r'',n''):\iff\exists k''(k''\geq n,n''\land f_{nk''}(r)=f_{n''k''}(r''))$. Considerem $k''\geq k,k'$ arbitrari. Fixem-nos que $\forall\ell(\ell\geq k\Rightarrow f_{n\ell}(r)=f_{n'\ell}(r'))$ i $\forall\ell'(\ell'\geq k'\Rightarrow f_{n'\ell'}(r')=f_{n''\ell'}(r''))$ (només cal aplicar $f_{k\ell},f_{k'\ell'}$ a les igualtats $f_{nk}(r)=f_{n'k}(r'),f_{n'k'}(r')=f_{n''k'}(r'')$ donades per hipòtesi, respectivament). Tenim
+            \begin{align*}
+                f_{nk''}(r)
+                &=f_{n'k''}(r')
+                &\quad&\textrm{($k''\geq k$)}\\
+                &=f_{n''k''}(r'')
+                &\quad&\textrm{($k''\geq k'$)}
+            \end{align*}
+            com volíem veure.
+        \end{proof}
+        \item Proveu que $R:=R'/\sim$ és un anell, amb operacions $\overline{(r,n)}+\overline{(s,m)}=\overline{(f_{nk}(r)+f_{mk}(s),k)}$ i $\overline{(r,n)}\cdot\overline{(s,m)}=\overline{(f_{nk}(r)\cdot f_{mk}(s),k)}$, on $k\geq n,m$.
+        \begin{proof}
+            Considerem $\star:\varinjlim(R_{n},f_{n})\times\varinjlim(R_{n},f_{n})\rightarrow\varinjlim(R_{n},f_{n})$ definida per $\star([(r,n)],[s,m]):=[(f_{nk}(r)\star_{R_{k}}f_{mk}(s),k)]$, on $\star\in\{+,\cdot\}$ i $\star_{R_{k}}\in\{+_{R_{k}},\cdot_{R_{k}}\}$ operacions binàries de l'anell $(R_{k},+_{R_{k}},\cdot_{R_{k}})$. Veiem que estan ben definides.\newline
+            Suposem que $(r,n)\sim(r',n'):\iff\exists k(k\geq n,n'\land f_{nk}(r)=f_{n'k}(r'))$ i $(s,m)\sim(s',m'):\iff\exists k'(k'\geq m,m'\land f_{mk'}(s)=f_{m'k'}(s'))$. Volem veure que
+            $(f_{nk}(r)\star_{R_{k}}f_{n'k}(r'),k)\sim(f_{mk'}(s)\star_{R_{k'}}f_{m'k'}(s'),k'):\iff\exists k''(k''\geq k,k'\land f_{kk''}(f_{nk}(r)\star_{R_{k}}f_{n'k}(r'))=f_{k'k''}(f_{mk'}(s)\star_{R_{k'}}f_{m'k'}(s')))$. Considerem $k''\geq k,k'$ arbitrari. Aleshores,
+            \begin{align*}
+                &f_{kk''}(f_{nk}(r)\star_{R_{k}}f_{n'k}(r'))\\
+                =\,
+                &f_{kk''}(f_{nk}(r))\star_{R_{k''}}f_{kk''}(f_{n'k}(r'))
+                &\quad&\textrm{($f_{kk''}$ morfisme d'anells)}\\
+                =\,
+                &f_{nk''}(r)\star_{R_{k''}}f_{n'k''}(r')
+                &\quad&\textrm{($f_{\alpha\gamma}=(f_{\gamma-1}\circ\cdots\circ f_{\beta})\circ(f_{\beta-1}\circ\cdots\circ f_{\alpha})=f_{\beta\gamma}\circ f_{\alpha\beta}$)}\\
+                =\,
+                &f_{mk''}(s)\star_{R_{k''}}f_{m'k''}(s')
+                &\quad&\textrm{($\forall\ell\forall\ell'(\ell\geq k,\ell\geq k'\Rightarrow f_{n\ell}(r)=f_{n'\ell}(r')),f_{m\ell'}(s)=f_{m'\ell'}(s')$)}\\
+                =\,
+                &f_{k'k''}(f_{mk'}(s))\star_{R_{k''}}f_{k'k''}(f_{m'k'}(s'))
+                &\quad&\textrm{($f_{\alpha\gamma}=f_{\beta\gamma}\circ f_{\alpha\beta}$)}\\
+                =\,
+                &f_{k'k''}(f_{mk'}(s)\star_{R_{k'}}f_{m'k'}(s'))
+                &\quad&\textrm{($f_{k'k''}$ morfisme d'anells)}
+            \end{align*}
+            d'on $\star$ esta ben definida.\newline
+            Veiem que $(\varinjlim{(R_{n},f_{n})},+)$ és un grup abelià.\newline
+            Commutativitat. Siguin $[(r,n)],[(s,m)]\in\varinjlim{(R_{n},f_{n})}$. Aleshores,
+            \begin{align*}
+                [(r,n)]+[(s,m)]
+                &=[(f_{nk}(r)+_{R_{k}}f_{mk}(s),k)]
+                &\quad&\textrm{(Per definició de $+$)}\\
+                &=[(f_{mk}(s)+_{R_{k}}f_{nk}(r),k)]
+                &\quad&\textrm{($(R_{k},+_{R_{k}},\cdot_{R_{k}})$ anell $\implies(R_{k},+_{R_{k}})$ grup abelià)}\\
+                &=[(s,m)]+[(r,n)]
+                &\quad&\textrm{(Per definició de $+$)}
+            \end{align*}
+            Existència de l'element neutre. Considerem $0_{\varinjlim(R_{n},f_{n})}:=[(0_{R_{1}},1)]\in\varinjlim(R_{n},f_{n})$, on $0_{R_{1}}$ és l'element neutre del grup $(R_{1},+_{R_{1}})$. Donat $[(r,n)]\in\varinjlim(R_{n},f_{n})$,
+            \begin{align*}
+                [(r,n)]+0_{\varinjlim{(R_{n},f_{n})}}
+                &=[(r,n)]+[(0_{R_{1}},1)]
+                &\quad&\textrm{(Per definició de $0_{\varinjlim{(R_{n},f_{n})}}$)}\\
+                &=[(f_{nn}(r)+_{R_{n}}f_{1n}(0_{R_{1}}),n)]
+                &\quad&\textrm{(Per definició de $+$)}\\
+                &=[(r+_{R_{n}}0_{R_{n}},n)]
+                &\quad&\textrm{($f_{nn}=id_{R_{n}}$ i $f_{1n}$ morfisme d'anells)}\\
+                &=[(r,n)]
+                &\quad&\textrm{($0_{R_{n}}$ element neutre de $(R_{n},+_{R_{n}})$)}
+            \end{align*}
+            Per commutativitat, tenim $0_{\varinjlim{(R_{n},f_{n})}}+[(r,n)]=[(r,n)]$. Per tant, $0_{\varinjlim(R_{n},f_{n})}$ és l'element neutre de $(\varinjlim{(R_{n},f_{n})},+)$.\newline
+            Existència de l'invers. Sigui $[(r,n)]\in\varinjlim(R_{n},f_{n})$. Considerem $-[(r,n)]:=[(-r,n)]\in\varinjlim(R_{n},f_{n})$, on $-r\in R_{n}$ és l'invers de $r$ al grup $(R_{n},+_{R_{n}})$. Tenim que
+            \begin{align*}
+                [(r,n)]+(-[(r,n)])
+                &=[(r,n)]+[(-r,n)]
+                &\quad&\textrm{(Per definició de $-[(r,n)]$)}\\
+                &=[(f_{nn}(r)+_{R_{n}}f_{nn}(-r),n)]
+                &\quad&\textrm{(Per definició de $+$)}\\
+                &=[(r+_{R_{n}}(-r),n)]
+                &\quad&\textrm{($f_{nn}=id_{R_{n}}$)}\\
+                &=[(0_{R_{n}},n)]
+                &\quad&\textrm{($-r$ invers de $r$ a $(R_{n},+_{R_{n}})$)}\\
+                &=0_{\varinjlim(R_{n},f_{n})}
+                &\quad&\textrm{($(0_{R_{n}},n)\sim(0_{R_{1}},1)$)}
+            \end{align*}
+            Per commutativitat, tenim $(-[(r,n)])+[(r,n)]=0_{\varinjlim(R_{n},f_{n})}$. Per tant, $-[(r,n)]$ és l'invers de $[(r,n)]$ en $(\varinjlim{(R_{n},f_{n})},+)$.\newline
+            Veiem l'associativitat de $\cdot$. Donats $[(r,n)],[(r',n')],[(r'',n'')]\in\varinjlim(R_{n},f_{n})$,
+            \begin{align*}
+                &([(r,n)]\cdot[(r',n')])\cdot[(r'',n'')]\\
+                =\,
+                &[(f_{nk}(r)\cdot_{R_{k}}f_{n'k}(r'),k)]\cdot[(r'',n'')]
+                &\quad&\textrm{(Per definició de $\cdot$)}\\
+                =\,
+                &[((f_{kk'}(f_{nk}(r)\cdot_{R_{k}}f_{n'k}(r')))\cdot_{R_{k'}}f_{n''k'}(r''),k')]
+                &\quad&\textrm{(Per definició de $\cdot$)}\\
+                =\,
+                &[((f_{nk'}(r)\cdot_{R_{k'}}f_{n'k'}(r'))\cdot_{R_{k'}}f_{n''k'}(r''),k')]
+                &\quad&\textrm{($f_{kk'}$ morfisme d'anells i $f_{\alpha\gamma}=f_{\beta\gamma}\circ f_{\alpha\beta}$)}\\
+                =\,
+                &[(f_{nk'}(r)\cdot_{R_{k'}}(f_{n'k'}(r')\cdot_{R_{k'}}f_{n''k'}(r'')),k')]
+                &\quad&\textrm{($(R_{k},+_{R_{k}},\cdot_{R_{k}})$ anell)}\\
+                =\,
+                &[(f_{nk'}(r)\cdot_{R_{k'}}(f_{k''k'}(f_{n'k''}(r')\cdot_{R_{k''}}f_{n''k''}(r''))),k')]
+                &\quad&\textrm{($f_{k''k'}$ morfisme d'anells i $f_{\alpha\gamma}=f_{\beta\gamma}\circ f_{\alpha\beta}$)}\\
+                =\,
+                &[(r,n)]\cdot[(f_{k''k'}(f_{n'k''}(r')\cdot_{R_{k''}}f_{n''k''}(r'')),k'')]
+                &\quad&\textrm{(Per definició de $\cdot$)}\\
+                =\,
+                &[(r,n)]\cdot([(r',n')]\cdot[(r'',n'')])
+                &\quad&\textrm{(Per definició de $\cdot$)}
+            \end{align*}
+            com volíem veure.\newline
+            Veiem la distributivitat de $\cdot$ sobre $+$. Donats $[(r,n)],[(r',n')],[(r'',n'')]\in\varinjlim(R_{n},f_{n})$,
+            \begin{align*}
+                &([(r,n)]+[(r',n')])\cdot[(r'',n'')]\\
+                =\,
+                &[(f_{nk}(r)+_{R_{k}}f_{n'k}(r'),k)]\cdot[(r'',n'')]
+                &\quad&\textrm{(Per definició de $+$)}\\
+                =\,
+                &[((f_{kk'}(f_{nk}(r)+_{R_{k}}f_{n'k}(r')))\cdot_{R_{k'}}f_{n''k'}(r''),k')]
+                &\quad&\textrm{(Per definició de $+$)}\\
+                =\,
+                &[((f_{nk'}(r)+_{R_{k'}}f_{n'k'}(r'))\cdot_{R_{k'}}f_{n''k'}(r''),k')]
+                &\quad&\textrm{($f_{kk'}$ morf. d'anells i $f_{\alpha\gamma}=f_{\beta\gamma}\circ f_{\alpha\beta}$)}\\
+                =\,
+                &[((f_{nk'}(r)\cdot_{R_{k'}}f_{n''k'}(r''))+_{R_{k'}}(f_{n'k'}(r')\cdot_{R_{k'}}f_{n''k'}(r'')),k')]
+                &\quad&\textrm{(Distributivitat de $\cdot_{R_{n}}$ sobre $+_{R_{n}}$)}\\
+                =\,
+                &[((f_{nk'}(r)\cdot_{R_{k'}}f_{n''k'}(r''),k')]
+                +[((f_{n'k'}(r')\cdot_{R_{k'}}f_{n''k'}(r'')),k')]
+                &\quad&\textrm{(Per definició de $+$)}\\
+                =\,
+                &([(r,n)]\cdot[(r'',n'')])
+                +([(r',n')]\cdot[(r'',n'')])
+                &\quad&\textrm{(Per definició de $\cdot$)}
+            \end{align*}
+            com volíem veure.\newline
+            No diem res sobre l'existència de l'element neutre multiplicatiu ni de la commutativitat de $\cdot$ ja que $\{R_{n}\newline:n\in\mathbb{N}\}$ no és una família d'anells necessàriament commutatius i amb unitat.
+        \end{proof}
+        \item Proveu que hi ha morfismes d'anells $\mu_{n}:R_{n}\rightarrow R$ tals que fan els diagrames
+        \begin{center}
+        \begin{tikzcd}
+            R_{n}
+            \arrow{r}{f_{mn}}
+            \arrow{d}{\mu_{n}}
+            &R_{m}
+            \arrow{dl}{\mu_{m}}\\
+            R
+        \end{tikzcd}
+        \end{center}
+        commutatius per a tot $m>n$.
+        \begin{proof}
+            Definim $\mu_{n}:R_{n}\rightarrow\varinjlim(R_{n},f_{n})$ via $\mu_{n}(r):=[(r,n)]$. Clarament esta ben definida i és morfisme d'anells (inclusió $R_{n}\hookrightarrow\bigsqcup_{n\in\mathbb{N}}R_{n}$ i composem amb la projecció $\bigsqcup_{n\in\mathbb{N}}R_{n}\twoheadrightarrow\varinjlim(R_{n},f_{n})$). Si $m>n$, tenim que
+            \begin{align*}
+                \mu_{m}(f_{nm}(r))
+                &=[(f_{nm}(r),m)]
+                &\quad&\textrm{(Per definició de $\mu_{m}$)}\\
+                &=[(r,n)]
+                &\quad&\textrm{($(f_{nm}(r),m)\sim(r,n)$)}\\
+                &=\mu_{n}(r)
+                &\quad&\textrm{(Per definició de $\mu_{n}$)}
+            \end{align*}
+            com volíem veure.
+        \end{proof}
+        \item Proveu que $R=\bigcup\mu_{n}(R_{n})$ i que $\ker(\mu_{n})=\{x\in R_{n}:\exists m\geq n\textrm{ amb }f_{mn}(x)=0\}$. En particular, si $\mu_{n}(e)^{2}=\mu_{n}(e)$, llavors $f_{mn}(e^{2})=f_{mn}(e)$ per algun $m\geq n$.
+        \begin{proof}
+            Tenim que $\mu_{n}(R_{n}):=\{\alpha\in\varinjlim(R_{n},f_{n}):\exists r_{n}(r_{n}\in R_{n}\land\mu_{n}(r_{n})=\alpha)\}$. Clarament, $\bigcup_{n\in\mathbb{N}}\mu_{n}(R_{n})\subset\varinjlim(R_{n},f_{n})$.\newline
+            Sigui $\alpha\in\varinjlim(R_{n},f_{n})$. Considerem la projecció $\pi:\bigcup_{n\in\mathbb{N}}\{(r_{n},n):r_{n}\in R_{n}\}\twoheadrightarrow\varinjlim(R_{n},f_{n})$, la qual és exhaustiva. Aleshores, $\exists\beta(\beta\in\bigcup_{n\in\mathbb{N}}\{(r_{n},n):r_{n}\in R_{n}\}\land\pi(\beta)=\alpha)$. Com $\beta\in\bigcup_{n\in\mathbb{N}}\{(r_{n},n):r_{n}\in R_{n}\}$, $\exists n(n\in\mathbb{N}\land\beta\in\{(r_{n},n):r_{n}\in R_{n}\})$. Escrivim $\beta=(r_{n},n)$. Aleshores, tenim que $\alpha=\pi(\beta)=\pi((r_{n},n))=[(r_{n},n)]$. Per tant, $\alpha\in\mu_{n}(R_{n})$, d'on deduïm $\varinjlim(R_{n},f_{n})\subset\bigcup_{n\in\mathbb{N}}\mu_{n}(R_{n})$.\newline
+            Per doble inclusió, tenim $\varinjlim(R_{n},f_{n})=\bigcup_{n\in\mathbb{N}}\mu_{n}(R_{n})$, com volíem.\newline
+            Tenim que
+            \begin{align*}
+                \ker{\mu_{n}}
+                &=\{r_{n}\in R_{n}:\mu_{n}(r_{n})=0_{\varinjlim(R_{n},f_{n})}\}
+                &\quad&\textrm{(Per definició de $\ker$)}\\
+                &=\{r_{n}\in R_{n}:[(r_{n},n)]=[(0_{R_{1}},1)]\}
+                &\quad&\textrm{(Per definició de $\mu_{n}$ i $0_{\varinjlim(R_{n},f_{n})}$)}\\
+                &=\{r_{n}\in R_{n}:\exists m(m\geq n\land f_{nm}(r_{n})=f_{1m}(0_{R_{1}})=0_{R_{m}})\}
+                &\quad&\textrm{(Per definició de $\sim$)}
+            \end{align*}
+            com volíem.\newline
+            Suposem que $\mu_{n}(e)^{2}=\mu_{n}(e)$. Aleshores,
+            \begin{align*}
+                \mu_{n}(e)^{2}=\mu_{n}(e)
+                &\implies e^{2}-e\in\ker{\mu_{n}}
+                &\quad&\textrm{($\mu_{n}$ morfisme d'anells)}\\
+                &\implies\exists m(m\geq n\land f_{nm}(e^{2}-e)=0_{R_{m}})
+                &\quad&\textrm{(Caracterització de $\ker{\mu_{n}}$)}\\
+                &\implies f_{nm}(e^{2})=f_{nm}(e)
+                &\quad&\textrm{($f_{nm}$ morfisme d'anells)}
+            \end{align*}
+            com volíem.
+        \end{proof}
+     \end{enumerate}
+\end{problema}
+\begin{problema}
+    \begin{enumerate}
+        \item Suposem que $(R_{n},f_{n})$ són com a l'exercici anterior, i que $S$ és un anell amb morfismes $\varphi_{n}:R_{n}\rightarrow S$ tals que
+        \begin{center}
+        \begin{tikzcd}
+            R_{n}
+            \arrow{r}{f_{nm}}
+            \arrow{d}{\varphi_{n}}
+            &R_{m}
+            \arrow{dl}{\varphi_{m}}\\
+            S
+        \end{tikzcd}
+        \end{center}
+        són commutatius per a tot $m>n$. Proveu que llavors existeix un únic morfisme $\psi:R\rightarrow S$ tal que
+        \begin{center}
+        \begin{tikzcd}
+            R_{n}
+            \arrow{rd}{\varphi_{n}}
+            \arrow{d}{\mu_{n}}\\
+            R
+            \arrow{r}{\psi}
+            &S
+        \end{tikzcd}
+        \end{center}
+        és commutatiu per a tot $m>n$.
+        \begin{proof}
+            Definim $\psi:\varinjlim(R_{n},f_{n})\rightarrow S$ via $\psi([(r,n)]):=\varphi_{n}(r)$. Veiem que esta ben definit. Sigui $[(r,n)]=[(r,n')]\in\varinjlim(R_{n},f_{n})$, d'on $\exists k(k\geq n,n'\land f_{nk}(r)=f_{n'k}(r'))$. Aleshores,
+            \begin{align*}
+                \psi([(r,n)])
+                &=\varphi_{n}(r)
+                &\quad&\textrm{(Per definició de $\psi$)}\\
+                &=\varphi_{k}(f_{nk}(r))
+                &\quad&\textrm{($k\geq n$: $\varphi_{n}=\varphi_{k}\circ f_{nk}$)}\\
+                &=\varphi_{k}(f_{n'k}(r'))
+                &\quad&\textrm{($f_{nk}(r)=f_{n'k}(r')$)}\\
+                &=\varphi_{n'}(r')
+                &\quad&\textrm{($k\geq n'$: $\varphi_{n'}=\varphi_{k}\circ f_{n'k}$)}\\
+                &=\psi([(r',n')])
+                &\quad&\textrm{(Per definició de $\psi$)}
+            \end{align*}
+            Veiem que $\psi$ és morfisme d'anells. Utilizem $\star\in\{+,\cdot\}$. Donats $[(r,n)],[(s,m)]\in\varinjlim(R_{n},f_{n})$,
+            \begin{align*}
+                \psi([(r,n)])\star_{S}\psi([(s,m)])
+                &=\varphi_{n}(r)\star_{S}\varphi_{m}(s)
+                &\quad&\textrm{(Per definició de $\psi$)}\\
+                &=\varphi_{k}(f_{nk}(r))
+                \star_{S}\varphi_{k}(f_{mk}(s))
+                &\quad&\textrm{($k\geq n,m$: $\varphi_{n}=\varphi_{k}\circ f_{nk},\varphi_{m}=\varphi_{k}\circ f_{mk}$)}\\
+                &=\varphi_{k}(f_{nk}(r)
+                \star_{_{R_{k}}}f_{mk}(s))
+                &\quad&\textrm{($\varphi_{k}$ morfisme d'anells)}\\
+                &=\psi([(f_{nk}(r)
+                \star_{_{R_{k}}}f_{mk}(s),k)])
+                &\quad&\textrm{(Per definició de $\psi$)}\\
+                &=\psi([(r',n')]\star[(s,m)])
+                &\quad&\textrm{(Per definició de $\star$)}
+            \end{align*}
+            A més, $\psi$ esta unívocament determinada i $\psi(\mu_{n}(r))=\psi([(r,n)])=\varphi_{n}(r)$ per definició de $\mu_{n}$ i $\psi$, d'on resulta l'enunciat.
+        \end{proof}
+        \item Proveu que, si $R_{n}=M_{n}(R)$ i $f_{n}:R_{n}\rightarrow R_{n+1}$ ve donada per $f_{n}(a)=\left(\begin{smallmatrix}a&0\\0&0\end{smallmatrix}\right)$ llavors $\varinjlim R_{n}\cong M_{\infty}(R)$.
+        \begin{proof}
+            $m>n$. Fixem-nos que si $A$ és un anell tal que
+            \begin{center}
+            \begin{tikzcd}
+                R_{n}
+                \arrow[bend left]{rrrr}{f_{nm}}
+                \arrow[swap]{rr}{\tau_{n}}
+                \arrow[swap]{rrdd}{\varphi_{n}}
+                &&A
+                \arrow[dotted]{dd}{\exists!\phi}
+                &&R_{m}
+                \arrow{ll}{\tau_{m}}
+                \arrow{lldd}{\varphi_{m}}\\
+                \\
+                &&S
+            \end{tikzcd}
+            \end{center}
+            commuta (on $\tau_{n},\tau_{m},\varphi_{n},\varphi_{m},\phi$ morfismes d'anells), aleshores $A\cong\varinjlim(R_{n},f_{n})$. En efecte, tenim el següent diagrama commutatiu
+            \begin{center}
+            \begin{tikzcd}
+                R_{n}
+                \arrow[bend left]{rrrr}{f_{nm}}
+                \arrow{rr}{\tau_{n}}
+                \arrow{rrd}{\mu_{n}}
+                \arrow{rrdd}{\tau_{n}}
+                \arrow[swap]{rrddd}{\mu_{n}}
+                &&A
+                \arrow[dotted]{d}{\exists!\phi}
+                &&R_{m}
+                \arrow[swap]{ll}{\tau_{m}}
+                \arrow[swap]{lld}{\mu_{m}}
+                \arrow[swap]{lldd}{\tau_{m}}
+                \arrow{llddd}{\mu_{m}}\\
+                &&\varinjlim(R_{n},f_{n})
+                \arrow[dotted]{d}{\exists!\psi}\\
+                &&A
+                \arrow[dotted]{d}{\exists!\phi}\\
+                &&\varinjlim(R_{n},f_{n})
+            \end{tikzcd}
+            \end{center}
+            d'on deduïm que $\psi\circ\phi=id_{A}$ i $\phi\circ\psi=id_{\varinjlim(R_{n},f_{n})}$.\newline
+            Ara, si $\iota_{n}:M_{n}(R)\rightarrow M_{\infty}(R)$ és la inclusió i $\phi:M_{\infty}(R)\rightarrow S$ ve definida per $\phi(a)=\varphi_{n}(a)$ si $a\in M_{n}(R)$, es comprova que $\phi$ esta ben definida (es fa igual que amb $\psi$) i que el diagrama
+            \begin{center}
+            \begin{tikzcd}
+                M_{n}(R)
+                \arrow[bend left]{rrrr}{f_{nm}}
+                \arrow[swap]{rr}{\iota_{n}}
+                \arrow[swap]{rrdd}{\varphi_{n}}
+                &&M_{\infty}(R)
+                \arrow[dotted]{dd}{\exists!\phi}
+                &&M_{m}(R)
+                \arrow{ll}{\iota_{m}}
+                \arrow{lldd}{\varphi_{m}}\\
+                \\
+                &&S
+            \end{tikzcd}
+            \end{center}
+            commuta. Per tant, $M_{\infty}(R)\cong\varinjlim(M_{n}(R),f_{n})$.
+        \end{proof}
+        \item Proveu que si $R_{n}\subset R_{n+1}$, aleshores $\varinjlim R_{n}=\bigcup_{n}R_{n}$.
+        \begin{proof}
+            Si $\iota_{n}:R_{n}\hookrightarrow R_{n+1}$ són les inclusions, tenim el sistema inductiu $(R_{n},\iota_{n})$. Per doble inclusió es comprova que $\iota_{n}(R_{n})=R_{n}$, d'on deduïm $\varinjlim(R_{n},\iota_{n})=\bigcup_{n\in\mathbb{N}}\iota_{n}(R_{n})=\bigcup_{n\in\mathbb{N}}R_{n}$.
+        \end{proof}
+     \end{enumerate}
+\end{problema}
+\begin{problema}
+    Sigui $(R_{n},f_{n})$ un sistema inductiu d'anells amb unitat. Sigui $R=\varinjlim R_{n}$.
+    \begin{enumerate}
+        \item Comproveu que tenim un sistema inductiu $(K_{0}(R_{n}),(f_{n})_{*})$, on $(f_{n})_{*}=K_{0}(f_{n})$.
+        \begin{proof}
+            $K_{0}:\mathbf{CMon}\rightarrow\mathbf{AbGrp}$ és un functor i els functors preserven els diagrames, d'on resulta l'enunciat.
+        \end{proof}
+        \item Vegeu que existeix un morfisme de grups $\theta:\varinjlim K_{0}(R_{n})\rightarrow K_{0}(R)$, i que de fet és un isomorfisme. Per tant $K_{0}(R)\cong\varinjlim K_{0}(R_{n})$.
+         \begin{proof}
+            Per la propietat universal del límit inductiu,
+            \begin{center}
+            \begin{tikzcd}
+                K_{0}(R_{n})
+                \arrow[bend left = 20]{rrrr}{K_{0}(f_{nm})}
+                \arrow[swap]{rr}{\eta_{n}}
+                \arrow[swap]{rrdd}{K_{0}(\mu_{n})}
+                &&\varinjlim(K_{0}(R_{n}),K_{0}(f_{n}))
+                \arrow[dotted]{dd}{\exists!\theta}
+                &&K_{0}(R_{m})
+                \arrow{ll}{\eta_{m}}
+                \arrow{lldd}{K_{0}(\mu_{m})}\\
+                \\
+                &&K_{0}(\varinjlim(R_{n},f_{n}))
+            \end{tikzcd}
+            \end{center}
+            Veiem la injectivitat. Sigui $\alpha\in\ker{\theta}\subset\varinjlim(K_{0}(R_{n}),K_{0}(f))=\bigcup_{n\in\mathbb{N}}\eta_{n}(K_{0}(R_{n}))$. Aleshores, $\exists n(n\in\mathbb{N}\land\alpha\in\eta_{n}(K_{0}(R_{n})))$, d'on
+            \begin{equation*}
+                \exists e\exists f(e,f\in\Idem(R_{n})\land\alpha=\eta_{n}(\gamma_{V'(R_{n})}(e)-\gamma_{V'(R_{n})}(f))),
+            \end{equation*}
+            on $\gamma_{V'(R)}:V'(R)\rightarrow G(V'(R))(\cong K_{0}(R))$ denota el morfisme de Grothendieck. Ara,
+            \begin{align*}
+                0_{K_{0}(\varinjlim(R_{n},f_{n}))}
+                &=\theta(\alpha)
+                &\quad&\textrm{($\alpha\in\ker{\theta}$)}\\
+                &=\theta(\eta_{n}(\gamma_{V'(R_{n})}(e)-\gamma_{V'(R_{n})}(f)))
+                &\quad&\textrm{($\alpha=\eta_{n}(\gamma_{V'(R_{n})}(e)-\gamma_{V'(R_{n})}(f))$)}\\
+                &=K_{0}(\mu_{n})(\gamma_{V'(R_{n})}(e)-\gamma_{V'(R_{n})}(f))
+                &\quad&\textrm{($K_{0}(\mu_{n})=\theta\circ\eta_{n}$)}\\
+                &=\gamma_{V'(\varinjlim(R_{n},f_{n}))}(\mu_{n}(e))-\gamma_{V'(\varinjlim(R_{n},f_{n}))}(\mu_{n}(f))
+                &\quad&\textrm{(Per definició de $K_{0}(\mu_{n})$)}
+            \end{align*}
+            D'aquí, com $\gamma_{V'(\varinjlim(R_{n},f_{n}))}(\mu_{n}(e))=\gamma_{V'(\varinjlim(R_{n},f_{n}))}(\mu_{n}(f))$,
+            \begin{equation*}
+                \exists u(u\in\Idem(\varinjlim(R_{n},f_{n}))\land\mu_{n}(e)\oplus u\sim\mu_{n}(f)\oplus u)
+            \end{equation*}
+            Per tant, $\exists s(s\in\GL(\varinjlim(R_{n},f_{n}))\land s\left(\begin{smallmatrix}\mu_{n}(e)\oplus u&0\\
+            0&0\end{smallmatrix}\right)s^{-1}=\left(\begin{smallmatrix}\mu_{n}(f)\oplus u&0\\
+            0&0\end{smallmatrix}\right))$
+            on $\sim$ és en el sentit de Murray-von Neumann. Ara, com $\GL(\varinjlim(R_{n},f_{n}))=\bigcup_{\ell\in\mathbb{N}}\GL_{\ell}(\varinjlim(R_{n},f_{n}))$, $\exists\ell(\ell\in\mathbb{N}\land s\in\GL_{\ell}(\varinjlim(R_{n},f_{n})))$, on $\ell\geq n$ és de la mida que hagi de ser. Per tant, deduïm que
+            $\gamma_{V'(R_{\ell})}(e)-\gamma_{V'(R_{\ell})}(f)=0_{R_{\ell}}$.\newline
+            Com $K_{0}(\mu_{\ell})$ factoritza a través de $\varinjlim(K_{0}(R_{n}),K_{0}(f_{n})))$, deduïm que $\alpha=0_{\varinjlim(K_{0}(R_{n}),K_{0}(f_{n})))}$. Aleshores,
+            \begin{equation*}
+                \ker{\theta}\subset\{0_{\varinjlim(K_{0}(R_{n}),K_{0}(f_{n})))}\}
+            \end{equation*}
+            Com la inclusió $\{\varinjlim(K_{0}(R_{n}),K_{0}(f_{n})))\}\subset\ker{\theta}$ és clara, per doble inclusió tenim que
+            \begin{equation*}
+                \ker{\theta}=\{0_{\varinjlim(K_{0}(R_{n}),K_{0}(f_{n})))}\},
+            \end{equation*}
+            d'on deduïm la injectivitat.\newline
+            Veiem l'exhaustivitat. Sigui $e\in\Idem(\varinjlim(R_{n},f_{n}))$. Per definició, $\exists m(m\in\mathbb{N}\land e\in M_{m}(\varinjlim(R_{n},f_{n})))$. Aleshores, $[e]\in\im{K_{0}(\mu_{m})}$. Com $K_{0}(\mu_{m})$ factoritza a través de $\varinjlim(K_{0}(R_{n}),K_{0}(f_{n})))$, $[e]\in\im{\theta}$. Com els elements $[e]$ generen $K_{0}(\varinjlim(K_{0}(R_{n}),K_{0}(f_{n}))))$, $\theta$ és exhaustiva.\newline
+            D'aquí, deduïm que $\varinjlim(K_{0}(R_{n}),K_{0}(f_{n})))\cong K_{0}(\varinjlim(R_{n},f_{n}))$
+         \end{proof}
+     \end{enumerate}
+\end{problema}
+\begin{problema}
+    Sigui $F$ un cos. Considerem $f_{n}:M_{2^{n}}(F)\rightarrow M_{2^{n+1}}(F)$ donat per $f_{n}(a)=\left(\begin{smallmatrix}a&0\\0&0\end{smallmatrix}\right)$. Denotem per $M_{2^{\infty}}(F)=\varinjlim(M_{2^{n}}(F),f_{n})$.
+    \begin{enumerate}
+        \item Proveu que $K_{0}(M_{n}(F))\cong K_{0}(F)\cong\mathbb{Z}$ per tot $n$.
+        \begin{proof}
+            Podem identificar $M_{m}(M_{n}(F))$ amb $M_{nm}(F)$. D'aquesta identificació deduïm que\newline$\Idem(M_{n}(F))=\Idem(F)$ i $\GL(M_{n}(F))=\GL(F)$, d'on l'isomorfisme $K_{0}(M_{n}(F))\cong K_{0}(F)$ resulta per la caracterització de $K_{0}$ per idempotents. Ara, com $F$ és un cos, en particular $F$ és DIP. Tot DIP té $K_{0}$ isomorf a $\mathbb{Z}$, d'on resulta $K_{0}(F)\cong\mathbb{Z}$.
+        \end{proof}
+        \item Proveu que $(f_{n})_{*}:\mathbb{Z}\rightarrow\mathbb{Z}$ és $(f_{n})_{*}(a)=2a$.
+        \begin{proof}
+            $p=2$. Si $R$ DIP, l'isomorfisme $V'(R)\cong\mathbb{N}$ venia donat per $[e]\mapsto n$, si $e\in\Idem(R)$ de rang $n$. D'aquí deduïm que, si $a\in M_{p^{n}}(F)$,
+            \begin{center}
+            \begin{tikzcd}
+                \overline{a}\in K_{0}(M_{p^{n}}(F))
+                \arrow[maps to]{rr}{K_{0}(f_{n})}
+                \arrow[maps to]{dd}{\varphi_{n}}
+                &&\overline{a\oplus a}\in K_{0}(M_{p^{n+1}}(F))
+                \arrow[maps to]{dd}{\varphi_{n+1}}\\
+                \\
+                m\in\mathbb{Z}
+                \arrow[maps to]{rr}{(f_{n})_{*}=\varphi_{n+1}\circ K_{0}(f_{n})\circ\varphi_{n}^{-1}}
+                &&2m\in\mathbb{Z}
+            \end{tikzcd}
+            \end{center}
+            Per tant, $(f_{n})_{*}(a)=2a$.
+        \end{proof}
+        \item Deduïu que $K_{0}(M_{2^{\infty}}(F))\cong\mathbb{Z}[1/2]$, el grup dels racionals diàdics. 
+        \begin{proof}
+            Escrivim $\varphi_{n}:K_{0}(M_{2^{n}}(F))\cong\mathbb{Z}$. Donats $\phi_{n}:K_{0}(M_{p^{n}}(F))\rightarrow S$ morfisme de grups, $S$ grup abelià, el següent diagrama commuta:
+            \begin{center}
+            \begin{tikzcd}
+                K_{0}(M_{p^{n}}(F))
+                \arrow{rrr}{\varphi_{n}^{-1}(1)\mapsto\frac{1}{p^{n}}}
+                \arrow[bend left = 20]{rrrrrr}{K_{0}(f_{n})}
+                \arrow[swap]{rrrdd}{\phi_{n}}
+                &&&\mathbb{Z}[1/p]
+                \arrow[dotted]{dd}{\Phi}
+                &&&K_{0}(M_{p^{n+1}}(F))
+                \arrow[swap]{lll}{\varphi_{n+1}^{-1}(1)\mapsto\frac{1}{p^{n+1}}}
+                \arrow{llldd}{\phi_{n+1}}\\\\
+                &&&S
+                &&&
+            \end{tikzcd}
+            \end{center}
+            on $\Phi:\mathbb{Z}[1/p]\rightarrow S$ és l'únic morfisme de grups (ben) definit via $\Phi(\sum_{i=0}^{n}\frac{a_{i}}{p^{i}}):=\sum_{i=0}^{n}\phi_{i}(\frac{a_{i}}{p^{i}})$. Per tant,
+            \begin{align*}
+                \mathbb{Z}[1/p]
+                &\cong\varinjlim(K_{0}(M_{p^{n}}(F)),K_{0}(f_{n}))
+                &\quad&\textrm{(Propietat universal del sistema inductiu $(K_{0}(M_{p^{n}}(F)),K_{0}(f_{n}))$)}\\
+                &\cong K_{0}(\varinjlim(M_{p^{n}}(F),f_{n}))
+                &\quad&\textrm{($K_{0}$ preserva els límits inductius)}\\
+                &=K_{0}(M_{p^{\infty}}(F))
+                &\quad&\textrm{(Per definició de $M_{p^{\infty}}(F)$)}
+            \end{align*}
+            com volíem.
+        \end{proof}
+        \item Podeu trobar un exemple d'anell $R$ amb $K_{0}(R)\cong\mathbb{Z}[1/3]$? I amb $K_{0}(R)\cong\mathbb{Q}$?
+        \begin{proof}
+            Tenim que $K_{0}(M_{3^{\infty}}(F))\cong\mathbb{Z}[1/3]$.\newline
+            Veiem que $K_{0}(\varinjlim(M_{n!}(F),f_{n}))\cong\mathbb{Q}$. Escrivim $\varphi_{n}:K_{0}(M_{n!}(F))\cong\mathbb{Z}$. Fixem-nos que en aquest cas $(f_{n})_{*}:\mathbb{Z}\rightarrow\mathbb{Z}$ ve donat per $(f_{n})_{*}(a)=(n+1)a$, ja que $f_{n}(a):=a\oplus\overset{n+1)}{\ldots}\oplus a$. El següent diagrama commuta per la propietat universal del límit inductiu:
+            \begin{center}
+            \begin{tikzcd}
+                K_{0}(M_{n!}(F))
+                \arrow{rrr}{\eta_{n}}
+                \arrow[bend left = 20]{rrrrrr}{K_{0}(f_{n})}
+                \arrow[swap]{rrrdd}{\varphi_{n}^{-1}(1)\mapsto\frac{1}{n!}}
+                &&&\varinjlim(K_{0}(M_{n!}(F)),K_{0}(f_{n}))
+                \arrow[dotted]{dd}{\exists!\Phi}
+                &&&K_{0}(M_{(n+1)!}(F))
+                \arrow[swap]{lll}{\eta_{n+1}}
+                \arrow{llldd}{\varphi_{n+1}^{-1}(1)\mapsto\frac{1}{(n+1)!}}\\\\
+                &&&\mathbb{Q}
+                &&&
+            \end{tikzcd}
+            \end{center}
+            Es comprova que $\Phi$ és isomorfisme (ja que $\varphi_{n}^{-1}(1)\mapsto\frac{1}{n!}$ és injectiu i l'exhaustivitat es dedueix del fet que $\frac{p}{q}=\chi_{q}(p(q-1)!)$, on $\chi_{q}$ és $\varphi_{q}^{-1}(1)\mapsto\frac{1}{q!}$). Per tant,
+            \begin{equation*}
+                \mathbb{Q}\cong \varinjlim(K_{0}(M_{n!}(F)),K_{0}(f_{n}))\cong K_{0}(\varinjlim(M_{n!}(F),f_{n})),
+            \end{equation*}
+            com volíem veure.
+        \end{proof}
+    \end{enumerate}
+\end{problema}
+\end{document}

@@ -1,0 +1,361 @@
+\documentclass[compress,10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{tikz-cd}
+\usepackage{fancyhdr}
+\usepackage[catalan]{babel}
+\usepackage[document]{ragged2e}
+\usepackage{appendix}
+
+%% Definicions, proposicions, etc. %%
+\newtheorem{definicio}{Definició}[section]
+\newtheorem{lema}{Lema}[section]
+\newtheorem{proposicio}{Proposició}[section]
+\newtheorem{corolari}{Corol·lari}[section]
+\newtheorem{teorema}{Teorema}[section]
+\newtheorem{problema}{\color{blue}Problema}[section]
+\newtheorem*{claim}{Claim}
+\newtheorem{enunciat}{}
+\theoremstyle{definition}
+\newtheorem{idea}{\color{gray}Idea}
+
+\fancyhead[L]{\textbf{100114. Topologia de varietats.}\\
+\textbf{Seminari 1. Espais i aplicacions recobridores.}}
+
+\fancyhead[R]{\textit{Jordi Cardiel}}
+
+% Letter fonts
+\usepackage{mathrsfs}
+\usepackage[scr=rsfs,cal=boondox]{mathalfa}
+
+%% Operadors pel math mode de LaTeX %%
+\DeclareMathOperator{\rel}{rel}
+% colímit (Categories)
+\DeclareMathOperator{\colim}{colim}
+\DeclareMathOperator{\Obj}{Obj}
+\DeclareMathOperator{\Mor}{Mor}
+
+\begin{document}
+\pagestyle{fancy}
+Siguin $(X,\mathscr{T}_{X}),(\Tilde{X},\mathscr{T}_{\Tilde{X}})$ espais topològics, $\Tilde{X}$ arc-connex i $p:\Tilde{X}\rightarrow X$ contínua. Direm que $(\Tilde{X},p)$ és un espai recobridor de $X$ si per tot $x\in X$ existeix un entorn obert $U_{x}$ de $x\in X$ tal que $p^{-1}(U_{x})$ és unió disjunta d'oberts $S_{i}$ tal que $p|_{S_{i}}:S_{i}\cong U_{x}$ per tot $i\in\mathscr{I}$ ($\mathscr{I}$ conjunt indexat).\newline
+Sabem un exemple d'espai recobridor de $\mathbb{S}^{1}$: $(\mathbb{R},\exp)$. Veiem un altre exemple (de fet, un nombre numerable d'exemples) d'espais recobridors de $\mathbb{S}^{1}$.
+\begin{enunciat}
+    L'aplicació $p_{n}:\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}$ definida com $p_{n}(z)=z^{n}$, per $z\in\mathbb{S}^{1}\subset\mathbb{C}$, és una aplicació recobridora.
+    \begin{proof}
+        Volem veure que $(\mathbb{S}^{1},p_{n})$ és un espai recobridor. $p_{n}$ és contínua i $\mathbb{S}^{1}$ arc-connexa. Sigui $e^{2\pi it}\in\mathbb{S}^{1}$. Volem veure que existeix un entorn $U_{e^{2\pi it}}$ de $e^{2\pi it}$ tal que $p_{n}^{-1}(U_{e^{2\pi it}})=\bigsqcup_{i\in\mathscr{I}}S_{i}$ és unió disjunta d'oberts de $\mathbb{S}^{1}$ tal que $p_{n}|_{S_{i}}:S_{i}\cong U_{e^{2\pi it}}$ per tot $i\in\mathscr{I}$. Considerem $U_{e^{2\pi it}}=\mathbb{S}^{1}-\{e^{\frac{2\pi i(t+1/2)}{n}}\}$ entorn obert de $e^{2\pi it}$. Aleshores,
+        \begin{equation}
+            p_{n}^{-1}(\mathbb{S}^{1}-\{e^{\frac{2\pi i(t+1/2)}{n}}\})
+            =\bigsqcup_{k=0}^{n-1}\{e^{2\pi ix}\in\mathbb{S}^{1}:\tfrac{t-\frac{1}{2}+k}{n}<x<\tfrac{t+\frac{1}{2}+k}{n}\}
+        \end{equation}
+        Escrivim $V_{k}=\{e^{2\pi ix}\in\mathbb{S}^{1}:\tfrac{t-\frac{1}{2}+k}{n}<x<\tfrac{t+\frac{1}{2}+k}{n}\}$. Tenim que $V_{k_{1}}\cap V_{k_{2}}=\emptyset$ si $k_{1}\neq k_{2}$: si $e^{2\pi ix}\in V_{k_{1}}\cap V_{k_{2}}$,
+        \begin{align*}
+            &\tfrac{t-\frac{1}{2}+k_{1}}{n}<x<\tfrac{t+\frac{1}{2}+k_{1}}{n}
+            \land\tfrac{t-\frac{1}{2}+k_{2}}{n}<x<\tfrac{t+\frac{1}{2}+k_{2}}{n}\\
+            \implies
+            &-\tfrac{1}{2}<xn-t-k_{1}<\tfrac{1}{2}
+            \land-\tfrac{1}{2}<-xn+t+k_{2}<\tfrac{1}{2}\\
+            \implies&-1<k_{2}-k_{1}<1\\
+            \implies&k_{1}=k_{2},
+        \end{align*}
+        on hem fet servir que $k_{1},k_{2}\in\mathbb{Z}$. Ara, clarament $p_{n}|_{V_{k}}:V_{k}\cong\mathbb{S}^{1}-\{e^{\frac{2\pi i(t+1/2)}{n}}\}$. Per tant, $(\mathbb{S}^{1},p_{n})$ és un espai recobridor.
+    \end{proof}
+\end{enunciat}
+Veiem ara un exemple d'un parell que no és un espai recobridor de $\mathbb{S}^{1}$.
+\begin{enunciat}
+    $f:(0,2)\rightarrow\mathbb{S}^{1}$ definida per $f(x)=\exp(2\pi ix)$ no és una aplicació recobridora.
+\end{enunciat}
+Demostrarem el següent fet: \textit{Sigui $\Tilde{X}$ connex, $X$ localment connex, $(\Tilde{X},p)$ espai recobridor de $X$ i $Y\subset\Tilde{X}$ propi. Aleshores, $(Y,p|_{Y})$ no és un espai recobridor de $X$.}\newline
+Com sabem que $(\mathbb{R},\exp)$ és un espai recobridor de $\mathbb{S}^{1}$, $\mathbb{R}$ és connex, $\mathbb{S}^{1}$ és localment connex i $(0,2)\subset\mathbb{R}$ és propi, tindrem que $((0,2),\exp|_{(0,2)})$ no és un espai recobridor de $\mathbb{S}^{1}$, que és el que volíem veure.
+\begin{proof}
+    Suposem que $(Y,p|_{Y})$ és un espai recobridor de $X$. Volem veure que $Y$ és obert i tancat en $\Tilde{X}$. Aleshores, per connexitat de $\Tilde{X}$, $Y=\Tilde{X}$, arribant a contradicció ja que $Y\subset\Tilde{X}$ és propi.\newline
+    Veiem que $Y$ és obert en $\Tilde{X}$. Sigui $y\in Y$. Sigui $U_{p|_{Y}(y)}$ un entorn obert de $p|_{Y}(y)\in X$ tal que $p|_{Y}^{-1}(U_{p|_{Y}(y)})=\bigsqcup_{i\in\mathscr{I}}V_{i}$ és unió disjunta d'oberts de $Y$ i $(p|_{Y})|_{V_{i}}:V_{i}\cong U_{p|_{Y}(y)}$ per tot $i\in\mathscr{I}$. Com $y\in p|_{Y}^{-1}(U_{p|_{Y}(y)})$, existeix un únic $i\in\mathscr{I}$ tal que $y\in V_{i}$ i hem acabat.\newline
+    Veiem que $Y$ és tancat en $\Tilde{X}$. Sigui $\Tilde{x}\in\Tilde{X}-Y$. Al ser $(Y,p|_{Y})$ un espai recobridor, $p|_{Y}$ és exhaustiva (similarment, $p$ és exhaustiva), d'on existeix $y\in Y$ tal que $p|_{Y}(y)=p(\Tilde{x})\in X$. Siguin $U_{p(\Tilde{x})},U_{p|_{Y}(y)}$ entorns oberts de $p(\Tilde{x})=p|_{Y}(y)\in X$ tals que 
+    \begin{enumerate}
+        \item $p^{-1}(U_{p(\Tilde{x})})=\bigsqcup_{i\in\mathscr{I}}V_{i}$ és unió disjunta d'oberts de $\Tilde{X}$ tal que $p|_{V_{i}}:V_{i}\cong U_{p(\Tilde{x})}$ per tot $i\in\mathscr{I}$.
+        \item $p|_{Z}^{-1}(U_{p|_{Y}(y)})=\bigsqcup_{j\in\mathscr{J}}W_{j}$ és unió disjunta d'oberts de $Y$ tal que $(p|_{Y})|_{W_{j}}:W_{j}\cong U_{p|_{Y}(y)}$ per tot $j\in\mathscr{J}$.
+    \end{enumerate}
+    Sigui $U$ un entorn connex de $p(\Tilde{x})\in X$. Considerem $U_{p|_{Y}(y)}\cap U\cap U_{p(\Tilde{x})}$ entorn connex de $p(\Tilde{x})\in X$. Per exhaustivitat de $p,p|_{Y}$, tenim que 
+    \begin{enumerate}
+        \item $p^{-1}(U_{p|_{Y}(y)}\cap U\cap U_{p(\Tilde{x})})=\bigsqcup_{i\in\mathscr{I}}(p^{-1}(U_{p|_{Y}(y)})\cap p^{-1}(U)\cap V_{i})$ és unió disjunta d'oberts de $\Tilde{X}$ tal que $p|_{p^{-1}(U_{p|_{Y}(y)})\cap p^{-1}(U)\cap V_{i}}:p^{-1}(U_{p|_{Y}(y)})\cap p^{-1}(U)\cap V_{i}\cong U_{p|_{Y}(y)}\cap U\cap U_{p(\Tilde{x})}$ per tot $i\in\mathscr{I}$.
+        \item $p|_{Y}^{-1}(U_{p|_{Y}(y)}\cap U\cap U_{p(\Tilde{x})})=\bigsqcup_{j\in\mathscr{J}}(W_{j}\cap p^{-1}(U)\cap p^{-1}(U_{p(\Tilde{x})}))$ és unió disjunta d'oberts de $\Tilde{X}$ tal que $(p|_{Y})|_{W_{j}\cap p^{-1}(U)\cap p^{-1}(U_{p(\Tilde{x})})}:W_{j}\cap p^{-1}(U)\cap p^{-1}(U_{p(\Tilde{x})})\cong U_{p|_{Y}(y)}\cap U\cap U_{p(\Tilde{x})}$ per tot $j\in\mathscr{J}$.
+    \end{enumerate}
+    Com $\Tilde{x}\in p^{-1}(U_{p|_{Y}(y)}\cap U\cap U_{p(\Tilde{x})})$, existeix una única $i\in\mathscr{I}$ tal que $\Tilde{x}\in p^{-1}(U_{p|_{Y}(y)})\cap p^{-1}(U)\cap V_{i}$. Si $p^{-1}(U_{p|_{Y}(y)})\cap p^{-1}(U)\cap V_{i}\cap Y=\emptyset$, tindrem un entorn de $\Tilde{x}\in\Tilde{X}-Y$ contingut en $\Tilde{X}-Y$ i haurem acabat. Sigui $\Tilde{x}'\in p^{-1}(U_{p|_{Y}(y)})\cap p^{-1}(U)\cap V_{i}\cap Y$. Tenim que $p(\Tilde{x}')=p|_{Y}(\Tilde{x}')\in U_{p|_{Y}(y)}\cap U\cap U_{p(\Tilde{x})}$. Aleshores, existeix un únic $j\in\mathscr{J}$ tal que $\Tilde{x}'\in W_{j}\cap p^{-1}(U)\cap p^{-1}(U_{p(\Tilde{x})})$. Com $U_{p|_{Y}(y)}\cap U\cap U_{p(\Tilde{x})}$ és connex i $(p|_{Y})|_{W_{j}\cap p^{-1}(U)\cap p^{-1}(U_{p(\Tilde{x})})}$ dona l'homeomorfisme
+    \begin{equation}
+        W_{j}\cap p^{-1}(U)\cap p^{-1}(U_{p(\Tilde{x})})
+        \cong U_{p|_{Y}(y)}\cap U\cap U_{p(\Tilde{x})},
+    \end{equation}
+    $W_{j}\cap p^{-1}(U)\cap p^{-1}(U_{p(\Tilde{x})})$ és connex. Ara bé, com $W_{j}\cap p^{-1}(U)\cap p^{-1}(U_{p(\Tilde{x})})$ és connex i
+    \begin{equation}
+        W_{j}\cap p^{-1}(U)\cap p^{-1}(U_{p(\Tilde{x})})
+        =\bigsqcup_{i\in\mathscr{I}}(W_{j}\cap p^{-1}(U)\cap V_{i}),
+    \end{equation}
+    existeix un únic $i'\in\mathscr{I}$ tal que $W_{j}\cap p^{-1}(U)\cap V_{i'}\neq\emptyset$. Per tant,
+    \begin{equation}
+    \begin{split}
+        &W_{j}\cap p^{-1}(U)\cap p^{-1}(U_{p(\Tilde{x})})\\
+        =&W_{j}\cap p^{-1}(U)\cap V_{i'}\\
+        =&\big(W_{j}\cap p^{-1}(U)\cap p^{-1}(U_{p(\Tilde{x})})\big)\cap\big(p^{-1}(U_{p|_{Y}(y)})\cap p^{-1}(U)\cap V_{i'}\big),
+    \end{split}
+    \end{equation}
+    on obtenim que $W_{j}\cap p^{-1}(U)\cap p^{-1}(U_{p(\Tilde{x})})\subset p^{-1}(U_{p|_{Y}(y)})\cap p^{-1}(U)\cap V_{i'}$. Ara, com $\Tilde{x}'\in p^{-1}(U_{p|_{Y}(y)})\cap p^{-1}(U)\cap V_{i'}$ i $\Tilde{x}'\in p^{-1}(U_{p|_{Y}(y)})\cap p^{-1}(U)\cap V_{i}$, $V_{i}\cap V_{i'}\neq\emptyset$, d'on obtenim que $i=i'$. Arribem a contradicció, ja que $\Tilde{x}\in p^{-1}(U_{p|_{Y}(y)})\cap p^{-1}(U)\cap V_{i}$ però $\Tilde{x}\notin W_{j}\cap p^{-1}(U)\cap p^{-1}(U_{p(\Tilde{x})})$ (ja que $\Tilde{x}\notin Y$). Per tant, $p^{-1}(U_{p|_{Y}(y)})\cap p^{-1}(U)\cap V_{i}\cap Y=\emptyset$.
+    %Com ambdós són homeomorfs a $U_{p|_{Y}(y)}\cap U\cap U_{p(\Tilde{x})}$ per $(p|_{Y})|_{W_{j}\cap p^{-1}(U)\cap p^{-1}(U_{p(\Tilde{x})})}$ i $p|_{p^{-1}(U_{p|_{Y}(y)})\cap p^{-1}(U)\cap V_{i'}}$, respectivament, tenim que
+    %\begin{equation}
+    %    W_{j}\cap p^{-1}(U)\cap p^{-1}(U_{p(\Tilde{x})})
+    %    =p^{-1}(U_{p|_{Y}(y)})\cap p^{-1}(U)\cap V_{i'}
+    %\end{equation}
+\end{proof}
+Estudiem els espais recobridors. Sigui $(\Tilde{X},p)$ un espai recobridor de $X$. Sigui $Y$ un espai topològic i $f:Y\rightarrow X$ contínua. Direm que $\Tilde{f}:Y\rightarrow\Tilde{X}$ és un aixecament de $f$ si $\Tilde{f}$ és contínua i $f=p\circ\Tilde{f}$, és a dir, que el següent diagrama commuta
+\begin{center}
+\begin{tikzcd}
+    &&\Tilde{X}
+    \arrow[two heads]{d}{p}\\
+    Y
+    \arrow[dotted]{urr}{\Tilde{f}}
+    \arrow{rr}{f}
+    &&X
+\end{tikzcd}
+\end{center}
+En l'apèndix \textbf{\ref{Tah}}, donem les demostracions de diverses propietats dels espais recobridors. De fet, veiem que els espais recobridors són fibrats al veure que satisfan la propietat d'aixecament d'homotopies. Ara, ens centrem en una conseqüència d'aquest aixecament d'homotopies.
+\begin{enunciat}
+    Si $Y$ és connex i localment arc-connex: $f:(Y,*_{Y})\rightarrow(X,*_{X})$ admet un aixecament $\Tilde{f}$ si i només si $f_{*}(\pi_{1}(Y,*_{Y}))\subset p_{*}(\pi_{1}(\Tilde{X},*_{\Tilde{X}}))$.
+\end{enunciat}
+Més precisament, demostrarem el següent enunciat: \textit{Sigui $Y$ connex i localment arc-connex, i $f:(Y,*_{Y})\rightarrow(X,*_{X})$ contínua. Si $(\Tilde{X},p)$ és un espai recobridor de $X$, aleshores existeix un únic $\Tilde{f}:(Y,*_{Y})\rightarrow(\Tilde{X},*_{\Tilde{X}})$, amb $*_{\Tilde{X}}\in p^{-1}(\{*_{X}\})$, aixecament de $\Tilde{f}$ si i només si $f_{*}(\pi_{1}(Y,*_{Y}))\subset p_{*}(\pi_{1}(\Tilde{X},*_{\Tilde{X}}))$.}
+\begin{proof}
+    Suposem que existeix $\Tilde{f}:(Y,*_{Y})\rightarrow(\Tilde{X},*_{\Tilde{X}})$ aixecament de $f$. Aleshores,
+    \begin{align*}
+        f_{*}(\pi_{1}(Y,*_{Y}))
+        &=p_{*}(\Tilde{f}_{*}(\pi_{1}(Y,*_{Y})))
+        &\quad&\textrm{($p\circ\Tilde{f}=f$)}\\
+        &\subset p_{*}(\pi_{1}(\Tilde{X},*_{\Tilde{X}}))
+        &\quad&\textrm{($\Tilde{f}_{*}(\pi_{1}(Y,*_{Y}))\subset\pi_{1}(\Tilde{X},*_{\Tilde{X}})$)}
+    \end{align*}
+    Suposem que $f_{*}(\pi_{1}(Y,*_{Y}))\subset p_{*}(\pi_{1}(\Tilde{X},*_{\Tilde{X}}))$. Com $Y$ és connex, $\Tilde{f}$ serà única. Com $Y$ és connex i localment arc-connex, aleshores $Y$ és arc-connex. Sigui $y\in Y$ i $h_{y}:\mathbb{I}\rightarrow Y$ un camí de $*_{Y}$ a $y$. Per tant, $f\circ h_{y}:\mathbb{I}\rightarrow X$ és un camí de $f(*_{Y})=*_{X}$ a $f(y)$. Sigui $\overline{f\circ h_{y}}:\mathbb{I}\rightarrow\Tilde{X}$ aixecament de $f\circ h_{y}$. Definim $\Tilde{f}:Y\rightarrow\Tilde{X}$ com $\Tilde{f}(y)=\overline{f\circ h_{y}}(1)$. Si $\Tilde{f}$ esta ben definida, tindrem que
+    \begin{align*}
+        p\circ\Tilde{f}(y)
+        &=p\circ(\overline{f\circ h_{y}})(1)
+        &\quad&\textrm{(Per definició de $\Tilde{f}$)}\\
+        &=f\circ h_{y}(1)
+        &\quad&\textrm{($p\circ(\overline{f\circ h_{y}})=f\circ h_{y}$)}\\
+        &=f(y)
+        &\quad&\textrm{($h_{y}(1)=y$)}
+    \end{align*}
+    Veiem que $\Tilde{f}$ esta ben definida ($\Tilde{f}$ no depèn de l'elecció de $h_{y}$). Sigui $h_{y}':\mathbb{I}\rightarrow\Tilde{X}$ camí de $*_{Y}$ a $y$ i $\overline{f\circ h_{y}'}:\mathbb{I}\rightarrow\Tilde{X}$ aixecament de $f\circ h_{y}'$. Volem veure que $\overline{f\circ h_{y}}(1)=\overline{f\circ h_{y}'}(1)$. Considerem $h_{y}*(h_{y}')^{-1}$. Aleshores,
+    \begin{align*}
+        &f_{*}([h_{y}*(h_{y}')^{-1}])\in f_{*}(\pi_{1}(Y,*_{Y}))
+        &&\\
+        \implies
+        &f_{*}([h_{y}*(h_{y}')^{-1}])\in p_{*}(\pi_{1}(\Tilde{X},*_{\Tilde{X}}))
+        &\quad&\textrm{($f_{*}(\pi_{1}(Y,*_{Y}))\subset p_{*}(\pi_{1}(\Tilde{X},*_{\Tilde{X}}))$)}\\
+        \implies
+        &\exists[\Tilde{g}]([\Tilde{g}]\in\pi_{1}(\Tilde{X},*_{\Tilde{X}})\land p_{*}([\Tilde{g}])=f_{*}([h_{y}*(h_{y}')^{-1}]))
+        &\quad&\textrm{(Per definició de $p_{*}(\pi_{1}(\Tilde{X},*_{\Tilde{X}}))$)}\\
+        \implies
+        &(f\circ h_{y})*(f\circ(h_{y}')^{-1})\simeq p\circ\Tilde{g}\rel\partial\mathbb{I}
+        &\quad&\textrm{(Per definició de $f_{*},p_{*}$)}\\
+        \implies
+        &(f\circ h_{y})*(f\circ(h_{y}')^{-1})*(p\circ(\overline{f\circ h_{y}'}))\simeq (p\circ\Tilde{g})*(p\circ(\overline{f\circ h_{y}'}))\rel\partial\mathbb{I}
+        &&\\
+        \implies
+        &f\circ h_{y}\simeq p\circ(\Tilde{g}*(\overline{f\circ h_{y}'}))\rel\partial\mathbb{I}
+        &\quad&\textrm{($p\circ(\overline{f\circ h_{y}'})=f\circ h_{y}'$)}\\
+        \implies
+        &\overline{f\circ h_{y}}\simeq\Tilde{g}*(\overline{f\circ h_{y}'})\rel\partial\mathbb{I}
+        &\quad&\textrm{(Aixecament d'homotopia)}
+    \end{align*}
+    on a l'últim pas hem considerat l'homotopia $F:f\circ h_{y}\simeq p\circ(\Tilde{g}*(\overline{f\circ h_{y}'}))\rel\partial\mathbb{I}$ ($F:\mathbb{I}\times\mathbb{I}\rightarrow X$) i $\Tilde{F}:\overline{f\circ h_{y}}\simeq\Tilde{g}*(\overline{f\circ h_{y}'})\rel\partial\mathbb{I}$ aixecament de $F$ ($\Tilde{F}:\mathbb{I}\times\mathbb{I}\rightarrow\Tilde{X}$ existeix pel teorema d'aixecament d'homotopies). Aleshores,
+    \begin{align*}
+        \overline{f\circ h_{y}}(1)
+        &=\Tilde{g}*(\overline{f\circ h_{y}'})(1)
+        &\quad&\textrm{($\overline{f\circ h_{y}}\simeq\Tilde{g}*(\overline{f\circ h_{y}'})\rel\partial\mathbb{I}$)}\\
+        &=\overline{f\circ h_{y}'}(1)
+        &\quad&\textrm{(Definició del producte de camins)}
+    \end{align*}
+    Veiem que $\Tilde{f}$ és contínua. Sigui $y\in Y$ i $U_{\Tilde{f}(y)}$ un entorn obert de $\Tilde{f}(y)\in\Tilde{X}$. Volem trobar un entorn $U_{y}$ de $y\in Y$ tal que $\Tilde{f}(U_{y})\subset U_{\Tilde{f}(y)}$. Sigui $U_{p\circ\Tilde{f}(y)}$ un entorn de $p\circ\Tilde{f}(y)\in X$ tal que $p^{-1}(U_{p\circ\Tilde{f}(y)})=\bigsqcup_{i\in\mathscr{I}}V_{i}$ és unió disjunta d'oberts de $\Tilde{X}$ tal que $p|_{V_{i}}:V_{i}\cong U_{p\circ\Tilde{f}(y)}$ per tot $i\in\mathscr{I}$. Com $\Tilde{y}\in p^{-1}(U_{p\circ\Tilde{f}(y)})$, existeix un únic $i\in\mathscr{I}$ tal que $\Tilde{f}\in V_{i}$. Com $(\Tilde{X},p)$ és un espai recobridor, en particular $p$ és oberta. Aleshores, $p(U_{\Tilde{f}(y)}\cap V_{i})$ és un entorn obert de $p\circ\Tilde{f}(y)\in X$ tal que $p(U_{\Tilde{f}(y)}\cap V_{i})\subset U_{p\circ\Tilde{f}(y)}$. Per continuïtat de $f$, $f^{-1}(p(U_{\Tilde{f}(y)}\cap V_{i})$ és un entorn obert de $y\in Y$. Sabem que $Y$ és localment arc-connex si i només si per tot $y\in Y$ i per tot entorn obert $W$ de $y$, existeix un entorn obert $W'$ arc-connex de $y$ tal que $W'\subset W$. Sigui $U_{y}$ un entorn obert arc-connex de $y\in Y$ tal que $U_{y}\subset f^{-1}(p(U_{\Tilde{f}(y)}\cap V_{i})$. Si veiem que $\Tilde{f}(U_{y})\subset U_{\Tilde{f}(y)}$, hem acabat.\newline
+    Sigui $y'\in U_{y}$. Per arc-connexitat de $U_{y}$, existeix un camí $h:\mathbb{I}\rightarrow U_{y}$ de $y$ a $y'$. Aleshores,
+    \begin{equation}
+        h(\mathbb{I})\subset U_{y}\subset f^{-1}(p(U_{\Tilde{f}(y)}\cap V_{i}))
+        \implies
+        (f\circ h)(\mathbb{I})\subset p(U_{\Tilde{f}(y)}\cap V_{i})
+    \end{equation}
+    Sigui $\overline{f\circ h}:\mathbb{I}\rightarrow\Tilde{X}$ l'aixecament de $f\circ h$ (que satisfà $\overline{f\circ h}(0)=*_{\Tilde{X}}$). Com $p(U_{\Tilde{f}(y)}\cap V_{i})\subset U_{p\circ\Tilde{f}(y)}$ i $V_{i}$ és tal que $p|_{V_{i}}:V_{i}\cong U_{p\circ\Tilde{f}(y)}$, tenim que
+    \begin{equation}
+        \overline{f\circ h}=p|_{V_{i}}^{-1}\circ f\circ h,
+    \end{equation}
+    d'on $\overline{f\circ h}(1)\in U_{\Tilde{f}(y)}\cap V_{i}$. Ara, $\overline{f\circ h_{y}}(1)=\Tilde{f}(y)=\overline{f\circ h}(0)$. Per tant, el producte de camins $(\overline{f\circ h_{y}})*(\overline{f\circ h})$ esta ben definit. Tenim que
+    \begin{equation*}
+    \begin{split}
+        p\circ((\overline{f\circ h_{y}})*(\overline{f\circ h}))
+        &=(p\circ(\overline{f\circ h_{y}}))*(p\circ(\overline{f\circ h}))\\
+        &=(f\circ h_{y})*(f\circ h)\\
+        &=f\circ(h_{y}*h),
+    \end{split}
+    \end{equation*}
+    on $h_{y}*h$ camí de $*_{Y}$ a $y'$. A més, $(\overline{f\circ h_{y}})*(\overline{f\circ h})(0)=\overline{f\circ h_{y}}(0)=*_{\Tilde{X}}$. Per tant, $\Tilde{f}(y)=(\overline{f\circ h_{y}})*(\overline{f\circ h})(0)(1)=\overline{f\circ h}(1)\in U_{\Tilde{f}(y)}$, com volíem ($\Tilde{f}(U_{y})\subset U_{\Tilde{f}(y)}$).
+\end{proof}
+La proposició anterior ens dona una condició necessària i suficient per garantir l'aixecament d'una aplicació. Ho veiem amb un exemple.
+\begin{enunciat}
+    Sigui $p_{n}:\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}$. Troba condicions necessàries i suficients per tal que l'aplicació $p_{m}:\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}$ admeti un aixecament $\Tilde{p}_{m}$ respecte el recobriment $p_{n}:\mathbb{S}^{1}\rightarrow\mathbb{S}^{1}$.
+\end{enunciat}
+Com $\mathbb{S}^{1}$ és connex i localment arc-connex, $p_{m}$ admet un aixecament respecte $p_{n}$ si i només si $p_{m*}(\pi_{1}(\mathbb{S}^{1},e))\subset p_{n*}(\pi_{1}(\mathbb{S}^{1},e))$. Aleshores,
+\begin{align*}
+    &p_{m*}(\pi_{1}(\mathbb{S}^{1},e))\subset p_{n*}(\pi_{1}(\mathbb{S}^{1},e))
+    &&\\
+    \iff
+    &p_{m*}(\mathbb{Z})\subset p_{n*}(\mathbb{Z})
+    &\quad&\textrm{($\pi_{1}(\mathbb{Z},e)\cong\mathbb{Z}$)}\\
+    \iff
+    &m\mathbb{Z}\subset n\mathbb{Z}
+    &\quad&\textrm{(Per definició de $p_{m*},p_{n*}$)}\\
+    \iff
+    &n\,|\, m
+\end{align*}
+\appendix
+\section{Teorema d'aixecament d'homotopies}\label{Tah}
+Donat $(\Tilde{X},p)$ un espai recobridor de $X$, veiem propietats de $p$ que hem fet servir i donem una demostració del teorema d'aixecament d'homotopies.
+\begin{proposicio}
+    Sigui $(\Tilde{X},p)$ un espai recobridor de $X$. Aleshores, $p$ és oberta i exhausitiva i $X$ és arc-connexa.
+    \begin{proof}
+        Veiem l'exhaustivitat, és a dir, que $X=im(p):=\{x\in X:\exists\Tilde{x}(\Tilde{x}\in\Tilde{X}\land p(\Tilde{x})=x)\}$. $im(p)\subset X$ és evident. Veiem que $X\subset im(p)$. Sigui $x\in X$. Aleshores, existeix un entorn obert $U_{x}$ de $x\in X$ tal que $p^{-1}(U_{x})=\bigsqcup_{i\in\mathscr{I}}S_{i}$ i $p|_{S_{i}}:S_{i}\cong U_{x}$ per tot $i\in\mathscr{I}$. Tenim que $p(p^{-1}(U_{x}))=p(\bigsqcup_{i\in\mathscr{I}}S_{i})=\bigsqcup_{i\in\mathscr{I}}p(S_{i})=\bigsqcup_{i\in\mathscr{I}}U_{x}=U_{x}$. Com $p(p^{-1}(U_{x}))=\{x'\in X:\exists\Tilde{x}(\Tilde{x}\in\{\Tilde{x}\in\Tilde{X}:p(\Tilde{x})\in U_{x}\}\land p(\Tilde{x})=x')\}$, en particular $\exists\Tilde{x}(\Tilde{x}\in\Tilde{X}\land p(\Tilde{x})=x)$.\newline
+        Veiem que $p$ és oberta. Sigui $V\in\mathscr{T}_{\Tilde{X}}$. Volem veure que $p(V)=\{x\in X:\exists\Tilde{x}(\Tilde{x}\in V\land p(\Tilde{x})=x)\}\in\mathscr{T}_{X}$. Sigui $x\in p(V)$. Com $x\in X$, existeix un entorn obert $U_{x}$ de $x\in X$ tal que $p^{-1}(U_{x})=\bigsqcup_{i\in\mathscr{I}}S_{i}$ i $p|_{S_{i}}:S_{i}\cong U_{x}$ per tot $i\in\mathscr{I}$. Sigui $\Tilde{x}\in p^{-1}(\{x\})\cup V$ i $S\in\{S_{i}:i\in\mathscr{I}\}$ l'únic obert que conté $\Tilde{x}$. Aleshores, $S\cap V$ és un obert de $S$ (per la topologia induïda) i $p(S\cap V)$ és un entorn obert de $x$ en $U_{x}$ (i, en particular, en $p(V)$).\newline
+        Veiem que $X$ és arc-connexa. Com $\Tilde{X}$ és arc-connexa i $p$ és contínua, $p(\Tilde{X})$ és arc-connexa. Per exhaustivitat de $p$, $p(\Tilde{X})=X$.
+    \end{proof}
+\end{proposicio}
+\begin{lema}
+    Sigui $(\Tilde{X},p)$ un espai recobridor de $X$, $Y$ connex, $f:(Y,*_{Y})\rightarrow(X,*_{X})$ contínua, $*_{\Tilde{X}}\in p^{-1}(\{*_{X}\})$. Aleshores, existeix una única $\Tilde{f}:(Y,*_{Y})\rightarrow(\Tilde{X},*_{\Tilde{X}})$ tal que $p\circ\Tilde{f}=f$.
+    \begin{center}
+    \begin{tikzcd}
+        &&(\Tilde{X},*_{\Tilde{X}})
+        \arrow[two heads]{d}{p}\\
+        (Y,*_{Y})
+        \arrow[dotted]{urr}{\exists!\Tilde{f}}
+        \arrow{rr}{f}
+        &&(X,*_{X})
+    \end{tikzcd}
+    \end{center}
+    \begin{proof}
+        Siguin $\Tilde{f},f':(Y,*_{Y})\rightarrow(\Tilde{X},*_{\Tilde{X}})$ tals que $p\circ\Tilde{f}=p\circ f'=f$. Volem veure que $\Tilde{f}=f'$. Si veiem que $\{y\in Y:\Tilde{f}(y)=f'(y)\},\{y\in Y:\Tilde{f}(y)\neq f'(y)\}$ són oberts, com $Y=\{y\in Y:\Tilde{f}(y)=f'(y)\}\sqcup\{y\in Y:\Tilde{f}(y)\neq f'(y)\}$, per connexitat de $Y$, o bé $\{y\in Y:\Tilde{f}(y)=f'(y)\}=\emptyset$ o bé $\{y\in Y:\Tilde{f}(y)\neq f'(y)\}=\emptyset$. Però com $*_{Y}\in\{y\in Y:\Tilde{f}(y)=f'(y)\}$ (ja que $\Tilde{f}(*_{Y})=f'(*_{Y})=*_{\Tilde{X}}$), $\{y\in Y:\Tilde{f}(y)\neq f'(y)\}=\emptyset$ i tindrem $\Tilde{f}=f'$.\newline
+        Sigui $y\in\{y\in Y:\Tilde{f}(y)=f'(y)\}$. Existeix un entorn obert $U_{f(y)}$ de $f(y)\in X$ tal que $p^{-1}(U_{f(y)})=\bigsqcup_{i\in\mathscr{I}}S_{i}$ i $p|_{S_{i}}:S_{i}\cong U_{f(y)}$. Sigui $S\in\{S_{i}:i\in\mathscr{I}\}$ l'únic obert que conté $\Tilde{f}(y)=f'(y)$. Aleshores, $\Tilde{f}^{-1}(S)\cap f'^{-1}(S)$ és un entorn de $y$ contingut en $\{y\in Y:\Tilde{f}(y)=f'(y)\}$: donat $y'\in\Tilde{f}^{-1}(S)\cap f'^{-1}(S)$, tenim $\Tilde{f}(y'),f'(y')\in S$ i de $p|_{S}(\Tilde{f}(y'))=f(y')=p|_{S}(f'(y'))$ tenim $\Tilde{f}(y')=f'(y')$ (aplicant $p|_{S}^{-1}$). Per tant, $\{y\in Y:\Tilde{f}(y)=f'(y)\}$ és obert.\newline
+        Sigui $y\in\{y\in Y:\Tilde{f}(y)\neq f'(y)\}$. Existeix un entorn obert $U_{f(y)}$ de $f(y)\in X$ tal que $p^{-1}(U_{f(y)})=\bigsqcup_{i\in\mathscr{I}}S_{i}$ i $p|_{S_{i}}:S_{i}\cong U_{f(y)}$. Si $\Tilde{f}(y),f'(y)$ estan en un únic $S\in\{S_{i}:i\in\mathscr{I}\}$, procedint com abans obtenim que $\Tilde{f}(y)=f'(y)$, arribant a contradicció. Aleshores, existeixen $\Tilde{S},S'\in\{S_{i}:i\in\mathscr{I}\}$ tal que $\Tilde{S}\cap S'=\emptyset$, $\Tilde{f}(y)\in\Tilde{S}$ i $f'(y)\in S'$. Tenim que $\Tilde{f}^{-1}(\Tilde{S})\cap f'^{-1}(S')$ és un entorn de $y$ contingut en $\{y\in Y:\Tilde{f}(y)\neq f'(y)\}$: donat $y'\in\Tilde{f}^{-1}(\Tilde{S})\cap f'^{-1}(S')$, com $\Tilde{S}\cap S'=\emptyset$, $\Tilde{f}(y')\in\Tilde{S}$ i $f'(y')\in S'$, tenim que $\Tilde{f}(y')\neq f'(y')$. Per tant, $\{y\in Y:\Tilde{f}(y)\neq f'(y)\}$ és obert.
+    \end{proof}
+\end{lema}
+\begin{lema}[Lema d'aixecament]
+    Sigui $(\Tilde{X},p)$ un espai recobridor de $X$, $f:(\mathbb{I},0)\rightarrow(X,*_{X})$ un camí i $*_{\Tilde{X}}\in p^{-1}(\{*_{X}\})$. Aleshores, existeix una única $\Tilde{f}:(\mathbb{I},0)\rightarrow(\Tilde{X},*_{\Tilde{X}})$ tal que $p\circ\Tilde{f}=f$.
+    \begin{center}
+    \begin{tikzcd}
+        &&(\Tilde{X},*_{\Tilde{X}})
+        \arrow[two heads]{d}{p}\\
+        (\mathbb{I},0)
+        \arrow[dotted]{urr}{\exists!\Tilde{f}}
+        \arrow{rr}{f}
+        &&(X,*_{X})
+    \end{tikzcd}
+    \end{center}
+    \begin{proof}
+        La unicitat ve donada per la connexitat de $\mathbb{I}$.\newline
+        Per tot $t\in\mathbb{I}$, existeix un entorn obert $U_{f(t)}$ de $f(t)\in X$ tal que $p^{-1}(U_{f(t)})=\bigsqcup_{i\in\mathscr{I}}S_{i}$ i $p|_{S_{i}}:S_{i}\cong U_{f(t)}$. Aleshores, com $\mathbb{I}$ és un espai mètric compacte i $\{f^{-1}(U_{f(t)}):t\in\mathbb{I}\}$ és un recobriment d'oberts de $\mathbb{I}$, $\{f^{-1}(U_{f(t)}):t\in\mathbb{I}\}$ admet un nombre de Lebesgue $\delta$. Considerem una partició $0=t_{1}<\ldots<t_{m}=1$ de $\mathbb{I}$ tal que $\forall j(j\in\{1,\ldots,m-1\}\rightarrow t_{j+1}-t_{j}<\delta)$.\newline
+        Fixem-nos que, si $[a,b]\subset\mathbb{I}$, existeix un entorn obert $U_{f(a)}$ de $f(a)\in X$ tal que $p^{-1}(U_{f(a)})=\bigsqcup_{\lambda\in\Lambda}V_{\lambda}$, $p|_{V_{\lambda}}:V_{\lambda}\cong U_{f(a)}$ i $V\in\{V_{\lambda}:\lambda\in\Lambda\}$ és l'únic obert que conté $*_{\Tilde{X}}$, si definim $\Tilde{g}:=p|_{S}^{-1}\circ f|_{[a,b]}$, tenim que $p\circ\Tilde{g}=f|_{[a,b]}$ amb $\Tilde{g}$ contínua. Per tant, existeix $\Tilde{g}_{1}:[t_{1},t_{2}]\rightarrow\Tilde{X}$ tal que $p\circ\Tilde{g}_{1}=f|_{[t_{1},t_{2}]}$ i $\Tilde{g}_{1}=*_{\Tilde{X}}$. Similarment, existeixen $\Tilde{g}_{j+1}:[t_{j+1},t_{j+2}]\rightarrow\Tilde{X}$ contínues amb $p\circ\Tilde{g}_{j+1}=f|_{[t_{j+1},t_{j+2}]}$ i $\Tilde{g}_{j+1}(t_{j+1})=\Tilde{g}_{j}(t_{j+1})$, per $1\leq j\leq m-2$. Aleshores, si definim $\Tilde{f}:(\mathbb{I},0)\rightarrow(\Tilde{X},*_{\Tilde{X}})$ com $\Tilde{f}(t)=\Tilde{g}_{j}(t)$ si $t\in[t_{j},t_{j+1}]$ per $1\leq j\leq m-1$, hem acabat ($\Tilde{f}$ és contínua perquè $\Tilde{g}_{j+1}(t_{j+1})=\Tilde{g}_{j}(t_{j+1})$).
+    \end{proof}
+\end{lema}
+\begin{lema}
+    Sigui $(\Tilde{X},p)$ un espai recobridor de $X$, $Y$ espai topològic. Si per $y\in Y$ existeix un entorn $U_{y}$ tal que existeix $\Tilde{F}_{y}:U_{y}\times\mathbb{I}\rightarrow\Tilde{X}$ contínua tal que el següent diagrama commuta:
+    \begin{center}
+    \begin{tikzcd}
+        U_{y}
+        \arrow{rr}{\Tilde{f}}
+        \arrow[hook]{dd}{j}
+        &&\Tilde{X}
+        \arrow[two heads]{dd}{p}\\
+        \\
+        U_{y}\times\mathbb{I}
+        \arrow[dotted]{uurr}{\exists\Tilde{F}}
+        \arrow{rr}{F}
+        &&X
+    \end{tikzcd}
+    \end{center}
+    aleshores, existeix $\Tilde{F}:Y\times\mathbb{I}\rightarrow\Tilde{X}$ contínua tal que el següent diagrama commuta
+    \begin{center}
+    \begin{tikzcd}
+        Y
+        \arrow{rr}{\Tilde{f}}
+        \arrow[hook]{dd}{j}
+        &&\Tilde{X}
+        \arrow[two heads]{dd}{p}\\
+        \\
+        Y\times\mathbb{I}
+        \arrow[dotted]{uurr}{\exists\Tilde{F}}
+        \arrow{rr}{F}
+        &&X
+    \end{tikzcd}
+    \end{center}
+    \begin{proof}
+        Com $\{U_{y}\times\mathbb{I}:y\in Y\}$ és un recobriment d'oberts de $Y\times\mathbb{I}$, és suficient veure que per tot $y',y''\in Y$ i per tot $y\in U_{y'}\cap U_{y''}$, $\Tilde{F}_{y'}|_{\{y\}\times\mathbb{I}}=\Tilde{F}_{y''}|_{\{y\}\times\mathbb{I}}$ (pel \textit{gluing lemma}, existirà una única $\Tilde{F}:Y\times\mathbb{I}\rightarrow\Tilde{X}$ contínua).\newline
+        Tenim que $\Tilde{F}_{y'}(y,0)=\Tilde{f}(y)=\Tilde{F}_{y''}(y,0)$ i, per tot $t\in\mathbb{I}$, $p\circ\Tilde{F}_{y'}(y,t)=F(y,t)=p\circ\Tilde{F}_{y''}(y,t)$. Aleshores, $\Tilde{F}_{y'},\Tilde{F}_{y''}$ són aixecaments de $F|_{\{y\}\times\mathbb{I}}$.
+        \begin{center}
+        \begin{tikzcd}
+            &&(\Tilde{X},*_{\Tilde{X}})
+            \arrow[two heads]{d}{p}\\
+            (\{y\}\times\mathbb{I},(y,0))
+            \arrow[dotted]{urr}{\Tilde{F}_{y'}|_{\{y\}\times\mathbb{I}},\Tilde{F}_{y''}|_{\{y\}\times\mathbb{I}}}
+            \arrow{rr}{F|_{\{y\}\times\mathbb{I}}}
+            &&(X,*_{X})
+    \end{tikzcd}
+    \end{center}
+        Per connexitat de $\{y\}\times\mathbb{I}$, $\Tilde{F}_{y'}|_{\{y\}\times\mathbb{I}}=\Tilde{F}_{y''}|_{\{y\}\times\mathbb{I}}$
+    \end{proof}
+\end{lema}
+\begin{teorema}
+    Sigui $(\Tilde{X},p)$ un espai recobridor de $X$, $Y$ espai topològic. Aleshores, existeix $\Tilde{F}:Y\times\mathbb{I}\rightarrow\Tilde{X}$ contínua tal que el següent diagrama commuta:
+    \begin{center}
+    \begin{tikzcd}
+        Y
+        \arrow{rr}{\Tilde{f}}
+        \arrow[hook]{dd}{j}
+        &&\Tilde{X}
+        \arrow[two heads]{dd}{p}\\
+        \\
+        Y\times\mathbb{I}
+        \arrow[dotted]{uurr}{\exists\Tilde{F}}
+        \arrow{rr}{F}
+        &&X
+    \end{tikzcd}
+    \end{center}
+    on $\forall y(y\in Y\rightarrow j(y)=(y,0))$.
+    \begin{proof}
+        Volem construir entorns $U_{y}$ i $\Tilde{F}_{y}:U_{y}\times\mathbb{I}\rightarrow\Tilde{X}$ tals que el següent diagrama commuta:
+        \begin{center}
+        \begin{tikzcd}
+            U_{y}
+            \arrow{rr}{\Tilde{f}}
+            \arrow[hook]{dd}{j}
+            &&\Tilde{X}
+            \arrow[two heads]{dd}{p}\\
+            \\
+            U_{y}\times\mathbb{I}
+            \arrow[dotted]{uurr}{\exists\Tilde{F}}
+            \arrow{rr}{F}
+            &&X
+        \end{tikzcd}
+        \end{center}
+        Sigui $y\in Y$, $t\in\mathbb{I}$ i $U_{F(y,t)}$ entorn obert de $F(y,t)\in X$ tal que $p^{-1}(U_{F(y,t)})=\bigsqcup_{i\in\mathscr{I}}S_{i}$ i $p|_{s_{I}}:S_{i}\cong U_{F(y,t)}$ per tot $i\in\mathscr{I}$. Com $F:Y\times\mathbb{I}\rightarrow X$ és contínua, $F^{-1}(U_{F(y,t)})\in\mathscr{T}_{Y\times\mathbb{I}}$. Escrivim $F^{-1}(U_{F(y,t)})=V_{y}\times W_{t}$ ($(V_{y},W_{t})\in\mathscr{T}_{Y}\times\mathscr{T}_{\mathbb{I}}$), d'on obtenim $F(V_{y}\times W_{t})=F(F^{-1}(U_{F(y,t)}))\subset U_{F(y,t)}$.\newline
+        Per compacitat de $\mathbb{I}$, existeix un subrecobriment finit $\{W_{t_{j}}:j\in\mathscr{J}\}\subset\{W_{t}:t\in\mathbb{I}\}$ de $\mathbb{I}$. Definim $U_{y}:=\bigcap_{j\in\mathscr{J}}V_{y_{j}}$ que és obert ja que $\mathscr{T}_{Y}$ és estable per intersecció finita i és un entorn de $y\in Y$. Com $\mathbb{I}$ és un espai mètric compacte i $\{W_{t_{j}}:j\in\mathscr{J}\}$ és un recobriment d'oberts de $\mathbb{I}$, $\{W_{t_{j}}:j\in\mathscr{J}\}$ admet un nombre de Lebesgue $\delta$. Considerem una partició $0=t_{1}<\ldots<t_{m}=1$ de $\mathbb{I}$ tal que $\forall k(k\in\{1,\ldots,m-1\}\rightarrow t_{k+1}-t_{k}<\delta)$. Aleshores, $\forall k(k\in\{1,\ldots,m-1\}\rightarrow\exists j(j\in\mathscr{J}\land U_{y}\times[t_{k-1},t_{k}]\subset V_{y_{j}}\times W_{t_{j}}))$, d'on $F(U_{y}\times[t_{k-1},t_{k}])\subset F(V_{y_{j}}\times W_{t_{j}})\subset U_{F(y,t)}$ ($U_{F(y,t)}$ depèn de $k$).\newline
+        Sigui $U_{F(y,t)}$ tal que $F(U_{y}\times[t_{1},t_{2}])\subset U_{F(y,t)}$. Tenim que $\{\Tilde{f}^{-1}(S_{i}):i\in\mathscr{I}\}$ és un recobriment d'oberts disjunts de $Y$. Definim $\Tilde{F}_{y,1}:=p|_{S_{i}}^{-1}\circ F:\Tilde{f}^{-1}(S_{i})\times[t_{1},t_{2}]\rightarrow U_{F(y,t)}\rightarrow S_{i}$, que compleix $p\circ\Tilde{F}_{y,1}=F|_{U_{y}\times[t_{1},t_{2}]}$ i $\Tilde{F}_{y,1}(y,0)=\Tilde{f}(y)$ per tot $y\in U_{y}$. Suposant que $\Tilde{F}_{y,i-1}$ existeix, podem construir $\Tilde{F}_{y,i}$ tal que $p\circ\Tilde{F}_{y,i}=F|_{U_{y}\times[t_{i},t_{i+1}]}$ i $\Tilde{F}_{y,i-1}(y,t_{i-1})=\Tilde{F}_{y,i}(y,t_{i-1})$. Acabem enganxant inductivament els $\Tilde{F}_{y,i}$ per obtenir $\Tilde{F}_{y}$.
+    \end{proof}
+\end{teorema}
+Fixem-nos que $\Tilde{F}:Y\times\mathbb{I}\rightarrow\Tilde{X}$ és única si $Y$ és connex. Aquest últim teorema ens diu que els espais recobridors satisfan la propietat d'aixecament d'homotopies, és a dir, que els espais recobridors són fibrats.
+\end{document}
+\begin{center}
+    \begin{tikzcd}
+        &&&&\Tilde{X}
+        \arrow[two heads]{dd}{p}\\
+        &&&&\\
+        \mathbb{I}
+        \arrow[swap]{rr}{h_{y}}
+        \arrow[dotted]{uurrrr}{\overline{f\circ h_{y}}}
+        &&Y
+        \arrow[dotted, swap]{uurr}{\Tilde{f}}
+        \arrow[swap]{rr}{f}
+        &&X
+    \end{tikzcd}
+    \end{center}

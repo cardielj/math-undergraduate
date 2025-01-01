@@ -1,0 +1,535 @@
+\documentclass[compress,10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{tikz-cd}
+\usepackage{fancyhdr}
+\usepackage[catalan]{babel}
+\usepackage[document]{ragged2e}
+\usepackage{appendix}
+
+%% Definicions, proposicions, etc. %%
+\newtheorem{definicio}{Definició}[section]
+\newtheorem{lema}{Lema}[section]
+\newtheorem{proposicio}{Proposició}[section]
+\newtheorem{corolari}{Corol·lari}[section]
+\newtheorem{teorema}{Teorema}[section]
+\newtheorem{problema}{\color{blue}Problema}[section]
+\newtheorem*{claim}{Claim}
+\newtheorem{enunciat}{}
+\theoremstyle{definition}
+\newtheorem{idea}{\color{gray}Idea}
+
+\fancyhead[L]{\textbf{100114. Topologia de varietats.}\\
+\textbf{Seminari 2. Homologia de superfícies.}}
+
+\fancyhead[R]{\textit{Jordi Cardiel}}
+
+% Letter fonts
+\usepackage{mathrsfs}
+\usepackage[scr=rsfs,cal=boondox]{mathalfa}
+
+%% Operadors pel math mode de LaTeX %%
+\DeclareMathOperator{\rel}{rel}
+% colímit (Categories)
+\DeclareMathOperator{\colim}{colim}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\Tor}{Tor}
+
+\begin{document}
+\pagestyle{fancy}
+\begin{enunciat}
+    Fent servir la successió exacta llarga de Mayer-Vietoris, calculem l'homologia de l'esfera, el tor i el pla projectiu.
+\end{enunciat}
+Calcularem l'homologia de $\mathbb{S}^{n}$, $\mathbb{S}^{n}\times\mathbb{S}^{m}$ ($\mathbb{T}^{2}\cong\mathbb{S}^{1}\times\mathbb{S}^{1}$ via Mayer-Vietoris i $\mathbb{S}^{n}\times\mathbb{S}^{m}$ via Künneth) i $\mathbb{R}\mathbb{P}^{n}$.\newline
+Calculem l'homologia de $\mathbb{S}^{n}$. Veurem que, si $n>0$,
+\begin{equation*}
+    H_{p}(\mathbb{S}^{0})\cong\begin{cases}
+        \mathbb{Z}\oplus\mathbb{Z}&\textrm{si $p=0$}\\
+        0&\textrm{si $p\neq0$}
+    \end{cases},
+    H_{p}(\mathbb{S}^{n})\cong\begin{cases}
+        \mathbb{Z}&\textrm{si $p=0,n$}\\
+        0&\textrm{si $p\neq0,n$}
+    \end{cases}
+\end{equation*}
+Amb homologia reduïda, és equivalent a veure que, per tot $n\geq0$,
+\begin{equation*}
+    \widetilde{H}_{p}(\mathbb{S}^{n})\cong\begin{cases}
+        \mathbb{Z}&\textrm{si $p=n$}\\
+        0&\textrm{si $p\neq n$}
+    \end{cases}
+\end{equation*}
+Procedim per inducció en $n$. Si $n=0$, $\mathbb{S}^{0}=\{1\}\sqcup\{-1\}$. Per l'axioma de la dimensió, $\widetilde{H}_{p}(\mathbb{S}^{0})\cong\widetilde{H}_{p}(\{1\})\oplus\widetilde{H}_{p}(\{-1\})\cong0\oplus0=0$. Com $\mathbb{S}^{0}$ no és buit i l'homologia singular és una teoria d'homologia amb coeficient $\mathbb{Z}$, $H_{0}(\mathbb{S}^{0})\cong H_{0}(\{1\})\oplus H_{0}(\{-1\})\cong\mathbb{Z}\oplus\mathbb{Z}$, d'on $\widetilde{H}_{0}(\mathbb{S}^{0})\cong\mathbb{Z}$.\newline
+Suposem que per $i<n$ el resultat és cert. Siguin $p\in\mathbb{S}^{n},U=\mathbb{S}^{n}-\{p\},V=\mathbb{S}^{n}-\{-p\}$. $U,V\subset\mathbb{S}^{n}$ són oberts (ja que en un espai Hausdorff $\{p\},\{-p\}$ són tancats), $U,V\simeq\{*\}$, $U\cap V\simeq\mathbb{S}^{n-1}$ i $U\cup V=\mathbb{S}^{n}$. Considerem la successió de Mayer-Vietoris per homologia reduïda:
+\begin{center}
+\begin{tikzcd}
+    \cdots
+    \arrow{r}
+    &\widetilde{H}_{p}(U)\oplus\widetilde{H}_{p}(V)
+    \arrow{r}{k_{*}-\ell_{*}}
+    \arrow{d}{\cong}
+    &\widetilde{H}_{p}(\mathbb{S}^{n})
+    \arrow{r}{D}
+    \arrow[equal]{d}
+    &\widetilde{H}_{p-1}(U\cap V)
+    \arrow{r}{\iota_{*}\oplus j_{*}}
+    \arrow{d}{\cong}
+    &\widetilde{H}_{p-1}(U)\oplus\widetilde{H}_{p}(V)
+    \arrow{r}
+    \arrow{d}{\cong}
+    &\cdots\\
+    \cdots
+    \arrow{r}
+    &0
+    \arrow{r}
+    &\widetilde{H}_{p}(\mathbb{S}^{n})
+    \arrow{r}
+    &\widetilde{H}_{p-1}(\mathbb{S}^{n-1})
+    \arrow{r}
+    &0
+    \arrow{r}
+    &\cdots
+\end{tikzcd}
+\end{center} 
+Per exactitud de la successió de Mayer-Vietoris, $\widetilde{H}_{p}(\mathbb{S}^{n})\cong\widetilde{H}_{p-1}(\mathbb{S}^{n-1})$ ($n>0$). Per hipòtesi d'inducció,
+\begin{equation*}
+    \widetilde{H}_{p}(\mathbb{S}^{n})
+    \cong\widetilde{H}_{p-1}(\mathbb{S}^{n-1})
+    \cong\begin{cases}
+        \mathbb{Z}&\textrm{si $p-1=n-1$}\\
+        0&\textrm{si $p-1\neq n-1$}
+    \end{cases}
+    =\begin{cases}
+        \mathbb{Z}&\textrm{si $p=n$}\\
+        0&\textrm{si $p\neq n$}
+    \end{cases}
+\end{equation*}
+Calculem l'homologia de $\mathbb{S}^{n}\times\mathbb{S}^{m}$ via Künneth. La fórmula de Künneth diu
+\begin{equation*}
+    H_{n}(X\times Y)
+    \cong\Big(\bigoplus_{p=0}^{n}H_{p}(X)\otimes H_{n-p}(Y)\Big)\oplus\Big(\bigoplus_{p=1}^{n}\Tor_{1}^{\mathbb{Z}}(H_{n-1}(X),H_{n-p}(Y))\Big)
+\end{equation*}
+Aleshores, distingint si $n\neq m$ i $n=m$, obtenim
+\begin{equation*}
+H_{p}(\mathbb{S}^{n}\times\mathbb{S}^{m})=\begin{cases}
+    \mathbb{Z}&\textrm{si $p=0,n,m,n+m$}\\
+    0&\text{si $p\neq0,n,m,n+m$}
+    \end{cases},
+    H_{p}(\mathbb{S}^{n}\times\mathbb{S}^{n})=\begin{cases}
+    \mathbb{Z}&\textrm{si $p=0,2n$}\\
+    \mathbb{Z}\oplus\mathbb{Z}&\textrm{si $p=n$}\\
+    0&\text{si $p\neq0,n,2n$}
+    \end{cases}
+\end{equation*}
+Calculem l'homologia de $\mathbb{T}^{2}$ via Mayer-Vietoris. Sigui $\pi:\mathbb{I}\times\mathbb{I}\twoheadrightarrow\mathbb{I}\times\mathbb{I}/\sim(=:\mathbb{T}^{2})$ el pas al quocient, on $\forall(x,y)((x,y)\in\mathbb{I}\times\mathbb{I}\rightarrow(x,0)\sim(x,1)\land(0,y)\sim(1,y))$. Com $\mathbb{T}^{2}$ és arc-connex, $H_{0}(\mathbb{T}^{2})=0$. Siguin $p\in Int(\mathbb{I}\times\mathbb{I})$, $U=\pi(\mathbb{I}\times\mathbb{I}-\{p\})$ i $V=\pi(Int(\mathbb{I}\times\mathbb{I}))$. Tenim que $U\simeq\mathbb{S}^{1}\vee\mathbb{S}^{1}$, $V\simeq\{*\}$, $U\cap V\simeq\mathbb{S}^{1}$ i $U\cap V=\mathbb{T}^{2}$. Considerem la successió de Mayer-Vietoris per homologia reduïda. Si $p\geq3$,
+\begin{center}
+\begin{tikzcd}
+    \cdots
+    \arrow{r}
+    &\widetilde{H}_{p}(U\cap V)
+    \arrow{r}{\iota_{*}\oplus j_{*}}
+    \arrow{d}{\cong}
+    &\widetilde{H}_{p}(U)\oplus\widetilde{H}_{p}(V)
+    \arrow{r}{k_{*}-\ell_{*}}
+    \arrow{d}{\cong}
+    &\widetilde{H}_{p}(\mathbb{T}^{2})
+    \arrow{r}{D}
+    \arrow[equal]{d}
+    &\widetilde{H}_{p-1}(U\cap V)
+    \arrow{r}
+    \arrow{d}{\cong}
+    &\cdots\\
+    \cdots
+    \arrow{r}
+    &0
+    \arrow{r}
+    &0
+    \arrow{r}
+    &\widetilde{H}_{p}(\mathbb{T}^{2})
+    \arrow{r}
+    &0
+    \arrow{r}
+    &\cdots
+\end{tikzcd}
+\end{center}
+Per exactitud de la successió de Mayer-Vietoris, $\widetilde{H}_{p}(\mathbb{T}^{2})=0$ si $p\geq0$. De Mayer-Vietoris, obtenim la següent successió exacta:
+\begin{center}
+\begin{tikzcd}
+    0
+    \arrow{r}
+    &\widetilde{H}_{2}(\mathbb{T}^{2})
+    \arrow{r}{D}
+    \arrow[equal]{d}
+    &\widetilde{H}_{1}(\mathbb{S}^{1})
+    \arrow{r}{\iota_{*}\oplus j_{*}}
+    \arrow{d}{\cong}
+    &\widetilde{H}_{1}(\mathbb{S}^{1}\vee\mathbb{S}^{1})
+    \arrow{r}{k_{*}-\ell_{*}}
+    \arrow{d}{\cong}
+    &\widetilde{H}_{1}(\mathbb{T}^{2})
+    \arrow{r}
+    \arrow[equal]{d}
+    &0\\
+    0
+    \arrow{r}
+    &\widetilde{H}_{2}(\mathbb{T}^{2})
+    \arrow{r}{D}
+    &\mathbb{Z}
+    \arrow{r}{\iota_{*}\oplus j_{*}}
+    &\mathbb{Z}\oplus\mathbb{Z}
+    \arrow{r}{k_{*}-\ell_{*}}
+    &\widetilde{H}_{1}(\mathbb{T}^{2})
+    \arrow{r}
+    &0
+\end{tikzcd}
+\end{center}
+Tenim que (fent un abús de notació) $\iota_{*}\oplus j_{*}:\mathbb{Z}\rightarrow\mathbb{Z}\oplus\mathbb{Z}$ esta definida per $\iota_{*}\oplus j_{*}(1)=(1,0)+(0,1)-(1,0)-(0,1)=(0,0)$. Aleshores, $\ker{\iota_{*}\oplus j_{*}}=\mathbb{Z}$ i $\im{\iota_{*}\oplus j_{*}}=0$. Per exactitud de la successió, $D$ és injectiva i $k_{*}-\ell_{*}$ és exhaustiva. Aleshores, $\widetilde{H}_{2}(\mathbb{T}^{2})\cong\im{D}=\ker{\iota_{*}\oplus j_{*}}=\mathbb{Z}$ i, pel primer teorema d'isomorfisme, $\widetilde{H}_{1}(\mathbb{T}^{2})\cong\mathbb{Z}\oplus\mathbb{Z}/\ker{k_{*}-\ell_{*}}=\mathbb{Z}\oplus\mathbb{Z}/\im{\iota_{*}\oplus j_{*}}=\mathbb{Z}\oplus\mathbb{Z}/0\cong\mathbb{Z}\oplus\mathbb{Z}$, com volíem. Fixem-nos que el càlcul coincideix amb Künneth.\newline
+Calculem l'homologia de $\mathbb{RP}^{2}$. Veurem que
+\begin{equation*}
+    H_{p}(\mathbb{RP}^{2})\cong\begin{cases}
+        \mathbb{Z}&\textrm{si $p=0$}\\
+        \mathbb{Z}/(2)&\textrm{si $p=1$}\\
+        0&\textrm{si $p\geq2$}
+    \end{cases}
+\end{equation*}
+Considerem $\pi:\mathbb{S}^{2}\twoheadrightarrow\mathbb{S}^{2}/(\mathbb{Z}/(2))(=\mathbb{RP}^{2})$ la identificació dels antipodals. Siguin $p,-p\in\mathbb{S}^{2}$, $U=\pi(\mathbb{S}^{2}-\{p,-p\})$, $V=\pi(\mathscr{B}(p;\varepsilon)\sqcup\mathscr{B}(-p;\varepsilon))$. $U,V$ són oberts, $U\simeq\mathbb{S}^{1}$, $V\simeq\{*\}$, $U\cap V\simeq\mathbb{S}^{1}$ i $U\cup V=\mathbb{RP}^{2}$. Considerem la successió de Mayer-Vietoris per homologia reduïda. Si $p\geq3$,
+\begin{center}
+\begin{tikzcd}
+    \cdots
+    \arrow{r}
+    &\widetilde{H}_{p}(U\cap V)
+    \arrow{r}{\iota_{*}\oplus j_{*}}
+    \arrow{d}{\cong}
+    &\widetilde{H}_{p}(U)\oplus\widetilde{H}_{p}(V)
+    \arrow{r}{k_{*}-\ell_{*}}
+    \arrow{d}{\cong}
+    &\widetilde{H}_{p}(\mathbb{RP}^{2})
+    \arrow{r}{D}
+    \arrow[equal]{d}
+    &\widetilde{H}_{p-1}(U\cap V)
+    \arrow{r}
+    \arrow{d}{\cong}
+    &\cdots\\
+    \cdots
+    \arrow{r}
+    &\widetilde{H}_{p}(\mathbb{S}^{1})
+    \arrow{r}{\iota_{*}\oplus j_{*}}
+    \arrow[equal]{d}
+    &\widetilde{H}_{p}(\mathbb{S}^{1})
+    \arrow{r}{k_{*}-\ell_{*}}
+    \arrow{d}{\cong}
+    &\widetilde{H}_{p}(\mathbb{RP}^{2})
+    \arrow{r}{D}
+    \arrow[equal]{d}
+    &\widetilde{H}_{p-1}(\mathbb{S}^{1})
+    \arrow{r}
+    \arrow[equal]{d}
+    &\cdots\\
+    \cdots
+    \arrow{r}
+    &0
+    \arrow{r}
+    &0
+    \arrow{r}
+    &\widetilde{H}_{p}(\mathbb{RP}^{2})
+    \arrow{r}
+    &0
+    \arrow{r}
+    &\cdots
+\end{tikzcd}
+\end{center}
+De Mayer-Vietoris, obtenim la següent successió exacta llarga:
+\begin{center}
+\begin{tikzcd}
+    0
+    \arrow{r}
+    &\widetilde{H}_{2}(\mathbb{RP}^{2})
+    \arrow{r}{D}
+    \arrow[equal]{d}
+    &\widetilde{H}_{1}(\mathbb{S}^{1})
+    \arrow{r}{\iota_{*}\oplus j_{*}}
+    \arrow{d}{\cong}
+    &\widetilde{H}_{1}(\mathbb{S}^{1})
+    \arrow{r}{k_{*}-\ell_{*}}
+    \arrow{d}{\cong}
+    &\widetilde{H}_{1}(\mathbb{RP}^{2})
+    \arrow{r}
+    \arrow[equal]{d}
+    &0\\
+    0
+    \arrow{r}
+    &\widetilde{H}_{2}(\mathbb{RP}^{2})
+    \arrow{r}{D}
+    &\mathbb{Z}
+    \arrow{r}{\iota_{*}\oplus j_{*}}
+    &\mathbb{Z}
+    \arrow{r}{k_{*}-\ell_{*}}
+    &\widetilde{H}_{1}(\mathbb{RP}^{2})
+    \arrow{r}
+    &0
+\end{tikzcd}
+\end{center}
+Tenim que $\iota_{*}\oplus j_{*}:\mathbb{Z}\rightarrow\mathbb{Z}$ esta definida per $\iota_{*}\oplus j_{*}(1)=2$. Aleshores, $\ker{\iota_{*}\oplus j_{*}}=0$ i $\im{\iota_{*}\oplus j_{*}}=2\mathbb{Z}$. Per exactitud de la successió, $D$ és injectiva i $k_{*}-\ell_{*}$ és exhaustiva. Aleshores, $\widetilde{H}_{2}(\mathbb{RP}^{2})\cong\im{D}=\ker{\iota_{*}\oplus j_{*}}=0$ i, pel primer teorema d'isomorfisme, $\widetilde{H}_{1}(\mathbb{RP}^{2})\cong\mathbb{Z}/\ker{k_{*}-\ell_{*}}=\mathbb{Z}/\im{\iota_{*}\oplus j_{*}}=\mathbb{Z}/(2)$, com volíem.
+\begin{enunciat}
+    Com ho faries per calcular l'homologia de qualsevulla d'elles (superfícies compactes)?
+\end{enunciat}
+Pel teorema de classificació de les superfícies compactes connexes, tota superfície compacta connexa és homeomorfa a una superfície compacta connexa orientable de gènere $g$ (és a dir, homeomorfa a $\mathbb{S}^{2}$ si $g=0$ o a $\#_{g}\mathbb{T}^{2}$ si $g>0$) o bé una superfície compacta connexa no-orientable de gènere $g$ (és a dir, homeomorfa a $\#_{g}\mathbb{RP}^{2}$ per $g>0$). Si $g>0$, les superfícies compactes connexes orientables i no-orientables de gènere $g$ corresponen amb un $4g$-gon amb costats identificats per les etiquetes $\alpha_{1},\beta_{1},\alpha_{1}^{-1},\beta_{1}^{-1},\ldots,\alpha_{g},\beta_{g},\alpha_{g}^{-1},\beta_{g}^{-1}$ i amb un $2g$-gon amb costats identificats per les etiquetats $\alpha_{1},\alpha_{1},\ldots,\alpha_{g},\alpha_{g}$. Aleshores, calcularem l'homologia de qualsevol d'elles buscant un recobriment adequat per fer servir Mayer-Vietoris.
+\begin{enunciat}
+    Descriu de manera general $H_{*}(S_{g})$ i $H_{*}(N_{g})$ on $S_{g}$ és una superfície compacta connexa orientable de gènere $g$ i $N_{g}$ és una superfície compacta connexa no-orientable de gènere $g$. 
+\end{enunciat}
+Com $S_{g},N_{g}$ són arc-connexes, $H_{0}(S_{g}),H_{0}(N_{g})\cong0$.\newline
+Considerem $P_{4g}$ el $4g$-gon descrit abans (per les superfícies compactes connexes orientables de gènere $g>0$) sense identificar i $q:P_{4g}\twoheadrightarrow S_{g}$ el pas al quocient. Sigui $p\in Int(P_{4g})$, $U=q(Int(P_{4g}))$ i $V=q(P_{4g}-\{p\})$. Tenim que $U,V$ són oberts, $U\simeq\{*\}$, $V\simeq\bigvee_{2g}\mathbb{S}^{1}$, $U\cap V\simeq\mathbb{S}^{1}$ i $U\cup V=S_{g}$. Considerem la successió de Mayer-Vietoris per homologia reduïda. Si $p\geq3$,
+\begin{center}
+\begin{tikzcd}
+    \cdots
+    \arrow{r}
+    &\widetilde{H}_{p}(U\cap V)
+    \arrow{r}{\iota_{*}\oplus j_{*}}
+    \arrow{d}{\cong}
+    &\widetilde{H}_{p}(U)\oplus\widetilde{H}_{p}(V)
+    \arrow{r}{k_{*}-\ell_{*}}
+    \arrow{d}{\cong}
+    &\widetilde{H}_{p}(S_{g})
+    \arrow{r}{D}
+    \arrow[equal]{d}
+    &\widetilde{H}_{p-1}(U\cap V)
+    \arrow{r}
+    \arrow{d}{\cong}
+    &\cdots\\
+    \cdots
+    \arrow{r}
+    &\widetilde{H}_{p}(\mathbb{S}^{1})
+    \arrow{r}{\iota_{*}\oplus j_{*}}
+    \arrow[equal]{d}
+    &\widetilde{H}_{p}(\bigvee_{2g}\mathbb{S}^{1})
+    \arrow{r}{k_{*}-\ell_{*}}
+    \arrow{d}{\cong}
+    &\widetilde{H}_{p}(S_{g})
+    \arrow{r}{D}
+    \arrow[equal]{d}
+    &\widetilde{H}_{p-1}(\mathbb{S}^{1})
+    \arrow{r}
+    \arrow[equal]{d}
+    &\cdots\\
+    \cdots
+    \arrow{r}
+    &\widetilde{H}_{p}(\mathbb{S}^{1})
+    \arrow{r}{\iota_{*}\oplus j_{*}}
+    \arrow{d}{\cong}
+    &\bigoplus_{2g}\widetilde{H}_{p}(\mathbb{S}^{1})
+    \arrow{r}{k_{*}-\ell_{*}}
+    \arrow{d}{\cong}
+    &\widetilde{H}_{p}(S_{g})
+    \arrow{r}{D}
+    \arrow[equal]{d}
+    &\widetilde{H}_{p-1}(\mathbb{S}^{1})
+    \arrow{r}
+    \arrow{d}{\cong}
+    &\cdots\\
+    \cdots
+    \arrow{r}
+    &0
+    \arrow{r}
+    &0
+    \arrow{r}
+    &\widetilde{H}_{p}(S_{g})
+    \arrow{r}
+    &0
+    \arrow{r}
+    &\cdots
+\end{tikzcd}
+\end{center}
+Per exactitud de la successió de Mayer-Vietoris, $\widetilde{H}_{p}(S_{g})$ per $p\geq3$. De Mayer-Vietoris, tenim la següent successió exacta:
+\begin{center}
+\begin{tikzcd}
+    0
+    \arrow{r}
+    &\widetilde{H}_{2}(S_{g})
+    \arrow{r}{D}
+    \arrow[equal]{d}
+    &\widetilde{H}_{1}(\mathbb{S}^{1})
+    \arrow{r}{\iota_{*}\oplus j_{*}}
+    \arrow{d}{\cong}
+    &\bigoplus_{2g}\widetilde{H}_{1}(\mathbb{S}^{1})
+    \arrow{r}{k_{*}-\ell_{*}}
+    \arrow{d}{\cong}
+    &\widetilde{H}_{1}(S_{g})
+    \arrow{r}
+    \arrow[equal]{d}
+    &0\\
+    0
+    \arrow{r}
+    &\widetilde{H}_{2}(S_{g})
+    \arrow{r}{D}
+    &\mathbb{Z}
+    \arrow{r}{\iota_{*}\oplus j_{*}}
+    &\bigoplus_{2g}\mathbb{Z}
+    \arrow{r}{k_{*}-\ell_{*}}
+    &\widetilde{H}_{1}(S_{g})
+    \arrow{r}
+    &0
+\end{tikzcd}
+\end{center}
+Tenim que $\iota_{*}\oplus j_{*}:\mathbb{Z}\rightarrow\bigoplus_{2g}\mathbb{Z}$ esta definida per $\iota_{*}\oplus j_{*}=e_{1}+e_{2}-e_{1}-e_{2}+\ldots+e_{2g-1}+e_{2g}-e_{2g-1}-e_{2g}=(0,\ldots,0)$, on $e_{i}=(0,\ldots,0,\overset{i)}{1},0,\ldots,0)\bigoplus_{2g}\mathbb{Z}$. Aleshores, $\ker{\iota_{*}\oplus j_{*}}=\mathbb{Z}$ i $\im{\iota_{*}\oplus j_{*}}=0$. Per exactitud de la successió, $D$ és injectiva i $k_{*}-\ell_{*}$ és exhaustiva. Aleshores, $\widetilde{H}_{2}(S_{g})\cong\im{D}=\ker{\iota_{*}\oplus j_{*}}=\mathbb{Z}$ i, pel primer teorema d'isomorfisme, $\widetilde{H}_{1}(S_{g})\cong\bigoplus_{2g}\mathbb{Z}/\ker{k_{*}-\ell_{*}}=\bigoplus_{2g}\mathbb{Z}/\im{\iota_{*}\oplus j_{*}}=\bigoplus_{2g}\mathbb{Z}/0\cong\bigoplus_{2g}\mathbb{Z}$, com volíem.\newline
+Considerem $Q_{2g}$ el $2g$-gon descrit abans (per les superfícies compactes connexes no-orientables de gènere $g>0$) sense identificar i $q:Q_{2g}\twoheadrightarrow N_{g}$ el pas al quocient. Sigui $p\in Int(Q_{2g})$, $U=q(Int(Q_{2g}))$ i $V=q(Q_{2g}-\{p\})$. Tenim que $U,V$ són oberts, $U\simeq\{*\}$, $V\simeq\bigvee_{g}\mathbb{S}^{1}$, $U\cap V\simeq\mathbb{S}^{1}$ i $U\cup V=N_{g}$. Considerem la successió de Mayer-Vietoris per homologia reduïda. Si $p\geq3$,
+\begin{center}
+\begin{tikzcd}
+    \cdots
+    \arrow{r}
+    &\widetilde{H}_{p}(U\cap V)
+    \arrow{r}{\iota_{*}\oplus j_{*}}
+    \arrow{d}{\cong}
+    &\widetilde{H}_{p}(U)\oplus\widetilde{H}_{p}(V)
+    \arrow{r}{k_{*}-\ell_{*}}
+    \arrow{d}{\cong}
+    &\widetilde{H}_{p}(N_{g})
+    \arrow{r}{D}
+    \arrow[equal]{d}
+    &\widetilde{H}_{p-1}(U\cap V)
+    \arrow{r}
+    \arrow{d}{\cong}
+    &\cdots\\
+    \cdots
+    \arrow{r}
+    &\widetilde{H}_{p}(\mathbb{S}^{1})
+    \arrow{r}{\iota_{*}\oplus j_{*}}
+    \arrow[equal]{d}
+    &\widetilde{H}_{p}(\bigvee_{g}\mathbb{S}^{1})
+    \arrow{r}{k_{*}-\ell_{*}}
+    \arrow{d}{\cong}
+    &\widetilde{H}_{p}(N_{g})
+    \arrow{r}{D}
+    \arrow[equal]{d}
+    &\widetilde{H}_{p-1}(\mathbb{S}^{1})
+    \arrow{r}
+    \arrow[equal]{d}
+    &\cdots\\
+    \cdots
+    \arrow{r}
+    &\widetilde{H}_{p}(\mathbb{S}^{1})
+    \arrow{r}{\iota_{*}\oplus j_{*}}
+    \arrow{d}{\cong}
+    &\bigoplus_{g}\widetilde{H}_{p}(\mathbb{S}^{1})
+    \arrow{r}{k_{*}-\ell_{*}}
+    \arrow{d}{\cong}
+    &\widetilde{H}_{p}(N_{g})
+    \arrow{r}{D}
+    \arrow[equal]{d}
+    &\widetilde{H}_{p-1}(\mathbb{S}^{1})
+    \arrow{r}
+    \arrow{d}{\cong}
+    &\cdots\\
+    \cdots
+    \arrow{r}
+    &0
+    \arrow{r}
+    &0
+    \arrow{r}
+    &\widetilde{H}_{p}(N_{g})
+    \arrow{r}
+    &0
+    \arrow{r}
+    &\cdots
+\end{tikzcd}
+\end{center}
+Per exactitud de la successió de Mayer-Vietoris, $\widetilde{H}_{p}(N_{g})$ per $p\geq3$. De Mayer-Vietoris, tenim la següent successió exacta:
+\begin{center}
+\begin{tikzcd}
+    0
+    \arrow{r}
+    &\widetilde{H}_{2}(N_{g})
+    \arrow{r}{D}
+    \arrow[equal]{d}
+    &\widetilde{H}_{1}(\mathbb{S}^{1})
+    \arrow{r}{\iota_{*}\oplus j_{*}}
+    \arrow{d}{\cong}
+    &\bigoplus_{g}\widetilde{H}_{1}(\mathbb{S}^{1})
+    \arrow{r}{k_{*}-\ell_{*}}
+    \arrow{d}{\cong}
+    &\widetilde{H}_{1}(N_{g})
+    \arrow{r}
+    \arrow[equal]{d}
+    &0\\
+    0
+    \arrow{r}
+    &\widetilde{H}_{2}(N_{g})
+    \arrow{r}{D}
+    &\mathbb{Z}
+    \arrow{r}{\iota_{*}\oplus j_{*}}
+    &\bigoplus_{g}\mathbb{Z}
+    \arrow{r}{k_{*}-\ell_{*}}
+    &\widetilde{H}_{1}(N_{g})
+    \arrow{r}
+    &0
+\end{tikzcd}
+\end{center}
+Tenim que $\iota_{*}\oplus j_{*}:\mathbb{Z}\rightarrow\bigoplus_{g}\mathbb{Z}$ esta definida per $\iota_{*}\oplus j_{*}(1)=e_{1}+e_{1}+\ldots+e_{g}+e_{g}=(2,\ldots,2)$. Aleshores, $\ker{\iota_{*}\oplus j_{*}}=0$ i $\im{\iota_{*}\oplus j_{*}}=\langle(2,\ldots,2)\rangle$. Tenim que $\langle(1,\ldots,1),e_{2},\ldots,e_{g}\rangle$ és una base de $\bigoplus_{g}\mathbb{Z}$, $\im{\iota_{*}\oplus j_{*}}=2\mathbb{Z}\oplus(\bigoplus_{g-1}0)$. Per exactitud de la successió, $D$ és injectiva i $k_{*}-\ell_{*}$ és exhaustiva. Aleshores, $\widetilde{H}_{2}(S_{g})\cong\im{D}=\ker{\iota_{*}\oplus j_{*}}=0$ i, pel primer teorema d'isomorfisme, $\widetilde{H}_{1}(S_{g})\cong\bigoplus_{g}\mathbb{Z}/\ker{k_{*}-\ell_{*}}=\bigoplus_{g}\mathbb{Z}/\im{\iota_{*}\oplus j_{*}}=\bigoplus_{g}\mathbb{Z}/(2\mathbb{Z}\oplus(\bigoplus_{g-1}0))\cong\mathbb{Z}/(2)\oplus(\bigoplus_{g-1}\mathbb{Z})$, com volíem.
+\begin{enunciat}
+    Per cadascun dels dos grups abelians graduats següents, descriu dos espais topològics no homòtops tals que la seva homologia coincideixi.
+    \begin{equation*}
+    A_{p}\cong\begin{cases}
+        \mathbb{Z}&\textrm{si $p=0$}\\
+        \bigoplus_{5}\mathbb{Z}\oplus\mathbb{Z}/(2)&\textrm{si $p=1$}\\
+        0&\textrm{si $p\geq2$}
+    \end{cases},
+    B_{p}\cong\begin{cases}
+        \mathbb{Z}&\textrm{si $p=0,2$}\\
+        \bigoplus_{6}\mathbb{Z}&\textrm{si $p=1$}\\
+        0&\textrm{si $p\geq3$}
+    \end{cases}
+    \end{equation*}
+\end{enunciat}
+Pel grup abelià graduat $A_{p}$, considerem $N_{6}$ i $\mathbb{RP}^{1}\vee(\bigvee_{5}\mathbb{S}^{1})$. És clar que $H_{*}(N_{6})\cong A_{p}\cong H_{*}(\mathbb{RP}^{1}\vee(\bigvee_{5}\mathbb{S}^{1}))$. Si fóssin homotòpicament equivalents, els grups d'homotopia serien isomorfs. Però, els primers grups d'homotopia no ho són, ja que els següents són clarament no isomorfs:
+\begin{align*}
+    \pi_{1}(N_{6})
+    &\cong\langle a_{1},a_{2},a_{3}|a_{1}^{2}a_{2}^{2}a_{3}^{2}=e\rangle\\
+    \pi_{1}(\mathbb{RP}^{1}\vee(\bigvee_{5}\mathbb{S}^{1}))
+    &\cong(*_{5}\,\mathbb{Z})*\mathbb{Z}/(2)
+\end{align*}
+Similarment, pel grup abelià graduat $B_{p}$, considerem $S_{3}$ i $\mathbb{S}^{2}\vee(\bigvee_{6}\mathbb{S}^{1})$. És clar que $H_{*}(S_{3})\cong B_{p}\cong H_{*}(\mathbb{S}^{2}\vee(\bigvee_{6}\mathbb{S}^{1}))$, però $\pi_{1}(S_{3})\not\cong\pi_{1}(\mathbb{S}^{2}\vee(\bigvee_{6}\mathbb{S}^{1}))$:
+\begin{align*}
+    \pi_{1}(S_{3})
+    &\cong\langle a_{1},b_{1},a_{2},b_{2},a_{3},b_{3}|a_{1}b_{1}a_{1}^{-1}b_{1}^{-1}a_{2}b_{2}a_{2}^{-1}b_{2}^{-1}a_{3}b_{3}a_{3}^{-1}b_{3}^{-1}=e\rangle\\
+    \pi_{1}(\mathbb{S}^{2}\vee(\bigvee_{6}\mathbb{S}^{1}))
+    &\cong\pi_{1}(\mathbb{S}^{2})*(*_{6}\pi_{1}(\mathbb{S}^{1}))
+    \cong*_{6}\mathbb{Z}
+\end{align*}
+\end{document}
+Calculem l'homologia de $\mathbb{RP}^{n}$. Veurem que
+\begin{equation*}
+    H_{p}(\mathbb{RP}^{n})\cong\begin{cases}
+        \mathbb{Z}&\textrm{si $p=0$ o $p=n$ si $n\equiv1\pmod{2}$}\\
+        \mathbb{Z}/(2)&\textrm{si $0<p<n$ i $p\equiv1\pmod{2}$}\\
+        0&\textrm{si no}
+    \end{cases}
+\end{equation*}
+Per $n=1$ és cert, ja que $\mathbb{RP}^{1}\cong\mathbb{S}^{1}$ i coincideix amb $H_{*}(\mathbb{S}^{1})$. Suposem que és cert per $i<n$. Sigui $\pi:\mathbb{S}^{n-1}\twoheadrightarrow\mathbb{S}^{n-1}/(\mathbb{Z}/(2))(=\mathbb{RP}^{n-1})$ la identificació dels antipodals. Podem escriure $\mathbb{RP}^{n}=\mathbb{RP}^{n-1}\sqcup_{\pi}\mathbb{D}^{n}$. Per $p<n-1$ i $p>n$ tenim que $H_{p}(\mathbb{RP}^{n-1})\cong H_{p}(\mathbb{RP}^{n})$. A més, tenim les successions exactes curtes següents
+\begin{center}
+\begin{tikzcd}
+    0
+    \arrow{r}
+    &\im{\pi_{*}}
+    \arrow{r}
+    &H_{n-1}(\mathbb{RP}^{n-1})
+    \arrow{r}
+    &H_{n-1}(\mathbb{RP}^{n})
+    \arrow{r}
+    &0
+\end{tikzcd}
+\end{center}
+\begin{center}
+\begin{tikzcd}
+    0
+    \arrow{r}
+    &H_{n}(\mathbb{RP}^{n-1})
+    \arrow{r}
+    &H_{n}(\mathbb{RP}^{n})
+    \arrow{r}
+    &\ker{\pi_{*}}
+    \arrow{r}
+    &0
+\end{tikzcd}
+\end{center}
+Si veiem que

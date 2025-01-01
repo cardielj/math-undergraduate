@@ -1,0 +1,356 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{tikz-cd}
+\usepackage{fancyhdr}
+\usepackage[catalan]{babel}
+\usepackage[document]{ragged2e}
+\usepackage{appendix}
+
+\usepackage[colorlinks = true,
+linkcolor = blue,
+urlcolor  = blue,
+citecolor = blue,
+anchorcolor = blue]{hyperref}
+\usepackage[backend=biber,style=alphabetic,sorting=ynt]{biblatex}
+\addbibresource{bibliografia.bib}
+
+\usepackage{silence}
+%\WarningFilter{latex}{Citation}
+%\WarningFilter{latex}{Reference}
+%\WarningFilter{latex}{There were undefined references}
+\WarningFilter{newunicodechar}{Redefining Unicode character}
+\WarningFilter{hyperref}{Token not allowed in a PDF string}
+\overfullrule=5pt
+
+\usepackage[margin=1in]{geometry}
+
+\usepackage[T1]{fontenc}
+\usepackage{newunicodechar}
+\usepackage[mathscr]{euscript}
+\usepackage{adjustbox}
+\usepackage{mathrsfs}
+\usepackage[scr=rsfs,cal=boondox]{mathalfa}
+
+\DeclareMathOperator{\Har}{Har}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\ord}{ord}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\Obj}{Obj}
+\DeclareMathOperator{\Quot}{Quot}
+\DeclareMathOperator{\Irr}{Irr}
+\DeclareMathOperator{\Spec}{Spec}
+\DeclareMathOperator{\IdEnter}{IdEnter}
+\DeclareMathOperator{\IdFrac}{IdFrac}
+
+%% Definicions, proposicions, etc. %%
+\newtheorem{teorema}{Teorema}[section]
+\newtheorem{definicio}[teorema]{Definició}
+\newtheorem{lema}[teorema]{Lema}
+\newtheorem{proposicio}[teorema]{Proposició}
+\newtheorem{corolari}[teorema]{Corol·lari}
+\newtheorem{problema}{Problema}
+
+%\usepackage{lineno}
+%\linenumbers
+
+\fancyhead[L]{\textbf{100113. Aritmètica.}}
+\fancyhead[R]{\textit{Jordi Cardiel}}
+
+\begin{document}
+\pagestyle{fancy}
+\begin{problema}
+    Sigui $A$ un domini Dedekind, i $K=\Quot(A)$. Considera per $\IdEnter(A)$ el monoid amb la multiplicació d'ideals generat pels ideals maximals de $A$, i considerem $(1)=A$ com element neutre en $\IdEnter(A)$.
+    \begin{enumerate}
+        \item Definim $\IdFrac(A)$ pels ideals fraccionaris de $A$, on $J\in\IdFrac(A)$ si $J\subset K$ és un $A$-mòdul i existeix $\beta\in A$ on $\beta J\subset A$ (en particular $\beta J$ és un ideal de A). Proveu primer que tot $A$-submòdul de $K$ ($M\subset K$) finit generat és un ideal fraccionari de $A$.
+        \begin{proof}
+            Escrivim
+            \begin{equation*}
+                \IdFrac(A)
+                =\{J\subset\Quot(A):J\textrm{ $A$-mòdul}\land\exists\beta(\beta\in A\land\beta J\subset A)\}
+            \end{equation*}
+            Sigui $M$ $A$-submòdul de $\Quot(A)$ finitament generat. Aleshores,
+            \begin{equation*}
+                \exists n\exists m_{1}\ldots\exists m_{n}(n\in\mathbb{N},m_{1},\ldots,m_{n}\in M\land M=m_{1}A+\ldots+m_{n}A)
+            \end{equation*}
+            Com $M\subset\Quot(A)$, $\forall i(i\in\{1,\ldots,n\}\Rightarrow\exists a_{i}\exists b_{i}(a_{i}\in A,b_{i}\in A-\{0\}\land m_{i}=\tfrac{a_{i}}{b_{i}}))$. Considerem $\beta:=\prod_{i=1}^{n}b_{i}\in A$. Aleshores, $\beta M=\sum_{i=1}^{n}(a_{i}\prod_{i\neq j}b_{j})A\subset A$, d'on $M\in\IdFrac(A)$.
+        \end{proof}
+        Considerem $\IdFrac(A)$ amb l'operació multiplicació de $A$-mòduls, veieu que dóna a $\IdFrac(A)$ una estructura de monoid.
+        \begin{proof}
+            Siguin $J_{1},J_{2}\in\IdFrac(A)$. Veiem que la multiplicació d'$A$-mòduls esta ben definida a $\IdFrac(A)$. Tenim que $\exists\beta_{1}(\beta_{1}\in A\land\beta_{1}J_{1}\subset A)$ i $\exists\beta_{2}(\beta_{2}\in A\land\beta_{2}J_{2}\subset A)$. Aleshores, $(\beta_{1}\beta_{2})J_{1}J_{2}=(\beta_{1}J_{1})(\beta_{2}J_{2})\subset AA\subset A$, d'on $J_{1}J_{2}\in\IdFrac(A)$.\newline
+            La multiplicació d'$A$-mòduls és associativa. En particular, donats $J_{1},J_{2},J_{3}\in\IdFrac(A)$, $J_{1}(J_{2}J_{3})=(J_{1}J_{2})J_{3}$.\newline
+            Com $A$ és anell commutatiu, el producte d'$A$-mòduls és commutatiu, d'on donats $J_{1},J_{2}\in\IdFrac(A)$ tenim $J_{1}J_{2}=J_{2}J_{1}$.\newline
+            Veiem que $A$ és l'element neutre de $\IdFrac(A)$. Clarament $A\in\IdFrac(A)$, ja que $\forall\beta(\beta\in A\Rightarrow\beta A\subset A)$ i $A$ és $A$-mòdul. Donat $J\in\IdFrac(A)$, $JA=J=AJ$ es dedueix de la commutativitat de la multipliació d'$A$-mòduls, de que $A$ és un anell amb unitat i de que $J$ és $A$-mòdul.\newline
+            Aleshores, tenim que tots els axiomes de monoide es satisfan, d'on $\IdFrac(A)$ té estructura de monoide.
+        \end{proof}
+        Tot seguit demostreu que si $I\in\IdFrac(A)$ llavors $I(A:I)=A$ on $(A:I)=\{k\in K:kI\subset A\}$
+        \begin{proof}
+            Fixem-nos que en general, donat $I\subset A$ $A$-mòdul, $I(A:I)\subset A$. En efecte, si $\alpha\in I(A:I)$, podem escriure $\alpha=\sum_{i\in I}x_{i}y_{i}$ on $x_{i}\in I$ i $y_{i}\in(A:I)$. Com $y_{i}\in(A:I)$, per definició de $(A:I)$, $y_{i}I\subset A$, d'on deduïm que $\forall i(i\in I\Rightarrow x_{i}y_{i}\in A)$. Per tant, $\alpha=\sum_{i\in I}x_{i}y_{i}\in A$, d'on $I(A:I)\subset I$.\newline
+            Veiem ara que $\forall\mathfrak{p}(\mathfrak{p}\in\Spec(A)-\{(0)\}\Rightarrow A\subsetneq(A:\mathfrak{p}))$. Sigui $\alpha\in\mathfrak{p}-\{0\}$. Considerem l'ideal $\alpha A$. Com $A$ és Dedekind, $A$ és domini de factorització única per ideals, d'on
+            \begin{equation*}
+                \exists r\exists\mathfrak{p}_{1}\ldots\exists\mathfrak{p}_{r}(r\in\mathbb{N},\mathfrak{p}_{1},\ldots,\mathfrak{p}_{r}\in\Spec(A)\land\alpha A=\mathfrak{p}_{1}\cdot\ldots\cdot\mathfrak{p}_{r})
+            \end{equation*}
+            Tenim $\alpha A\subset\mathfrak{p}$ i dos alternatives:
+            \begin{enumerate}
+                \item Suposem que $\alpha A=\mathfrak{p}$. Suposem que $\frac{1}{\alpha}\in A$. Aleshores, com $\alpha A=\mathfrak{p}$, $1=\alpha\frac{1}{\alpha}\in\mathfrak{p}$, contradicció, ja que $\mathfrak{p}\in\Spec(A)$. Aleshores, $\frac{1}{\alpha}\notin A$. A més,
+                \begin{align*}
+                    \alpha A=\mathfrak{p}
+                    &\implies\tfrac{1}{\alpha}\mathfrak{p}\subset A\\
+                    &\implies\tfrac{1}{\alpha}\in(A:\mathfrak{p})
+                \end{align*}
+                Per tant, $\frac{1}{\alpha}\in(A:\mathfrak{p})-A$, d'on deduïm que $A\subsetneq(A:\mathfrak{p})$.
+                \item Suposem que $\alpha A\subsetneq\mathfrak{p}$. Aleshores, $\exists i(i\in\{1,\ldots,r\}\land\mathfrak{p}=\mathfrak{p}_{i})$. Sense pèrdua de la generalitat, suposem que $\mathfrak{p}=\mathfrak{p}_{1}$. Considerem $\beta\in\mathfrak{p}_{2}\cdot\ldots\cdot\mathfrak{p}_{r}-\alpha A$. Tenim que
+                \begin{align*}
+                    \beta\in\mathfrak{p}_{2}\cdot\ldots\cdot\mathfrak{p}_{r}-\alpha A
+                    &\implies\tfrac{\beta}{\alpha}\in\tfrac{1}{\alpha}\mathfrak{p}_{2}\cdot\ldots\cdot\mathfrak{p}_{r}-A\\
+                    &\implies\tfrac{\beta}{\alpha}\notin A
+                \end{align*}
+                A més,
+                \begin{align*}
+                    \beta\mathfrak{p}\subset\alpha A
+                    &\implies\tfrac{\beta}{\alpha}\mathfrak{p}\subset A\\
+                    &\implies\tfrac{\beta}{\alpha}\in(A:\mathfrak{p})
+                \end{align*}
+                d'on $\frac{\beta}{\alpha}\in(A:\mathfrak{p})-A$ i, conseqüentment, $A\subsetneq(A:\mathfrak{p})$.
+            \end{enumerate}
+            Veiem ara que $\forall\mathfrak{p}(\mathfrak{p}\in\Spec(A)-\{(0)\}\Rightarrow\mathfrak{p}(A:\mathfrak{p})=A)$. Com $A$ és Dedekind, $\mathfrak{p}$ és maximal. Aleshores, com $\mathfrak{p}(A:\mathfrak{p})$ és un ideal d'$A$ tal que $\mathfrak{p}\subset\mathfrak{p}(A:\mathfrak{p})$, per maximalitat o bé $\mathfrak{p}(A:\mathfrak{p})=\mathfrak{p}$ o bé $\mathfrak{p}(A:\mathfrak{p})=A$. Suposem que $\mathfrak{p}(A:\mathfrak{p})=\mathfrak{p}$. Sigui $x\in(A:\mathfrak{p})-A$. Tenim que
+            \begin{align*}
+                \mathfrak{p}(A:\mathfrak{p})=\mathfrak{p}
+                &\implies x\mathfrak{p}\subset\mathfrak{p}\\
+                &\implies x\textrm{ enter sobre }A
+            \end{align*}
+            on la darrera implicació s'obté fent el mateix argument que la demostració de Cayley-Hamilton. Arribem a contradicció, ja que $A$ al ser Dedekind, és integrament tancat. Per tant, $\mathfrak{p}(A:\mathfrak{p})=A$.\newline
+            Veiem ara que per tot ideal $I$ d'$A$ tenim $I(A:I)=A$. Sigui $I$ ideal d'$A$. Com $A$ Dedekind,
+            \begin{equation*}
+                \exists s\exists\mathfrak{p}_{1}\ldots\exists\mathfrak{p}_{s}(s\in\mathbb{N},\mathfrak{p}_{1},\ldots,\mathfrak{p}_{s}\in\Spec(A)\land I=\mathfrak{p}_{1}\cdot\ldots\cdot\mathfrak{p}_{s})
+            \end{equation*}
+            Aleshores,
+            \begin{align*}
+                &I\cdot(A:\mathfrak{p}_{s})\cdot\ldots\cdot(A:\mathfrak{p}_{1})\\
+                =\,
+                &\mathfrak{p}_{1}\cdot\ldots\cdot\mathfrak{p}_{s}\cdot(A:\mathfrak{p}_{s})\cdot\ldots\cdot(A:\mathfrak{p}_{1})
+                &\quad&\textrm{($I=\mathfrak{p}_{1}\cdot\ldots\cdot\mathfrak{p}_{s}$)}\\
+                =\,
+                &A
+                &\quad&\textrm{($\forall i(i\in\{1,\ldots,s\}\Rightarrow\mathfrak{p}_{i}(A:\mathfrak{p}_{i})=A)$)}
+            \end{align*}
+            Volem veure que $(A:I)=(A:\mathfrak{p}_{s})\cdot\ldots\cdot(A:\mathfrak{p}_{1})$. Sigui $\alpha\in(A:\mathfrak{p}_{s})\cdot\ldots\cdot(A:\mathfrak{p}_{1})$. Aleshores, escrivim $\alpha=\sum_{i\in I}\alpha_{i,s}\cdot\ldots\cdot\alpha_{i,1}$ on $\alpha_{i,k}\in(A:\mathfrak{p}_{k})$. Sigui $\beta\in I$. Com tenim la factorització $I=\mathfrak{p}_{1}\cdot\ldots\cdot\mathfrak{p}_{s}$, podem escriure $\beta=\sum_{j\in J}\beta_{j,1}\cdot\ldots\cdot\alpha_{j,s}$ on $\alpha_{j,k}\in\mathfrak{p}_{k}$. Aleshores,
+            \begin{equation*}
+                \alpha\beta=\sum_{(i,j)\in I\times J}\alpha_{i,s}\cdot\ldots\cdot\alpha_{i,1}\cdot\beta_{j,1}\cdot\ldots\cdot\alpha_{j,s}\in A
+            \end{equation*}
+            ja que $\alpha_{i,k}\in(A:\mathfrak{p}_{k})\land\beta_{j,k}\in\mathfrak{p}_{k}\implies\alpha_{i,k}\beta_{j,k}\in A$. Per tant, $\alpha I\subset A$, d'on $\alpha\in(A:I)$ (i $(A:\mathfrak{p}_{s})\cdot\ldots\cdot(A:\mathfrak{p}_{1})\subset(A:I)$). D'altra banda, tenim que
+            \begin{align*}
+                (A:I)
+                &=(A:\mathfrak{p}_{s})\cdot\ldots\cdot(A:\mathfrak{p}_{1})\cdot I\cdot(A:I)
+                &\quad&\textrm{($(A:\mathfrak{p}_{s})\cdot\ldots\cdot(A:\mathfrak{p}_{1})\cdot I=A$)}\\
+                &\subset(A:\mathfrak{p}_{s})\cdot\ldots\cdot(A:\mathfrak{p}_{1})
+                &\quad&\textrm{($I(A:I)\subset A$)}
+            \end{align*}
+            Per doble inclusió deduïm que $(A:I)=(A:\mathfrak{p}_{s})\cdot\ldots\cdot(A:\mathfrak{p}_{1})$.\newline
+            Veiem ara que $\forall J(J\in\IdFrac(A)\Rightarrow J(A:J)=A)$, que és el resultat a demostrar. Tenim que $\exists\beta(\beta\in A\land\beta J\subset A)$. En particular, $\beta J$ és un ideal d'$A$. Pel claim anterior, tenim que
+            \begin{equation*}
+                A
+                =(\beta J)(A:\beta J)
+                =J(\beta(A:\beta J))
+            \end{equation*}
+            Volem veure que $(A:J)=\beta(A:\beta J)$ i haurem acabat. Sigui $\alpha\in\beta(A:\beta J)$. Sigui $\gamma\in J$. Aleshores,
+            \begin{align*}
+                \alpha\gamma
+                &=(\beta x)\gamma
+                &\quad&\textrm{($\alpha\in\beta(A:\beta J)\implies\exists x(x\in(A:\beta J)\land\alpha=\beta x)$)}\\
+                &=(\beta\gamma)x\in A
+                &\quad&\textrm{($x\in(A:\beta J)$)}
+            \end{align*}
+            Per tant, $\alpha J\subset A$ i $\alpha\in(A:J)$, d'on tenim la inclusió $\beta(A:\beta J)\subset(A:J)$. D'altra banda,
+            \begin{align*}
+                (A:J)
+                &=(A:\beta J)\beta J(A:J)
+                &\quad&\textrm{($(A:\beta J)\beta J=A$)}\\
+                &\subset\beta(A:\beta J)
+                &\quad&\textrm{($J(A:J)\subset A$)}
+            \end{align*}
+            Aleshores, per doble inclusió, $(A:J)=\beta(A:\beta J)$, com volíem veure.
+        \end{proof}
+        Proveu que $\IdFrac(A)$ és un grup abelià lliure generat pels ideals primers de $A$. 
+        \begin{proof}
+            Sigui $J\in\IdFrac(A)$. Aleshores, $\exists\beta(\beta\in A\land\beta J\subset A)$. Al ser $A$ Dedekind,
+            \begin{align*}
+                \exists n\exists a_{1}\ldots\exists a_{n}\exists b_{1}\ldots\exists b_{n}\exists\mathfrak{p}_{1}\ldots\exists\mathfrak{p}_{n}(n,b_{1}\leq a_{1},\ldots,b_{n}\leq a_{n}\in\mathbb{N},\quad\quad\quad\quad\\
+                \quad\quad\quad\quad\mathfrak{p}_{1},\ldots,\mathfrak{p}_{n}\in\Spec(A)\land\beta J=\mathfrak{p}_{1}^{a_{1}}\cdot\ldots\cdot\mathfrak{p}_{n}^{a_{n}},\beta A=\mathfrak{p}_{1}^{b_{1}}\cdot\ldots\cdot\mathfrak{p}_{n}^{b_{n}})
+            \end{align*}
+            d'on deduïm que $J=\mathfrak{p}_{1}^{a_{1}-b_{1}}\cdot\ldots\cdot\mathfrak{p}_{n}^{a_{n}-b_{n}}$.  Aleshores, podem definir un morfisme d'$A$-mòduls
+            \begin{center}
+            \begin{tikzcd}
+                \IdFrac(A)
+                \arrow{rr}{\varphi}
+                &&\prod_{\mathfrak{p}\in\Spec(A)}\mathbb{Z}
+            \end{tikzcd}
+            \end{center}
+            definit via $\varphi(\mathfrak{p}^{a_{\mathfrak{p}}}):=(\delta_{\mathfrak{p},\mathfrak{q}}a_{\mathfrak{p}})_{\mathfrak{q}\in\Spec(A)}$, on $\delta_{\mathfrak{p},\mathfrak{q}}$ és la delta de Kronecker, i estenent per linealitat (ho podem fer ja que $\Spec(A)$ genera $\IdFrac(A)$ per la factorització anterior). Clarament $\varphi$ esta ben definida i és isomorfisme ja que la factorització és única per ser $A$ Dedekind. D'aquí deduïm es veu clarament que és lliure. Que $\IdFrac(A)$ és un grup abelià ve de que és monoide i de l'existència d'inversos de l'apartat anterior.
+        \end{proof}
+        Proveu que tot ideal fraccionari de $A$ és un $A$-mòdul finit generat.
+        \begin{proof}
+            Sigui $J\in\IdFrac(A)$. Com $J(A:J)=A$,
+            \begin{equation*}
+                \exists x_{1}\ldots\exists x_{n}\exists y_{1}\ldots\exists y_{n}(x_{1},\ldots,x_{n}\in J,y_{1},\ldots,y_{n}\in\Big((A:J)\land\sum_{i=1}^{n}x_{i}y_{i}=1_{A}\Big)
+            \end{equation*}
+            Aleshores, com $y_{i}\in(A:J)\implies y_{i}J\subset A$, $J=\sum_{i=1}^{n}x_{i}y_{i}J\subset\sum_{i=1}^{n}x_{i}A$. Aleshores, com $A$ és noetherià, tot $A$-submòdul d'un finit generat és finit generat. Aleshores, $J$ és finit generat.
+        \end{proof}
+        \item Diem que un ideal fraccionari és principal si és de la forma $\alpha A$ per cert $\alpha\in K^{*}$. Diem dos ideals fraccionaris $I_{1}\equiv I_{2}$ si $I_{1}I_{2}^{-1}$ és un ideal fraccionari principal dins $\IdFrac(A)$. Veieu $\equiv$ és una relació d'equivalència i $\IdFrac(A)/\equiv$ és un grup abelià.
+        \begin{proof}
+            Veiem la reflexivitat. Fixem-nos que $A$ és un ideal fraccionari principal, ja que $A=1_{\Quot(A)}A$ i $1_{\Quot(A)}\in\Quot(A)^{*}$. Aleshores, donat $I\in\IdFrac(A)$, $II^{-1}=A$, el qual és ideal fraccionari principal.\newline
+            Veiem la simetria. Siguin $I_{1},I_{2}\in\IdFrac(A)$. Suposem que $I_{1}\equiv I_{2}:\iff\exists\alpha(\alpha\in\Quot(A)^{*}\land I_{1}I_{2}^{-1}=\alpha A)$. Tenim que $I_{2}I_{1}^{-1}=\alpha^{-1}\alpha AI_{2}I_{1}^{-1}=\alpha^{-1}I_{1}I_{2}^{-1}I_{2}I_{1}^{-1}=\alpha^{-1}A$, d'on deduïm que $I_{2}\equiv I_{1}$.\newline
+            Veiem la transitivitat. Suposem que $I_{1}\equiv I_{2}:\iff\exists\alpha(\alpha\in\Quot(A)^{*}\land I_{1}I_{2}^{-1}=\alpha A)$ i $I_{2}\equiv I_{3}:\iff\exists\alpha'(\alpha'\in\Quot(A)^{*}\land I_{2}I_{3}^{-1}=\alpha' A)$. Aleshores, $I_{1}I_{3}^{-1}=I_{1}I_{2}^{-1}I_{2}I_{3}^{-1}=(\alpha A)(\alpha' A)=\alpha\alpha' A$, d'on $I_{1}\equiv I_{3}$. Per tant, $\equiv$ defineix una relació d'equivalència en $\IdFrac(A)$.\newline
+            Tot quocient d'un grup abelià és abelià, d'on $\IdFrac(A)/\equiv$ és un grup abelià.
+        \end{proof}
+        \item Demostreu un isomorfisme de grups entre $C\ell(A)$ i $\IdFrac(A)/\equiv$.
+        \begin{proof}
+            Per definició, $J\in\IdFrac(A)$ és $A$-mòdul i $\exists\beta(\beta\in A-\{0\}\land\beta J\subset A)$. En particular, $\beta J$ és un ideal d'$A$. Considerem $\varphi:\IdFrac(A)\rightarrow C\ell(A)$ definida via $\varphi(J):=[\beta J]$, on recordem que $C\ell(A):=\{I\neq(0)\textrm{ ideal d'}A\}/\sim$, on $\mathfrak{a}\sim\mathfrak{b}:\iff\exists\alpha\exists\beta(\alpha,\beta\in A-\{0\}\land(\alpha)\mathfrak{a}=(\beta)\mathfrak{b})$.\newline
+            $\varphi$ esta ben definit. En efecte, si $\exists\beta\exists\beta'(\beta,\beta'\in A-\{0\}\land\beta J,\beta' J\subset A)$, tenim que $\beta J\sim\beta J'$ (és llegir la definició de $\sim$).\newline
+            $\varphi$ és morfisme de grups. En efecte, siguin $J_{1},J_{2}\in\IdFrac(A)$. Aleshores, $\exists\beta_{1}(\beta_{1}\in A-\{0\}\land\beta_{1}J_{1}\subset A)$ i $\exists\beta_{2}(\beta_{2}\in A-\{0\}\land\beta_{2}J_{2}\subset A)$. Tenim que $\varphi(J_{1}J_{2})=[\beta_{1}\beta_{2}J_{1}J_{2}]=[(\beta_{1}J_{1})(\beta_{2}J_{2})]=[\beta_{1}J_{1}][\beta_{2}J_{2}]=\varphi(J_{1})\varphi(J_{2})$ i $\varphi(A)=[A]$.\newline
+            Calculem $\ker{\varphi}$. Sigui $J\in\ker{\varphi}$. Aleshores, per definició de $\varphi$,
+            \begin{align*}
+                \beta J\sim A
+                &\implies\exists\alpha\exists\gamma(\alpha,\gamma\in A-\{0\}\land\beta\alpha J=\gamma A)\\
+                &\implies\beta J=\tfrac{\gamma}{\alpha}A\in\{\alpha A:\alpha\in\Quot(A)\}
+            \end{align*}
+            Per tant, $\ker{\varphi}\subset\{\alpha A:\alpha\in\Quot(A)\}$. Sigui $\alpha A\in\{\alpha A:\alpha\in\Quot(A)\}$. Clarament $\alpha A\sim A$. Aleshores, $\{\alpha A:\alpha\in\Quot(A)\}\subset\ker{\varphi}$. Per doble inclusió, $\ker{\varphi}=\{\alpha A:\alpha\in\Quot(A)\}$. Fixem-nos que amb aquesta caracterització es dedueix $\IdFrac(A)/\ker{\varphi}=\IdFrac(A)/\equiv$.\newline
+            Veiem l'exhaustivitat de $\varphi$. Sigui $I\neq(0)$ ideal d'$A$ i $\beta\in A-\{0\}$. Tenim que $\tfrac{1}{\beta}I\in\IdFrac(A)$, ja que $\tfrac{1}{\beta}I$ és $A$-mòdul i $\beta(\tfrac{1}{\beta}I)=I\subset A$. A més, $\varphi(\tfrac{1}{\beta}I)=[\beta(\tfrac{1}{\beta}I)]=[I]$, d'on resulta l'exhaustivitat.\newline
+            Ara, pel primer teorema d'isomorfisme obtenim $\IdFrac(A)/\ker{\varphi}\cong C\ell(A)$.
+        \end{proof}
+        \item Demostreu que tot ideal en un domini de Dedekind A està generat com a molt per 2 elements.
+        \begin{proof}
+            Primer veiem que si $A$ Dedekind i $\mathfrak{a}$ ideal d'$A$, $A/\mathfrak{a}$ és un domini d'ideals principals.\newline
+            Sigui $\mathfrak{p}\in\Spec(A),n\in\mathbb{N}$. Sabem que $A/\mathfrak{p}^{n}\cong A_{\mathfrak{p}}/\mathfrak{p}^{n}A_{\mathfrak{p}}$. Com $A_{\mathfrak{p}}$ és un anell de valuació discreta, en particular és domini d'ideals principals, d'on deduïm que tot ideal d'$A/\mathfrak{p}^{n}$ és principal.\newline
+            Sigui $\mathfrak{a}$ ideal d'$A$. Com $A$ Dedekind, $A$ domini de factorització única per ideals, d'on
+            \begin{equation*}
+                \exists n\exists a_{i}\ldots\exists a_{n}\exists\mathfrak{p}_{1}\ldots\exists\mathfrak{p}_{n}(n,a_{1},\ldots,a_{n}\in\mathbb{N},\mathfrak{p}_{1},\ldots,\mathfrak{p}_{n}\in\Spec(A)\land\mathfrak{a}=\mathfrak{p}_{1}^{a_{1}}\cdot\ldots\cdot\mathfrak{p}_{n}^{a{n}})
+            \end{equation*}
+            Com $A$ Dedekind, $\dim_{Krull}(A)=1$, d'on $\mathfrak{p}_{1},\ldots,\mathfrak{p}_{n}$ són maximals. En particular, coprimers dos a dos. Considerem la projecció $A\twoheadrightarrow\prod_{i=1}^{n}A/\mathfrak{p}_{i}^{a_{i}}$, morfisme exhaustiu amb nucli $\bigcap_{i=1}^{n}\mathfrak{p}_{i}^{a_{i}}=\mathfrak{a}$, d'on la darrera igualtat la tenim per coprimalitat. Pel primer teorema d'isomorfisme, deduïm que $A/\mathfrak{a}\cong\prod_{i=1}^{n}A/\mathfrak{p}_{i}^{a_{i}}$. Sigui $\mathfrak{b}$ ideal d'$A/\mathfrak{a}$. Podem pensar $\mathfrak{b}$ a $\prod_{i=1}^{n}A/\mathfrak{p}_{i}^{a_{i}}$. Si $e_{j}=(\delta_{ij_{A/\mathfrak{p}_{i}^{a_{i}}}})_{i=1}^{n}$, tenim que $\mathfrak{b}=\sum_{j=1}^{n}\mathfrak{b}e_{j}$ i $\mathfrak{b}e_{j}=(b_{j})$ ja que $A/\mathfrak{p}_{i}^{a_{i}}$ és principal. D'aquí deduïm que, a $A/\mathfrak{a}$, $\mathfrak{b}=\varphi^{-1}(b_{1},\ldots,b_{n})(A/\mathfrak{a})$. Per tant, $\mathfrak{b}$ és principal, d'on resulta el claim.\newline
+            Demostrem ara l'enunciat. Sigui $I$ un ideal no principal d'$A$. Sigui $a\in I-\{0\}$. Aleshores, $I/(a)$ és un ideal principal d'$A/(a)$, sigui $(b+(a))(A/(a))=I/(a)$, on $b\in I$. Aleshores, deduïm que $I=(a,b)$.
+        \end{proof}
+    \end{enumerate}
+\end{problema}
+\begin{problema}
+    Sigui $A$ un domini de Dedekind, i $K=\Quot(A)$. Sigui $L/K$ una extensió finita i separable de cossos i escrivim $L=K(\alpha)$. Sigui $B$ la clausura entera de $A$ en $L$, on sempre podem pensar $\alpha\in B$. Considera $\Irr(\alpha,K)[X]\in A[X]$.
+    \begin{enumerate}
+        \item (Lema de Nakayama) Si $B'$ és un subanell de $B$ contenint $A$ i satisfent les dues condicions següents:
+        \begin{itemize}
+            \item $L$ és generat per $B'$ com a $K$-espai vectorial.
+            \item $B'+\mathfrak{m}B=B$ per a tot ideal primer no zero $\mathfrak{m}$ de A.
+        \end{itemize}
+        Demostreu llavors que $B'=B$.
+        \begin{proof}
+            Primer veiem que $\exists\beta(\beta\in A-\{0\}\land\beta B\subset B')$. Per les hipòtesis, tenim que $B$ és un $A[\alpha]$-submòdul de $\Quot(A[\alpha])=\Quot(A)(\alpha)$ (ja que $B:=\{\alpha\in\Quot(A)(\alpha):\alpha\textrm{ enter sobre }A\}$) finit generat. Aleshores, pel problema 1, $B$ és un ideal fraccionari de $A[\alpha]$, d'on resulta que $\exists\beta'(\beta'\in A[\alpha]-\{0\}\land\beta' B\subset A[\alpha])$ i, escrivint $\beta'=\sum_{i=0}^{m}a_{i}\alpha^{i}\in A[\alpha]$ i $\alpha\in B$, deduïm que $\exists\beta(\beta\in A-\{0\}\land\beta B\subset A[\alpha])$. Com $A[\alpha]\subset B'$ ja que $B'$ genera $\Quot(A)(\alpha)$ com $\Quot(A)$-espai vectorial, deduïm el claim.\newline
+            Ara, veiem que si $I\neq(0)$ és ideal d'$A$, $B'+IB=B$. Com $A$ és Dedekind,
+            \begin{equation*}
+                \exists s\exists\mathfrak{p}_{1}\ldots\exists\mathfrak{p}_{s}(s\in\mathbb{N},
+                \mathfrak{p}_{1},\dots,\mathfrak{p}_{s}\in\Spec(A)\land I=\mathfrak{p}_{1}\cdot\ldots\cdot\mathfrak{p}_{s})
+            \end{equation*}
+            Tenim que $B'+\mathfrak{p}_{1}\mathfrak{p}_{2}B\subset B'+\mathfrak{p}_{1}B,B'+\mathfrak{p}_{2}B=B$. Fixem-nos que $B'\subset B'+\mathfrak{p}_{1}\mathfrak{p}_{2}B$ i $\mathfrak{p}_{2}B=\mathfrak{p}_{2}(B'+\mathfrak{p}_{1}B)=\mathfrak{p}_{2}B'+\mathfrak{p}_{1}\mathfrak{p}_{2}B\subset B'+\mathfrak{p}_{1}\mathfrak{p}_{2}B$. Com $B'+\mathfrak{p}_{1}\mathfrak{p}_{2}B$ és un ideal que conté $B'$ i $\mathfrak{p_{2}}B$ i $B'+\mathfrak{p_{2}}B$ és l'ideal més petit que els conté, tenim que $B'+\mathfrak{p_{2}}B\subset B'+\mathfrak{p}_{1}\mathfrak{p}_{2}B$. Per doble inclusió resulta $B=B'+\mathfrak{p_{2}}B=B'+\mathfrak{p}_{1}\mathfrak{p}_{2}B$. Per inducció en $s$, deduïm el claim.\newline
+            Ara, considerem l'ideal d'$A$ $\beta A$, on $\beta\in A$ és tal que $\beta B\subset B'$. Tenim $B=B'+\beta B\subset B'+B'=B'\subset B$, d'on per doble inclusió tenim $B=B'$.
+        \end{proof}
+        \item Suposem $\Irr(\alpha,K)[X]=\sum_{i=0}^{n}a_{i}X^{i}\in A[X]$ on existeix un ideal primer $\mathfrak{m}$ de A on $a_{i}\in\mathfrak{m}$ per $i=0,\ldots,d-1$, $a_{d}=1$ i $a_{0}\notin\mathfrak{m}^{2}$ (diem $\Irr(\alpha,K)[X]$ és un polinomi $\mathfrak{m}$-Eisenstein). Demostreu llavors $\mathfrak{m}B$ té en la seva factorització en ideals primers en $B$ un únic ideal maximal, i es té $A[\alpha]+\mathfrak{m}B=B$.
+        \begin{proof}
+            Com $A$ domini de Dedekind i $L/K$ extensió finita i separable de cossos, $B$ és domini de Dedekind. Recordem que
+            \begin{align*}
+                B
+                &=\{\gamma\in K(\alpha):\gamma\textrm{ enter sobre }A\}\\
+                &=\{\gamma\in K(\alpha):\exists p(X)(p(X)\in A[X]\textrm{ mònic}\land p(\gamma)=0)\}
+            \end{align*}
+            Aleshores, $\alpha\in B$ ja que $\Irr(\alpha,K)[X]\in A[X]$ (per hipòtesi), $\Irr(\alpha,K)[X]$ mònic i $\Irr(\alpha,K)[\alpha]=0$ (per definició de $\Irr(\alpha,K)[X]$). Com $\alpha\in B$, deduïm que $B(\mathfrak{m}B+\alpha B)\subset B$, és a dir, $\mathfrak{m}B+\alpha B$ ideal de $B$ (fixem-nos que $\alpha B=A[\alpha]$).\newline
+            Fixem-nos que $\mathfrak{m}B\subset\mathfrak{m}B+\alpha B$. Aleshores, $\exists j(j\in\{1,\ldots,n-1\}\land\mathfrak{m}B\subset(\mathfrak{m}B+\alpha B)^{j})$.
+            Veiem que $\mathfrak{m}B\subset(\mathfrak{m}B+\alpha B)^{j+1}$. Com $\alpha\in\mathfrak{m}B+\alpha B$, $\alpha^{n}\in(\mathfrak{m}B+\alpha B)^{n}$. Com $j<n$, tenim que $(\mathfrak{m}B+\alpha B)^{n}\subset(\mathfrak{m}B+\alpha B)^{j+1}$, d'on $\alpha^{n}\in(\mathfrak{m}B+\alpha B)^{j+1}$. Per $i\in\{1,\ldots,n-1\}$, com $a_{i}\in\mathfrak{m}$, $a_{i}\alpha^{i}\in\mathfrak{m}(\mathfrak{m}B+\alpha B)^{i}$. De
+            \begin{align*}
+                \mathfrak{m}(\mathfrak{m}B+\alpha B)^{i}
+                &\subset
+                (\mathfrak{m}B+\alpha B)^{j+i}
+                &\quad&\textrm{($\mathfrak{m}B\subset(\mathfrak{m}B+\alpha B)^{j}$)}
+                \\
+                &\subset(\mathfrak{m}B+\alpha B)^{j+1}
+                &\quad&\textrm{($i\geq1\implies j+i\geq j+1$)}
+            \end{align*}
+            deduïm que $a_{i}\alpha^{i}\in(\mathfrak{m}B+\alpha B)^{j+1}$. Aleshores,
+            \begin{align*}
+                \Irr(\alpha,K)[\alpha]=0
+                \implies a_{0}=-(\alpha^{n}+\ldots+a_{1}\alpha)
+                \in(\mathfrak{m}B+\alpha B)^{j+1}
+            \end{align*}
+            De $a_{0}\in(\mathfrak{m}B+\alpha B)^{j+1}\cap(\mathfrak{m}-\mathfrak{m}^{2})$, deduïm que $\mathfrak{m}=a_{0}A+\mathfrak{m}^{2}$. Per tant,
+            \begin{align*}
+                \mathfrak{m}B
+                &=\mathfrak{m}B+\mathfrak{m}^{2}B
+                &\quad&\textrm{($\mathfrak{m}=a_{0}A+\mathfrak{m}^{2}$)}\\
+                &\subset(\mathfrak{m}B+\alpha B)^{j+1}+(\mathfrak{m}B)(\mathfrak{m}B)
+                &\quad&\textrm{($a_{0}\in(\mathfrak{m}B+\alpha B)^{j+1}$)}\\
+                &\subset(\mathfrak{m}B+\alpha B)^{j+1}+(\mathfrak{m}B+\alpha B)^{2j}
+                &\quad&\textrm{($\mathfrak{m}B\subset(\mathfrak{m}B+\alpha B)^{j}$)}\\
+                &\subset(\mathfrak{m}B+\alpha B)^{j+1}
+                &\quad&\textrm{($2j\geq j+1$)}
+            \end{align*}
+            com volíem. Inductivament, deduïm que $\mathfrak{m}B\subset(\mathfrak{m}B+\alpha B)^{n}$.
+            \newline
+            Sigui $\mathfrak{p}\in\Spec(B)$ tal que $\mathfrak{p}\cap A=\mathfrak{m}$. En particular, $\mathfrak{m}B\subset\mathfrak{p}$. Si escrivim $\Irr(\alpha,K)[X]=\sum_{i=0}^{n}a_{i}X^{i}$,
+            \begin{align*}
+                \Irr(\alpha,K)[\alpha]=0
+                &\implies\alpha^{n}=-(a_{0}+\ldots+a_{n-1}\alpha^{n-1})\in\mathfrak{m}B
+                &\quad&\textrm{($a_{0},\ldots,a_{n-1}\in\mathfrak{m}$, $1,\ldots,\alpha^{n-1}\in B$)}\\
+                &\implies\alpha^{n}\in\mathfrak{p}
+                &\quad&\textrm{($\mathfrak{m}B\subset\mathfrak{p}$)}\\
+                &\implies(\alpha+\mathfrak{p})^{n}=\alpha^{n}+\mathfrak{p}=\mathfrak{p}
+                &\quad&\textrm{(Pas al quocient $B/\mathfrak{p}$)}\\
+                &\implies\alpha+\mathfrak{p}=\mathfrak{p}
+                &\quad&\textrm{($B/\mathfrak{p}$ domini)}\\
+                &\implies\alpha\in\mathfrak{p}\\
+                &\implies\alpha B\subset\mathfrak{p}
+            \end{align*}
+            Ara, com $\mathfrak{m}B+\alpha B$ és l'ideal de $B$ més petit que conté $\mathfrak{m}B$ i $\alpha B$ i $\mathfrak{m}B,\alpha B\subset\mathfrak{p}$, deduïm que $\mathfrak{m}B+\alpha B\subset\mathfrak{p}$. Per tant,
+            \begin{align*}
+                \mathfrak{m}B
+                &\subset(\mathfrak{m}B+\alpha B)^{n}\\
+                &\subset\mathfrak{p}^{n}
+                &\quad&\textrm{($\mathfrak{m}B+\alpha B\subset\mathfrak{p}$)}
+            \end{align*}
+            Com $B$ domini de Dedekind, $B$ és domini de factorització única per ideals, d'on
+            \begin{equation*}
+                \exists s\exists a_{1}\ldots\exists a_{s}\exists\mathfrak{p}_{1}\ldots\exists\mathfrak{p}_{s}(s,a_{1},\ldots,a_{s}\in\mathbb{N},\mathfrak{p}_{1},\ldots,\mathfrak{p}_{s}\in\Spec(B)\land\mathfrak{m}B=\mathfrak{p}_{1}^{a_{1}}\cdot\ldots\cdot\mathfrak{p}_{s}^{a_{s}})
+            \end{equation*}
+            Tenim que $\mathfrak{p}^{n}$ forma part de la factorització de $\mathfrak{m}B$, ja que $\mathfrak{m}B\subset\mathfrak{p}^{n}$. Suposem que $\mathfrak{p}$ no és l'únic ideal primer de la factorització. Escrivim $\mathfrak{m}B=\mathfrak{p}^{n}\cdot\mathfrak{p}_{2}^{a_{2}}\cdot\ldots\cdot\mathfrak{p}_{s}^{a_{s}}$ Aleshores,
+            \begin{align*}
+                n
+                &\leq n[B/\mathfrak{p}:A/\mathfrak{m}]
+                &\quad&\textrm{($[B/\mathfrak{p}:A/\mathfrak{m}]\geq1$)}\\
+                &<n[B/\mathfrak{p}:A/\mathfrak{m}]+\sum_{i=2}^{s}a_{i}[B/\mathfrak{p}_{i}:A/\mathfrak{m}]\\
+                &=[K(\alpha):K]
+                &\quad&\textrm{(Teorema 4.8.3. dels apunts i $\mathfrak{m}B=\mathfrak{p}^{n}\cdot\mathfrak{p}_{2}^{a_{2}}\cdot\ldots\cdot\mathfrak{p}_{s}^{a_{s}}$)}\\
+                &=\deg{\Irr(\alpha,K)[X]}
+                &\quad&\textrm{($K(\alpha)/K$ extensió finita i simple)}\\
+                &=n
+                &\quad&\textrm{($\Irr(\alpha,K)[X]=X^{n}+a_{n-1}X^{n-1}+\ldots+a_{0}$)}
+            \end{align*}
+            contradicció. Per tant, $\mathfrak{p}$ és l'únic ideal primer en la factorització de $\mathfrak{m}B$. Com $B$ domini de Dedekind, en particular $\dim_{Krull}(B)=1$. Per tant, $\mathfrak{p}$ és maximal, d'on resulta la primera part de l'enunciat.\newline
+            Com $\mathfrak{m}B\subsetneq\mathfrak{m}B+\alpha B$ ideal de $B$ i $\mathfrak{m}B$ ideal maximal de $B$, deduïm que $\mathfrak{m}B+\alpha B=B$, d'on resulta la segona part de l'enunciat.
+        \end{proof}
+        \item Sigui $B'$ un subanell de $B$ contenint $A$, on $B'$ genera $L$ com $K$-espai vectorial i $\Irr(\alpha,K)[X]$ és $\mathfrak{m}$-Eisenstein per un ideal maximal de $A$ amb $\alpha\in B'\subset B$ i $L=K(\alpha)$. Demostreu en aquesta situació que $B'=B$.
+        \begin{proof}
+            Com $\alpha\in B'$ i $A\subset B'$, $A[\alpha]\subset B'$, d'on deduïm
+            \begin{align*}
+                B
+                &=A[\alpha]+\mathfrak{m}B
+                &\quad&\textrm{($\Irr(\alpha,K)[X]$ $\mathfrak{m}$-Eisenstein)}\\
+                &\subset B'+\mathfrak{m}B
+                &\quad&\textrm{($A[\alpha]\subset B'$)}\\
+                &\subset B
+                &\quad&\textrm{($B'\subset B$)}
+            \end{align*}
+            Per doble inclusió, $B'+\mathfrak{m}B=B$. Estem en les condicions del lema de Nakayama, d'on $B'=B$.
+        \end{proof}
+        \item Proveu que $\mathbb{Z}[\sqrt[3]{3}]$ és integrament tancat.
+        \begin{proof}
+            Considerem $A:=\mathbb{Z}\subset(1,\sqrt[3]{3},\sqrt[3]{3^{2}})=:B'$. $B'$ genera $L:=\mathbb{Z}(\sqrt[3]{3})$ com $\Quot(\mathbb{Z})$-espai vectorial. $\Irr(\sqrt[3]{3},\mathbb{Z})[X]=X^{3}-3\in\mathbb{Z}[X]$ és $(3)$-Eisenstein ($(3)$ ideal maximal de $\mathbb{Z}$). Aleshores, $B'=B$, $B$ clausura entera de $A=\mathbb{Z}$ en $L=\mathbb{Z}(\sqrt[3]{3})$. Com $\mathbb{Z}[\sqrt[3]{3}]=(1,\sqrt[3]{3},\sqrt[3]{3^{2}})=B'$, deduïm que $\mathbb{Z}[\sqrt[3]{3}]$ és integrament tancat.
+        \end{proof}
+    \end{enumerate}
+\end{problema}
+\end{document}

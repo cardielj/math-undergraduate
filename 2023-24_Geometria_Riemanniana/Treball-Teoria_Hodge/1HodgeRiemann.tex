@@ -1,0 +1,247 @@
+\section{Teoria de Hodge sobre varietats riemannianes compactes}
+Sigui $(M,g)$ una $n$-varietat riemanniana orientada compacte, $\eta_{M}\in\Omega^{n}(M)$ element de volum de $M$.
+\subsection{$\star$}
+\begin{definicio}
+    Sigui $\star_{k}:\Omega^{k}(M)\rightarrow\Omega^{n-k}(M)$ l'operador definit per la identitat $\alpha\wedge\star_{k}\beta:=g(\alpha,\beta)\eta_{M}$. Diem que $\star_{k}$ és l'operador de Hodge. 
+\end{definicio}
+Pensarem $\star_{k}$ com una família d'operadors per cada $k$ i escriurem $\star$. Es comprova que $\star$ ve definit per un isomorfisme (veure \cite{Voisin_2002}, 5.1.1.). La idea és que l'operador de Hodge completa una $k$-forma diferenciable al element de volum $\eta_{M}$. Tenim que $\Omega^{k}(M)$ és un espai prehilbertià si el dotem pel producte escalar
+\begin{equation*}
+    \langle\alpha,\beta\rangle
+    =\int_{M}g(\alpha,\beta)\eta_{M}
+    =\int_{M}\alpha\wedge\star\beta
+\end{equation*}
+Veiem propietats de l'operador de Hodge.
+\begin{lema}
+   L'operador de Hodge satisfà $\star^{2}=(-1)^{k(n-k)}id_{\Omega^{k}(M)}$, on $\star^{2}:\Omega^{k}(M)\rightarrow\Omega^{n-k}(M)\rightarrow\Omega^{k}(M)$.
+    \begin{proof}
+        Sigui $\beta\in\Omega^{k}(M)$. Tenim que
+        \begin{align*}
+            \alpha\wedge\star\beta
+            &=g(\alpha,\beta)\eta_{M}
+            &\quad&\textrm{($\star$ operador de Hodge)}\\
+            &=g(\star\alpha,\star\beta)\eta_{M}
+            &\quad&\textrm{($\star$ preserva $g$)}\\
+            &=g(\star\beta,\star\alpha)\eta_{M}
+            &\quad&\textrm{($g$ simètrica)}\\
+            &=\star\beta\wedge\star\star\alpha
+            &\quad&\textrm{($\star$ operador de Hodge)}\\
+            &=(-1)^{k(n-k)}\star\star\alpha\wedge\star\beta
+            &\quad&\textrm{($\alpha\in\Omega^{k}(M),\star\beta\in\Omega^{n-k}(M)$ i $\omega_{1}\wedge\omega_{2}=(-1)^{\ord{\omega_{1}}\ord{\omega_{2}}}\omega_{2}\wedge\omega_{1}$)}
+        \end{align*}
+        d'on deduïm que $\star^{2}=(-1)^{k(n-k)}id_{\Omega^{k}(M)}$.
+    \end{proof}
+\end{lema}
+\begin{lema}
+    $d^{*}:=(-1)^{k}\star^{-1}d\star$ és l'operador adjunt de $d$.
+    \begin{proof}
+        Sigui $\alpha\in\Omega^{k-1}(M),\beta\in\Omega^{k}(M)$. Aleshores,
+        \begin{align*}
+            \langle d\alpha,\beta\rangle
+            &=\int_{M}d\alpha\wedge\star\beta
+            &\quad&\textrm{(Per definició de $\langle\cdot,\cdot\rangle$)}\\
+            &=\int_{M}d(\alpha\wedge\star\beta)+(-1)^{k}\alpha\wedge d\star\beta
+            &\quad&\textrm{($\omega_{1},\omega_{2}\in\Omega^{k}(M)$, $d(\omega_{1}\wedge\omega^{2})=d\omega_{1}\wedge\omega_{2}+(-1)^{k}\omega_{1}\wedge d\omega_{2}$)}\\
+            &=\int_{M}(-1)^{k}\alpha\wedge d\star\beta
+            &\quad&\textrm{\Big(Teorema de Stokes: $\int_{M}d(\alpha\wedge\star\beta)=0$\Big)}\\
+            &=\int_{M}(-1)^{k}\alpha\wedge\star(\star^{-1}d\star\beta)
+            &\quad&\textrm{($\star$ isomorfisme)}\\
+            &=\langle\alpha,(-1)^{k}\star^{-1}d\star\beta\rangle
+            &\quad&\textrm{(Per definició de $\langle\cdot,\cdot\rangle$)}
+        \end{align*}
+        com volíem veure.
+    \end{proof}
+\end{lema}
+\begin{definicio}
+    Sigui $\Delta_{k}^{d}:\Omega^{k}(M)\rightarrow\Omega^{k}(M)$ l'operador definit per $\Delta_{k}^{d}\alpha:=(d_{k-1}d_{k}^{*}+d_{k+1}^{*}d_{k})\alpha$. Diem que $\Delta_{k}^{d}$ és l'operador de Laplace-Beltrami.
+\end{definicio}
+Escriurem, fent un abús de notació, $\Delta_{d}$.
+\begin{lema}
+    $\langle\alpha,\Delta_{d}\alpha\rangle=\langle d^{*}\alpha,d^{*}\alpha\rangle
+    +\langle d\alpha,d\alpha\rangle$.
+    \begin{proof}
+        Tenim que
+        \begin{align*}
+            \langle\alpha,\Delta_{d}\alpha\rangle
+            &=\langle\alpha,(dd^{*}+d^{*}d)\alpha\rangle
+            &\quad&\textrm{(Per definició de $\Delta_{d}$)}\\
+            &=\langle\alpha,dd^{*}\alpha\rangle
+            +\langle\alpha,d^{*}d\alpha\rangle
+            &\quad&\textrm{($\langle\cdot,\cdot\rangle$ lineal)}\\
+            &=\langle d^{*}\alpha,d^{*}\alpha\rangle
+            +\langle d\alpha,d\alpha\rangle
+            &\quad&\textrm{($d,d^{*}$ adjunts)}
+        \end{align*}
+        com volíem.
+    \end{proof}
+\end{lema}
+\begin{corolari}
+    $\Delta_{d}$ és autoadjunt.
+    \begin{proof}
+        Fent el mateix, $\langle\Delta_{d}\alpha,\alpha\rangle=\langle d^{*}\alpha,d^{*}\alpha\rangle+\langle d\alpha,d\alpha\rangle=\langle\alpha,\Delta_{d}\alpha\rangle$.
+    \end{proof}
+\end{corolari}
+\begin{corolari}
+    $\ker{\Delta_{d}}=\ker{d}\cap\ker{d^{*}}$.
+    \begin{proof}
+        Sigui $\alpha\in\ker{\Delta_{d}}$. Aleshores,
+        \begin{align*}
+            &\|d^{*}\alpha\|^{2}+\|d\alpha\|^{2}
+            =\langle\alpha,\Delta_{d}\alpha\rangle
+            =0
+            &\quad&\textrm{($\alpha\in\ker{\Delta_{d}}$: $\Delta_{d}\alpha=0$)}\\
+            \implies
+            &\|d^{*}\alpha\|^{2}=0\land\|d\alpha\|^{2}=0
+            &\quad&\textrm{($\|\cdot\|\geq0$)}\\
+            \implies
+            &d^{*}\alpha=0\land d\alpha=0
+            &\quad&\textrm{(Per definició de $\|\cdot\|$)}\\
+            \implies
+            &\alpha\in\ker{d}\cap\ker{d^{*}}
+        \end{align*}
+        Aleshores, $\ker{\Delta_{d}}\subset\ker{d}\cap\ker{d^{*}}$. Sigui $\alpha\in\ker{d}\cap\ker{d^{*}}$. Aleshores, $\Delta_{d}\alpha=dd^{*}\alpha+d^{*}d\alpha=0+0=0$, d'on $\alpha\in\ker{\Delta_{d}}$ i $\ker{d}\cap\ker{d^{*}}\subset\ker{\Delta_{d}}$. Per doble inclusió, $\ker{\Delta_{d}}=\ker{d}\cap\ker{d^{*}}$.
+    \end{proof}
+\end{corolari}
+\subsection{Operadors diferencials el·líptics}
+Per descriure la descomposició de Hodge, requerim de les següents nocions. La referència principal d'aquesta subsecció és \cite{demailly1997complex}.
+\begin{definicio}
+    Siguin $E,F$ fibrats vectorials reals (o complexos) de $M$. Un operador diferencial de grau $\delta$ de $E$ a $F$ és un operador $\mathbb{R}$-lineal (o $\mathbb{C}$-lineal) $P:\mathcal{C}^{\infty}(M,E)\rightarrow\mathcal{C}^{\infty}(M,F)$ de la forma
+    \begin{equation*}
+        Pf(x)
+        =\sum_{|\alpha|\leq\delta}a_{\alpha}(x)D^{\alpha}f(x)
+    \end{equation*}
+    on $E|_{U}\cong U\times\mathbb{R}^{r}$ (o $E|_{U}\cong U\times\mathbb{C}^{r}$), $F|_{U}\cong U\times\mathbb{R}^{r'}$ (o $F|_{U}\cong U\times\mathbb{C}^{r'}$) són trivializats localment en una carta local $U$ de $M$ equipada amb coordenades $(x_{1},\ldots,x_{m})$, on $a_{\alpha}(x)=(a_{\alpha_{\lambda,\mu}}(x))_{1\leq\lambda\leq r',1\leq\mu\leq r}$ és una matriu d'ordre $r'\times r$ a coefficients a $\mathcal{C}^{\infty}(U)$. 
+\end{definicio}
+\begin{definicio}
+     Un operador diferencial $P$ és el·líptic si $\sigma_{P}(p,\xi)=\sum_{|\alpha|=\delta}a_{\alpha}(x)\xi^{\alpha}\in\Hom(E_{x},F_{x})$ és injectiu per tot $p\in M$ i $\xi\in T_{p}M^{*}-\{0\}$.
+\end{definicio}
+\begin{lema}
+    El símbol de $\Delta_{d}$ és $\sigma_{\Delta_{d}}(\alpha)(\omega)=-g(\alpha,\alpha)\omega$.
+    \begin{proof}
+        És suficient demostrar la igualtat localment i per la mètrica $g:=\sum_{i=1}^{n}\mathrm{d}x_{i}\otimes\mathrm{d}x_{i}$ (\cite{Voisin_2002}, 5.18). Es comprova que, si $\omega:=\sum_{i_{1}<\ldots<i_{p}}\omega_{i_{1},\ldots,i_{p}}\mathrm{d}x_{i_{1}}\wedge\ldots\wedge\mathrm{d}x_{i_{p}}\in\Omega^{p}(M)$, aleshores
+        \begin{align*}
+            \Delta_{d}\omega
+            =-\sum_{i_{1}<\ldots<i_{p}}\Big(\sum_{j=1}^{n}\partial_{x_{j}}^{2}\omega_{i_{1},\ldots,i_{p}}\Big)\mathrm{d}x_{i_{1}}\wedge\ldots\wedge\mathrm{d}x_{i_{p}}
+        \end{align*}
+        d'on es dedueix el resultat (pels càlculs, veure \cite{demailly1997complex}, IV.3.12.)
+    \end{proof}
+\end{lema}
+Del darrer resultat es dedueix la el·lípticitat de $\Delta_{d}$.\newline
+El següent resultat és cabdal pels resultats principals d'aquest treball. La demostració es basa en resultats de teoria el·líptica d'equacions en derivades parcials.
+\begin{teorema}\label{1.11}
+    Sigui $P:E\rightarrow F$ un operador diferencial el·líptic sobre una varietat compacte tals que $E,F$ tenen el mateix rang i tenen una mètrica. Aleshores, $\ker{P}\subset\mathscr{C}^{\infty}(E)$ és de dimensió finita, $P(\mathcal{C}^{\infty}(E))\subset\mathcal{C}^{\infty}(F)$ és tancat i de codimensió finita i $\mathcal{C}^{\infty}(E)=\ker{P}\oplus P^{*}(\mathcal{C}^{\infty}(F))$.
+    \begin{proof}
+        Veure \cite{demailly1997complex}, IV.2.4.
+    \end{proof}
+\end{teorema}
+\subsection{Isomorfisme de Hodge}
+La idea és aplicar \ref{1.11} a l'operador $\Delta_{d}$.
+\begin{teorema}\label{1.12}
+    $\ker{\Delta_{k}^{d}}\cong H^{k}(\Omega^{\bullet}(M;\mathbb{R}),d)$.
+    \begin{proof}
+        Per la descomposició anterior, en particular tenim
+        \begin{align*}
+            \Omega^{k}(M)
+            &=\ker{\Delta_{d}}\oplus\Delta_{d}^{*}(\Omega^{k}(M))
+            &\quad&\textrm{($\Delta_{d}$ operador el·líptic)}\\
+            &=\ker{\Delta_{d}}\oplus\Delta_{d}(\Omega^{k}(M))
+            &\quad&\textrm{($\Delta_{d}$ autoadjunt)}
+        \end{align*}
+        Considerem el morfisme
+        \begin{equation*}
+            \pi\circ\iota:
+            \ker{\Delta_{d}}
+            \hookrightarrow\ker(d:\Omega^{k}(M)\rightarrow\Omega^{k+1}(M))
+            \twoheadrightarrow H^{k}(\Omega^{\bullet}(M;\mathbb{R}),d)
+        \end{equation*}
+        Sigui $\alpha\in\ker{\pi\circ\iota}$. Aleshores, $\alpha\in\im{d}$. Com $\alpha\in\ker{\Delta_{d}}$, en particular $\alpha\in\ker{d^{*}}$ ($\ker{\Delta_{d}}=\ker{d}\cap\ker{d^{*}}$), d'on deduïm que $\alpha\in\im{d}\cap\ker{d^{*}}$. Com $d,d^{*}$ són adjunts, $\im{d}\cap\ker{d^{*}}=\im{d}\cap(\im{d})^{\perp}=\{0\}$. Aleshores, $\alpha\in\{0\}$, d'on $\ker{\pi\circ\iota}\subset\{0\}$. Com la inclusió $\{0\}\subset\ker{\pi\circ\iota}$ és evident, per doble inclusió $\ker{\pi\circ\iota}=\{0\}$, d'on resulta la injectivitat de $\pi\circ\iota$.\newline
+        Sigui $\alpha\in\ker{d}$. En particular, $\alpha\in\Omega^{k}(M)=\ker{\Delta_{d}}\oplus\Delta_{d}(\Omega^{k}(M))$, d'on $\exists\beta\exists\gamma(\beta\in\ker{\Delta_{d}},\gamma\in\Omega^{k}(M)\land\alpha=\beta+\Delta_{d}\gamma)$. D'aquí obtenim que $d^{*}d\gamma=\alpha-\beta-dd^{*}\gamma\in\ker{d}$, ja que $\alpha,\beta,dd^{*}\gamma\in\ker{d}$. Per tant, $d^{*}d\gamma\in\ker{d}\cap\im{d^{*}}=\ker{d}\cap(\ker{d})^{\perp}=\{0\}$, d'on deduïm que $d^{*}d\gamma=0$. Aleshores, $\alpha=\beta+dd^{*}\gamma$. Passant al quocient, $\alpha+\im{d}=\beta+\im{d}$, d'on resulta l'exhaustivitat de $\pi\circ\iota$ (ja que hem vist que $\forall\alpha+\im{d}(\alpha+\im{d}\in H^{k}(\Omega^{\bullet}(M;\mathbb{R}),d)\Rightarrow\exists\beta(\beta\in\ker{\Delta_{d}}\land\pi\circ\iota(\beta)=\alpha+\im{d}))$).\newline
+        Per tant, $\iota\circ\pi$ és isomorfisme, d'on resulta $\ker{\Delta_{d}}\cong H^{k}(\Omega^{\bullet}(M;\mathbb{R}),d)$.
+    \end{proof}
+\end{teorema}
+\begin{corolari}
+    $H^{k}(\Omega^{\bullet}(M;\mathbb{R}),d)$ és de dimensió finita.
+    \begin{proof}
+        $\ker{\Delta_{d}}\cong H^{k}(\Omega^{\bullet}(M;\mathbb{R}),d)$ i $\ker{\Delta_{d}}$ és de dimensió finita per \ref{1.11}.
+    \end{proof}
+\end{corolari}
+El darrer isomorfisme ens permet demostrar la dualitat de Poincaré per la cohomologia amb coeficients reals. Necessitem un lema previ sobre la commutativitat de $\star$ i $\Delta_{d}$.
+\begin{lema}
+    $\star$ i $\Delta_{d}$ commuten.
+    \begin{proof}
+        Sigui $\alpha\in\Omega^{k}(M)$. Fixem-nos que
+        \begin{align*}
+            d^{*}\alpha
+            &=(-1)^{k}\star^{-1}d\star\alpha
+            &\quad&\textrm{(Per definició de $d^{*}$)}\\
+            &=(-1)^{k}\star^{-1}\star^{-1}\star d\star\alpha\\
+            &=(-1)^{k}(-1)^{k(n-k)}\star d\star\alpha
+            &\quad&\textrm{($\star^{2}=(-1)^{k(n-k)}$)}
+        \end{align*}
+        D'una banda,
+        \begin{align*}
+            \star\Delta_{d}\alpha
+            &=\star dd^{*}\alpha+\star d^{*}d\alpha
+            &\quad&\textrm{(Per definició de $\Delta_{d}$)}\\
+            &=(-1)^{k}(-1)^{k(n-k)}\star d\star d\star\alpha+(-1)^{k+1}(-1)^{(k+1)(n-(k+1))}\star\star d\star d\alpha
+            &\quad&\textrm{($\alpha\in\Omega^{k},d\alpha\in\Omega^{k+1}$)}\\
+            &=(-1)^{k(n-k+1)}\star d\star d\star\alpha+(-1)^{k+1}(-1)^{(k+1)(n-(k+1))}(-1)^{k(n-k)}d\star d\alpha
+            &\quad&\textrm{($\star^{2}=(-1)^{k(n-k)}$)}\\
+            &=(-1)^{k(n-k+1)}\star d\star d\star\alpha+(-1)^{n-k}d\star d\alpha
+        \end{align*}
+        D'altra banda,
+        \begin{align*}
+            \Delta_{d}\star\alpha
+            &=dd^{*}\star\alpha+d^{*}d\star\alpha
+            &\quad&\textrm{(Per definició de $\Delta_{d}$)}\\
+            &=(-1)^{n-k}(-1)^{k(n-k)}d\star d\star\star\alpha+(-1)^{n-k+1}(-1)^{(n-k+1)(k-1)}\star d\star d\star\alpha
+            &\quad&\textrm{($\star\alpha\in\Omega^{n-k}$)}\\
+            &=(-1)^{n-k}(-1)^{k(n-k)}(-1)^{k(n-k)}d\star d\alpha+(-1)^{k(n-k+1)}\star d\star d\star\alpha
+            &\quad&\textrm{($\star^{2}=(-1)^{k(n-k)}$)}\\
+            &=(-1)^{n-k}d\star d\alpha+(-1)^{k(n-k+1)}\star d\star d\star\alpha
+        \end{align*}
+        d'on resulta $\star\Delta_{d}=\Delta_{d}\star$.
+    \end{proof}
+\end{lema}
+\begin{teorema}[Dualitat de Poincaré]
+    $H^{k}(\Omega^{\bullet}(M;\mathbb{R}),d)\cong\Hom_{\mathbb{R}}(H^{n-k}(\Omega^{\bullet}(M;\mathbb{R}),d),\mathbb{R})$.
+    \begin{proof}
+        Considerem la forma bilineal $\varphi:H^{k}(\Omega^{\bullet}(M;\mathbb{R}),d)\times H^{n-k}(\Omega^{\bullet}(M;\mathbb{R}),d)\rightarrow\mathbb{R}$ definida per
+        \begin{equation*}
+            \varphi(\alpha+\im{d},\beta+\im{d}):=\int_{M}\alpha\wedge\beta
+        \end{equation*}
+        Siguin $\alpha+\im{d},\alpha'+\im{d}\in H^{k}(\Omega^{\bullet}(M;\mathbb{R}),d)$ i $\beta+\im{d},\beta'+\im{d}\in H^{n-k}(\Omega^{\bullet}(M;\mathbb{R}),d)$ tal que $\alpha+\im{d}=\alpha'+\im{d}$ i $\beta+\im{d}=\beta'+\im{d}$. Aleshores, $\exists\gamma(\gamma\in\Omega^{k-1}(M)\land\alpha=\alpha'+d\gamma)$ i $\exists\gamma'(\gamma\in\Omega^{k-1}(M)\land\beta=\beta'+d\gamma')$. Pel teorema de Stokes i com $\beta',\alpha',d\gamma'\in\ker{d}$, obtenim
+        \begin{align*}
+            &\int_{M}\alpha\wedge\beta\\
+            =\,
+            &\int_{M}(\alpha'+d\gamma)\wedge(\beta'+d\gamma')\\
+            =\,
+            &\int_{M}\alpha'\wedge\beta'
+            +d(\gamma\wedge\beta')
+            +(-1)^{k}\gamma\wedge d\beta'
+            +d(\alpha'\wedge\beta')
+            +(-1)^{k+1}d\alpha'\wedge\beta'
+            +d(\gamma\wedge d\gamma')
+            +(-1)^{k}\gamma\wedge d^{2}\gamma'\\
+            =\,
+            &\int_{M}\alpha'\wedge\beta'
+            +d(\gamma\wedge\beta')
+            +d(\alpha'\wedge\beta')
+            +d(\gamma\wedge d\gamma')\\
+            =\,
+            &\int_{M}\alpha'\wedge\beta'
+        \end{align*}
+        és a dir, $\varphi(\alpha+\im{d},\beta+\im{d})=\varphi(\alpha'+\im{d},\beta+\im{d})$. Per tant, $\varphi$ esta ben definida.\newline
+        Ara, considerem $\Phi:H^{k}(\Omega^{\bullet}(M;\mathbb{R}),d)\rightarrow\Hom(H^{n-k}(\Omega^{\bullet}(M;\mathbb{R}),d),\mathbb{R})$ definda per $\Phi(\alpha+\im{d})(\beta+\im{d}):=\varphi(\alpha,\beta)$ (clarament ben definida). Sigui $\alpha+\im{d}\in\ker{\Phi}$. Aleshores, $\forall\beta+\im{d}(\beta+\im{d}\in H^{n-k}(\Omega^{\bullet}(M;\mathbb{R}),d)\Rightarrow\Phi(\alpha+\im{d})(\beta+\im{d})=0)$. Suposem que $\alpha+\im{d}\neq\im{d}$ (i, en particular, $\alpha\neq0$). Com $\ker{\Delta_{d}}\cong H^{k}(\Omega^{\bullet}(M;\mathbb{R}),d)$, podem suposar sense pèrdua de la generalitat que $\alpha\in\ker{\Delta_{d}}$. Per la commutativitat de $\star$ i $\Delta_{d}$, $\star\alpha\in\ker{\Delta_{d}}$. Ara,
+        \begin{align*}
+            \Phi(\alpha+\im{d})(\star\alpha+\im{d})
+            &=\varphi(\alpha+\im{d},\star\alpha+\im{d})
+            &\quad&\textrm{(Per definició de $\Phi$)}\\
+            &=\int_{M}\alpha\wedge\star\alpha
+            &\quad&\textrm{(Per definició de $\varphi$)}\\
+            &=\|\alpha\|^{2}\neq0
+            &\quad&\textrm{($\alpha\neq0$)}
+        \end{align*}
+        contradicció, ja que $\Phi(\alpha+\im{d})(\star\alpha+\im{d})=0$. Per tant, $\alpha+\im{d}=\im{d}$, d'on $\ker{\Phi}\subset\{\im{d}\}$. Com $\{\im{d}\}\subset\ker{\Phi}$ és evident, per doble inclusió $\ker{\Phi}=\{\im{d}\}$, d'on $\Phi$ és injectiva.\newline
+        Similarment, podriem haver definit $\Phi':H^{n-k}(\Omega^{\bullet}(M;\mathbb{R}),d)\rightarrow\Hom(H^{k}(\Omega^{\bullet}(M;\mathbb{R}),d),\mathbb{R})$ injectiva. Com $H^{k}(\Omega^{\bullet}(M;\mathbb{R}),d),H^{n-k}(\Omega^{\bullet}(M;\mathbb{R}),d)$ són de dimensió finita, per la injectivitat de $\Phi$ i $\Phi'$, tenen la mateixa dimensió. Per tant, $\Phi$ és isomorfisme, d'on resulta $H^{k}(\Omega^{\bullet}(M;\mathbb{R}),d)\cong\Hom(H^{n-k}(\Omega^{\bullet}(M;\mathbb{R}),d),\mathbb{R})$.
+    \end{proof}
+\end{teorema}

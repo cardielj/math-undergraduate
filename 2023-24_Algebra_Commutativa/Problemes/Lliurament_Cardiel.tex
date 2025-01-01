@@ -1,0 +1,541 @@
+\documentclass[compress]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{tikz-cd}
+\usepackage{fancyhdr}
+\usepackage[catalan]{babel}
+\usepackage[document]{ragged2e}
+\usepackage{appendix}
+
+\usepackage{silence}
+%\WarningFilter{latex}{Citation}
+%\WarningFilter{latex}{Reference}
+%\WarningFilter{latex}{There were undefined references}
+\WarningFilter{newunicodechar}{Redefining Unicode character}
+\WarningFilter{hyperref}{Token not allowed in a PDF string}
+\overfullrule=5pt
+
+\usepackage[margin=0.9in]{geometry}
+
+\usepackage[T1]{fontenc}
+\usepackage{newunicodechar}
+\usepackage[mathscr]{euscript}
+\usepackage{adjustbox}
+
+%% Definicions, proposicions, etc. %%
+\newtheorem{definicio}{Definició}
+\newtheorem{lema}{Lema}[section]
+\newtheorem{proposicio}{Proposició}[section]
+\newtheorem{corolari}{Corol·lari}
+\newtheorem{teorema}{Teorema}
+\newtheorem{problema}{Problema}
+\newtheorem*{claim}{Claim}
+\newtheorem{enunciat}{}
+\theoremstyle{definition}
+\newtheorem{idea}{\color{gray}Idea}
+\newtheorem{exemple}{Exemple}
+
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\Spec}{Spec}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\car}{car}
+\DeclareMathOperator{\Gal}{Gal}
+\DeclareMathOperator{\Obj}{Obj}
+\DeclareMathOperator{\ann}{ann}
+\DeclareMathOperator{\Bil}{Bil}
+
+\fancyhead[L]{\textbf{100112. Àlgebra Commutativa.}}
+
+\fancyhead[R]{\textit{Jordi Cardiel}}
+
+\usepackage{mathrsfs}
+\usepackage[scr=rsfs,cal=boondox]{mathalfa}
+%\usepackage{lineno}
+%\linenumbers
+
+\begin{document}
+\pagestyle{fancy}
+En tot el lliurament, $R$ serà un anell commutatiu amb unitat i un DIP.
+\begin{problema}
+    Sigui $M$ un $R$-mòdul $M$.
+    \begin{enumerate}
+        \item Si $m\in M$, definim l'anul·lador de $m$ com $\ann_{R}(m)=\{r\in R:rm=0_{R}\}$. Proveu que $\ann_{R}(m)$ és un ideal de $R$.
+        \begin{proof}
+            Veiem que $\ann_{R}(m)=\{r\in R:rm=0_{R}\}$ és un ideal de $R$. Per definició, $\ann_{R}(m)\subset R$. Siguin $r,r'\in\ann_{R}(m)$. Tenim que
+            \begin{align*}
+                (r-r')m
+                &=rm-r'm
+                &\quad&\textrm{(Distributivitat)}\\
+                &=0_{R}-0_{R}
+                &\quad&\textrm{($r,r'\in\ann_{R}(m)$)}\\
+                &=0_{R}
+                &\quad&\textrm{($0_{R}$ element neutre additiu)}
+            \end{align*}
+            Aleshores, $r-r'\in\ann_{R}(m)$, d'on $\ann_{R}(m)$ és un subgrup additiu de $R$. Siguin $r\in R,a\in\ann_{R}(m)$. Tenim que
+            \begin{align*}
+                (ra)m
+                &=r(am)
+                &\quad&\textrm{(Associativitat)}\\
+                &=r0_{R}
+                &\quad&\textrm{($a\in\ann_{R}(m)$)}\\
+                &=0_{R}
+                &\quad&\textrm{($0_{R}$ element neutre additiu)}
+            \end{align*}
+            Aleshores, $ra\in\ann_{R}(m)$, d'on deduïm $R\ann_{R}(m)\subset\ann_{R}(m)$.
+        \end{proof}
+        \item Diem que $m$ és de torsió si $\ann_{R}(m)\neq\{0_{R}\}$ i definim el submòdul de torsió de $M$ com $T(M)=\{m\in M:\ann_{R}(m)\neq\{0_{R}\}\}$. Diem que $M$ és lliure de torsió si $T(M)=\{0_{R}\}$. Proveu que $T(M)$ és un submòdul de $M$ i $M/T(M)$ és lliure de torsió.
+        \begin{proof}
+            Veiem que
+            \begin{align*}
+                T(M)
+                &=\{m\in M:\ann_{R}(m)\neq\{0_{R}\}\}\\
+                &=\{m\in M:\exists r(r\in R-\{0_{R}\}\land rm=0_{R})\}
+            \end{align*}
+            és $R$-submòdul de $M$. $T(M)\subset M$. Sigui $m_{1},m_{2}\in T(M)$. Aleshores, $\forall i(i\in\{1,2\}\Rightarrow\exists r_{i}(r_{i}\in R-\{0_{R}\}\land r_{i}m_{i}=0_{R}))$. Com $R$ és DIP, $R$ és domini. Per tant, $r_{1}\neq0_{R}\land r_{2}\neq0_{R}\Rightarrow r_{1}r_{2}\neq0_{R}$. Tenim que
+            \begin{align*}
+                (r_{1}r_{2})(m_{1}-m_{2})
+                &=(r_{1}r_{2})m_{1}-(r_{1}r_{2})m_{2}
+                &\quad&\textrm{(Distributivitat)}\\
+                &=(r_{2}r_{1})m_{1}-(r_{1}r_{2})m_{2}
+                &\quad&\textrm{($R$ commutatiu)}\\
+                &=r_{2}(r_{2}m_{1})-r_{1}(r_{2}m_{2})
+                &\quad&\textrm{(Associativitat)}\\
+                &=r_{2}0_{R}-r_{1}0_{R}
+                &\quad&\textrm{($r_{1}\in\ann_{R}(m_{1})\land r_{2}\in\ann_{R}(m_{2})$)}\\
+                &=0_{R}
+                &\quad&\textrm{($0_{R}$ element neutre additiu)}
+            \end{align*}
+            Per tant, $\exists r(r\in R-\{0_{R}\}\land r(m_{1}-m_{2})=0_{R})$, és a dir, $m_{1}-m_{2}\in T(M)$, d'on $T(M)$ és un subgrup additiu de $M$. Sigui $r\in R,m\in T(M)$. $\exists r'(r'\in R-\{0_{R}\}\land r'm=0_{R})$. Per tant,
+            \begin{align*}
+                r'(rm)
+                &=(r'r)m
+                &\quad&\textrm{(Associativitat)}\\
+                &=(rr')m
+                &\quad&\textrm{($R$ commutatiu)}\\
+                &=r(r'm)
+                &\quad&\textrm{(Associativitat)}\\
+                &=r0_{R}
+                &\quad&\textrm{($r'\in\ann_{R}(m)$)}\\
+                &=0_{R}
+                &\quad&\textrm{($0_{R}$ element neutre additiu)}
+            \end{align*}
+            Com $\exists r'(r'\in R-\{0_{R}\}\land r'(rm)=0_{R})$, $rm\in T(M)$, és a dir, $T(M)$ és tancat per multiplicació d'elements de $R$. Com $T(M)$ és un subgrup additiu de $M$ i és tancat per multiplicació d'elements de $R$, és un $R$-submòdul de $M$.\newline
+            Veiem que $T/T(M)$ és lliure de torsió. Clarament
+            \begin{align*}
+                \{T(M)\}\subset T(M/T(M))
+                &=\{m+T(M):\exists r(r\in R-\{0_{R}\}\land r(m+T(M))=T(M))\}\\
+                &=\{m+T(M):\exists r(r\in R-\{0_{R}\}\land rm\in T(M))\}
+            \end{align*}
+            Sigui $m+T(M)\in T(M/T(M))$. $\exists r(r\in R-\{0_{R}\}\land rm\in T(M))$. Com $rm\in T(M)$, $\exists r'(r'\in R-\{0_{R}\}\land r'(rm)=0_{R})$. Com $R$ és domini i $r,r'\neq0_{R}$, deduïm que $m=0_{R}$. Aleshores, $m+T(M)=0_{R}+T(M)=T(M)\in\{T(M)\}$. Per tant, $T(M/T(M))\subset\{T(M)\}$. Per doble inclusió, $T(M/T(M))=\{T(M)\}$.
+        \end{proof}
+        \item Proveu que $T(M\oplus N)=T(M)\oplus T(N)$.
+        \begin{proof}
+            Escrivim
+            \begin{align*}
+                T(M\oplus N)
+                &=\{(m,n)\in M\oplus N:\exists r(r\in R-\{0_{R}\}\land r(m,n)=(rm,rn)=(0_{R},0_{R}))\}\\
+                T(M)\oplus T(N)
+                &=\{(m,n)\in M\oplus N:\exists r_{1}(r_{1}\in R-\{0_{R}\}\land r_{1}m=0_{R})\land\exists r_{2}(r_{2}\in R-\{0_{R}\}\land r_{2}n=0_{R})\}
+            \end{align*}
+            Sigui $(m,n)\in T(M\oplus N)$. $\exists r(r\in R-\{0_{R}\}\land r(m,n)=(rm,rn)=(0_{R},0_{R}))$. Per tant, $\exists r(r\in R-\{0_{R}\}\land rm=0_{R})\land\exists r(r\in R-\{0_{R}\}\land rn=0_{R})$, és a dir, $(m,n)\in T(M)\oplus T(N)$ (i per tant $T(M\oplus N)\subset T(M)\oplus T(N)$).\newline
+            Sigui $(m,n)\in T(M)\oplus T(N)$. $\exists r_{1}(r_{1}\in R-\{0_{R}\}\land r_{1}m=0_{R})\land\exists r_{2}(r_{2}\in R-\{0_{R}\}\land r_{2}n=0_{R})$. Com $R$ és domini, $r_{1}\neq0_{R}\land r_{2}\neq0_{R}\Rightarrow r_{1}r_{2}\neq0_{R}$. Tenim que
+            \begin{align*}
+                (r_{1}r_{2})(m,n)
+                &=((r_{1}r_{2})m,(r_{1}r_{2})n)\\
+                &=((r_{2}r_{1})m,(r_{1}r_{2})n)
+                &\quad&\textrm{($R$ commutatiu)}\\
+                &=(r_{2}(r_{2}m),r_{1}(r_{2}n))
+                &\quad&\textrm{(Associativitat)}\\
+                &=(r_{2}0_{R},r_{1}0_{R})
+                &\quad&\textrm{($r_{1}\in\ann_{R}(m)\land r_{2}\in\ann_{R}(n)$)}\\
+                &=(0_{R},0_{R})
+                &\quad&\textrm{($0_{R}$ element neutre additiu)}
+            \end{align*}
+            Per tant, $\exists r(r\in R-\{0_{R}\}\land r(m,n)=(rm,rn)=(0_{R},0_{R}))$, és a dir, $(m,n)\in T(M\oplus N)$ (i per tant $T(M)\oplus T(N)\subset T(M\oplus N)$). Per doble inclusió, $T(M\oplus N)=T(M)\oplus T(N)$.
+        \end{proof}
+        \item Calculeu $T(R)$ i $T(R/(a))$.
+        \begin{proof}
+            Ho fem directament:
+            \begin{align*}
+                T(R)
+                &=\{r\in R:\exists r'(r'\in R-\{0_{R}\}\land r'r=0_{R})\}
+                &\quad&\textrm{(Per definició de $T(R)$)}\\
+                &=\{0_{R}\}
+                &\quad&\textrm{($R$ domini)}
+            \end{align*}
+            \begin{align*}
+                T(R/(a))
+                &=\{r+(a)\in R+(a):\exists r'(r'\in R-\{0_{R}\}\land r'(r+(a))=(a))\}
+                &\quad&\textrm{(Per definició de $T(R/(a))$)}\\
+                &=\{r+(a)\in R+(a):\exists r'(r'\in R-\{0_{R}\}\land r'r\in(a))\}\\
+                &=R/(a)
+                &\quad&\textrm{($r'=a$ i $(a)$ ideal)}
+            \end{align*}
+        \end{proof}
+    \end{enumerate}
+\end{problema}
+\begin{problema}
+    Proveu que si $M$ és un mòdul finitament generat i lliure de torsió és lliure.
+    \begin{proof}
+        Com $M$ $R$-mòdul finitament generat, $\exists m_{1}\ldots\exists m_{s}(m_{1},\ldots,m_{s}\in M-\{0_{R}\}\land M=(m_{1},\ldots,m_{s}))$. Sense pèrdua de la generalitat, podem suposar $s$ mínima. Escrivim $\forall i(i\in\{1,\ldots,s\}\Rightarrow M_{i}:=(m_{1},\ldots,m_{i}))$.\newline
+        Veiem que $M_{1}$ és lliure. Sigui $f:R\rightarrow M_{1}$ morfisme de $R$-mòduls definida per $f(r):=rm_{1}$. $f$ és exhaustiva ja que $M_{1}:=(m_{1})$. Sigui $r\in\ker{f}$. Aleshores, $rm_{1}=0_{R}$. Suposem que $r\neq0_{R}$. Aleshores, $m_{1}\in T(M)$. Com $M$ és lliure de torsió, $T(M)=\{0_{R}\}$, d'on deduïm que $m_{1}=0_{R}$, contradicció. Per tant, $r=0_{R}\in\{0_{R}\}$, d'on $\ker{f}\subset\{0_{R}\}$. Com $\{0_{R}\}\subset\ker{f}$ és evident, per doble inclusió $\ker{f}=\{0_{R}\}$. Per tant, $f$ és injectiva. Com $f$ morfisme de $R$-mòduls és exhaustiva i injectiva, $f$ és un isomorfisme. Per tant, $M_{1}\cong R$ ($M_{1}$ és lliure).\newline
+        Suposem que $j:=\max\{i\in\{1,\ldots,s\}:M_{i}\textrm{ és lliure}\}<s$. $M_{j+1}$ no és lliure. Aleshores, $\{m_{1},\ldots,m_{j+1}\}$ és un sistema generador linealment dependent. Per tant,
+        \begin{equation*}
+            \forall r_{1}\ldots\forall r_{j+1}\Big(r_{1},\ldots,r_{j+1}\in R\Rightarrow\Big(\sum_{k=1}^{j+1}r_{k}m_{k}=0_{R}\land\exists k\Big(k\in\{1,\ldots,j+1\}\land r_{k}\neq0_{R}\Big)\Big)\Big)
+        \end{equation*}
+        Suposem que $r_{j+1}\neq0_{R}$. Aleshores, $\sum_{k=1}^{j+1}r_{k}m_{k}=\sum_{k=1}^{j}r_{k}m_{k}=0_{R}$. Com $M_{j}$ és lliure, $\{m_{1},\ldots,m_{j}\}$ és un conjunt linealment independent. Per tant, $\sum_{k=1}^{j}r_{k}m_{k}=0_{R}\Rightarrow\forall k(k\in\{1,\ldots,j\}\Rightarrow r_{k}=0_{R})$, contradicció. Per tant, $r_{j+1}\neq0_{R}$.\newline
+        Sigui $g:M_{j+1}\rightarrow M_{j}$ definida per $g(x):=r_{j+1}x$. $g$ ben definida, ja que si $x=\sum_{k=1}^{j+1}r_{k}'m_{k}$, es comprova que $g(x)=\sum_{k=1}^{j}(r_{j+1}r_{k}'-r_{j+1}'r_{k})m_{k}\in M_{j}$. Sigui $x\in\ker{g}$. Aleshores, $r_{j+1}x=0_{R}$. Suposem que $x\neq0_{R}$. Aleshores, $r_{j+1}\in T(M)$. Com $M$ és lliure de torsió, $T(M)=\{0_{R}\}$, d'on deduïm que $r_{j+1}=0_{R}$, contradicció. Per tant, $x=0_{R}\in\{0_{R}\}$ i $\ker{g}\subset\{0_{R}\}$, d'on $\ker{g}=\{0_{R}\}$ per doble inclusió. Aleshores, $M_{j+1}\cong\im{g}$, contradicció, ja que com $M_{j}$ és lliure i $\im{g}$ és $R$-submòdul de $M_{j}$, $\im{g}$ és lliure i $M_{j+1}$ no ho és. Per tant $j=s$, com volíem veure.
+    \end{proof}
+\end{problema}
+\begin{problema}
+    Sigui $M$ un $R$-mòdul finitament generat. Proveu que la sucessió exacta curta
+    \begin{center}
+    \begin{tikzcd}
+        0
+        \arrow{r}
+        &T(M)
+        \arrow{r}
+        &M
+        \arrow{r}
+        &M/T(M)
+        \arrow{r}
+        &0
+    \end{tikzcd}
+    \end{center}
+    és escindida. Deduïu que $M$ és isomorf a la suma directa del seu submòdul de torsió i un mòdul lliure. Proveu que aquesta descomposició de $M$ com a suma directa d'un mòdul de torsió i un mòdul lliure és única tret d'isomorfisme.
+    \begin{proof}
+        Sigui $M$ $R$-mòdul finitament generat. Aleshores, $M/T(M)$ és $R$-mòdul finitament generat i lliure de torsió, d'on deduïm que és lliure. Sigui $\{m_{1}+T(M),\ldots,m_{n}+T(M)\}$ base de $M/T(M)$ tal que $\forall i(i\in\{1,\ldots,n\}\Rightarrow m_{i}\notin T(M))$.\newline
+        Sigui $\alpha:M/T(M)\rightarrow M$ definida per $\forall i(i\in\{1,\ldots,n\}\Rightarrow\alpha(m_{i}+T(M)):=m_{i})$ i estenent per linealitat. $\alpha$ esta ben definida i és morfisme de $R$-mòduls. Considerem $\pi:M\twoheadrightarrow M/T(M)$ la projecció canònica. Aleshores,
+        \begin{align*}
+            \pi\circ\alpha(m_{i}+T(M))
+            &=\pi(m_{i})
+            &\quad&\textrm{(Per definició de $\alpha$)}\\
+            &=m_{i}+T(M)
+            &\quad&\textrm{(Per definició de $\pi$)}
+        \end{align*}
+        Deduïm que $\pi\circ\alpha=id_{M/T(M)}$. Per tant,
+        \begin{center}
+        \begin{tikzcd}
+        0
+        \arrow{r}
+        &T(M)
+        \arrow{r}
+        &M
+        \arrow{r}
+        &M/T(M)
+        \arrow{r}
+        &0
+        \end{tikzcd}
+        \end{center}
+        és escindida, o, equivalentment, $M\cong T(M)\oplus(M/T(M))$, on $T(M)$ és el $R$-submòdul de torsió de $M$ i $M/T(M)$ $R$-mòdul lliure per l'observació inicial.\newline
+        Sigui $T_{tor}$ $R$-mòdul de torsió i $L$ $R$-mòdul lliure tal que $M\cong T_{tor}\oplus L$. Tenim que
+        \begin{align*}
+            T(M)
+            &\cong T(T_{tor}\oplus L)
+            &\quad&\textrm{($M\cong T_{tor}\oplus L$)}\\
+            &=T(T_{tor})\oplus T(L)
+            &\quad&\textrm{($T(M\oplus N)=T(M)\oplus T(N)$)}\\
+            &=T(T_{tor})\oplus\{0_{R}\}
+            &\quad&\textrm{($L$ lliure $\implies$ $L$ lliure de torsió)}\\
+            &\cong T(T_{tor})
+            \\
+            &=T_{tor}
+            &\quad&\textrm{($T_{tor}$ $R$-mòdul de torsió)}
+        \end{align*}
+        D'altra banda,
+        \begin{align*}
+            \frac{M}{T(M)}
+            &\cong\frac{T(M)\oplus(M/T(M))}{T(M)\oplus\{0_{R}\}}\\
+            &\cong\frac{T_{tor}\oplus L}{T_{tor}\oplus\{0_{R}\}}
+            &\quad&\textrm{($T(M)\oplus(M/T(M))\cong M\cong T_{tor}\oplus L$ i $T(M)\cong T_{tor}$)}\\
+            &\cong L
+        \end{align*}
+        Deduïm que la descomposició de $M$ com a suma directa d'un $R$-mòdul de torsió i un $R$-mòdul lliure és única tret d'isomorfisme.
+    \end{proof}
+\end{problema}
+\begin{problema}
+    Sigui $M$ un $R$-mòdul de torsió, és a dir, $T(M)=M$. Per a cada ideal $(r)$ de $R$ (recordem que és DIP), definim el submòdul $(r)$-primari de $M$ com $T_{(r)}:=\{m\in M:r^{n}m=0_{R}\textrm{ per algun}n\geq0\}$.
+    \begin{enumerate}
+        \item Proveu que $T_{(r)}$ és independent del generador que triem per l'ideal.
+        \begin{proof}
+            Siguin $r,r'\in R$ tal que $(r)=(r')$. Sigui $m\in T_{(r)}:=\{m\in M:\exists n(n\in\mathbb{N}\land r^{n}m=0_{R})\}$. $\exists n(n\in\mathbb{N}\land r^{n}m=0_{R})$. Aleshores,
+            \begin{align*}
+                (r')^{n}
+                &=(r''r)^{n}m
+                &\quad&\textrm{($r'\in(r')=(r'')\implies\exists r''(r''\in R\land r'=r''r)$)}\\
+                &=(r'')^{n}r^{n}m
+                &\quad&\textrm{($R$ commutatiu)}\\
+                &=(r'')^{n}0_{R}
+                &\quad&\textrm{($r^{n}m=0_{R}$)}\\
+                &=0_{R}
+                &\quad&\textrm{($0_{R}$ element neutre additiu)}
+            \end{align*}
+            Per tant, $m\in T_{(r')}$, d'on $T_{(r)}\subset T_{(r')}$. Per simetria, $T_{(r')}\subset T_{(r)}$. Per doble inclusió, $T_{(r)}=T_{(r')}$, com volíem veure.
+        \end{proof}
+        \item Proveu que si $r,s$ són coprimers, llavors $T_{(rs)}\cong T_{(r)}\oplus T_{(s)}$.
+        \begin{proof}
+            Sigui $m\in T_{(r)}\cap T_{(s)}$. Aleshores, $\exists n\exists n'(n,n'\in\mathbb{N}\land r^{n}m=s^{n'}m=0_{R})$. Com $r,s$ coprimers, $(r,s)=R$. Aleshores, $\exists r'\exists s'(r',s'\in R\land r'r^{n}+s's^{n'}=1_{R})$. Per tant,
+            \begin{align*}
+                m
+                &=m(r'r^{n}+s's^{n'})
+                &\quad&\textrm{($r'r^{n}+s's^{n'}=1_{R}$)}\\
+                &=m(r'r^{n})+m(s's^{n'})
+                &\quad&\textrm{(Distributivitat)}\\
+                &=r'(r^{n}m)+s'(s^{n'}m)
+                &\quad&\textrm{(Associativitat i commutativitat)}\\
+                &=r'0_{R}+s'0_{r}
+                &\quad&\textrm{($r^{n}m=s^{n'}m=0_{R}$)}\\
+                &=0_{R}
+                &\quad&\textrm{($0_{R}$ element neutre additiu)}
+            \end{align*}
+            Per tant $m\in\{0_{R}\}$, d'on $T_{(r)}\cap T_{(s)}\subset\{0_{R}\}$. Com $\{0_{R}\}\subset T_{(r)}\cap T_{(s)}$ és evident, per doble inclusió $T_{(r)}\cap T_{(s)}=\{0_{R}\}$.\newline
+            Sigui $f:T_{(r)}\oplus T_{(s)}\rightarrow T_{(rs)}$ definida per $f(m,m'):=m+m'$. Veiem que $f$ esta ben definida. Sigui $(m,m')\in T_{(r)}\oplus T_{(s)}$. Aleshores, $\exists n\exists n'(n,n'\in\mathbb{N}\land r^{n}m=s^{n'}m'=0_{R})$. Tenim que
+            \begin{align*}
+                (rs)^{\max\{n,n'\}}f(m,m')
+                &=(rs)^{\max\{n,n'\}}(m+m')
+                &\quad&\textrm{(Per definició de $f$)}\\
+                &=s^{\max\{n,n'\}}(r^{\max\{n,n'\}}m)
+                +r^{\max\{n,n'\}}(s^{\max\{n,n'\}}m')
+                &\quad&\textrm{(Lo de sempre)}\\
+                &=s^{\max\{n,n'\}}0_{R}
+                +r^{\max\{n,n'\}}0_{R}
+                &\quad&\textrm{($r^{n}m=s^{n'}m'=0_{R}$)}\\
+                &=0_{R}
+                &\quad&\textrm{(També lo de sempre)}
+            \end{align*}
+            Per tant $f(m,m')\in T_{(rs)}$. $f$ és clarament morfisme de $R$-mòduls i $\ker{f}=(T_{(r)}\cap T_{(s)})\oplus(T_{(r)}\cap T_{(s)})=\{(0_{R},0_{R})\}$ ($f$ injectiva). Comprovem l'exhaustivitat. Sigui $m\in T_{(rs)}$. $\exists n(n\in\mathbb{N}\land(rs)^{n}m=0_{R})$. Com $(r,s)=R$, $\exists r'\exists s'(r',s'\in R\land r'r^{n}+s's^{n'}=1_{R})$. Com $(rs)^{n}m$, $r'r^{n}m\in T_{(s)}$ i $s's^{n}m\in T_{(r)}$. Tenim que
+            \begin{align*}
+                f(s's^{n}m,r'r^{n}m)
+                &=s's^{n}m+r'r^{n}m
+                &\quad&\textrm{(Per definició de $f$)}\\
+                &=(s's^{n}+r'r^{n})m
+                &\quad&\textrm{(Distributivitat)}\\
+                &=1_{R}m
+                &\quad&\textrm{($r'r^{n}+s's^{n'}=1_{R}$)}\\
+                &=m
+            \end{align*}
+            Per tant, $\forall m(m\in T_{(rs)}\Rightarrow\exists(x,x')((x,x')\in T_{(r)}\oplus T_{(s)}\land f(x,x')=m))$, és a dir, $f$ exhaustiva. Deduïm que $T_{(r)}\oplus T_{(s)}\cong T_{(rs)}$ ja que $f$ és isomorfisme.
+        \end{proof}
+        \item Proveu que $M\cong\bigoplus_{p}T_{(p)}$, on $p$ es mou en els primers de $R$.
+        \begin{proof}
+            Per tot $p$ primer sigui $\iota_{p}:T_{(p)}\rightarrow\bigoplus_{p}T(M)(=M)$ i $\iota_{p}':T_{(p)}\rightarrow\bigoplus_{p}T_{(p)}$ les respectives inclusions. Per la propietat universal de la suma directa,
+            \begin{center}
+            \begin{tikzcd}
+                T_{(p)}
+                \arrow[hook]{rr}{\iota_{p}'}
+                \arrow[hook, swap]{rrdd}{\iota_{p}}
+                &&\bigoplus_{p}T_{(p)}
+                \arrow[dotted]{dd}{\exists!\iota}\\
+                \\
+                &&T(M)
+            \end{tikzcd}
+            \end{center}
+            Per un argument similar a l'apartat anterior, $\ker{\iota}=\bigoplus_{p}\bigcap_{p}T_{(p)}=\bigoplus_{p}\{0_{R}\}=\{(0_{R})_{p}\}$, d'on deduïm la injectivitat de $\iota$.\newline
+            Veiem l'exhaustivitat. Sigui $m\in T(M)$. $\exists r(r\in R-\{0_{R}\}\land rm=0_{R})$. Per tant, $m\in T_{(r)}$. Com $R$ és DIP, $R$ és DFU. Aleshores, $\exists e_{1}\ldots\exists e_{n}\exists p_{1}\ldots\exists p_{n}(e_{1},\ldots,e_{n}\in\mathbb{N},p_{1},\ldots,p_{n}\in R\textrm{ primers}\land r=\prod_{i=1}^{n}p_{i}^{e_{i}})$. Aplicant l'isomorfisme del darrer apartat inductivament, obtenim el següent diagrama commutatiu
+            \begin{center}
+            \begin{tikzcd}
+                \bigoplus_{p}T_{(p)}
+                \arrow[dotted]{dd}{\iota}
+                &&\bigoplus_{i=1}^{n}T_{(p_{i})}
+                \arrow[hook,swap]{ll}{\beta}
+                &&\bigoplus_{i=1}^{n}T_{(p_{i}^{e_{i}})}
+                \arrow[hook,swap]{ll}{T_{(p_{i}^{e_{i}})}\subset T_{(p_{i})}}\\
+                \\
+                T(M)
+                &&T_{(r)}
+                \arrow[hook]{ll}{\iota_{r}}
+                \arrow[hook]{uu}{\alpha}
+                \arrow[two heads, hook]{uurr}{\cong}
+            \end{tikzcd}
+            \end{center}
+            Aleshores, $\iota(\beta\circ\alpha(m))=m$, d'on obtenim l'exhaustivitat ($\forall m(m\in T(M)\Rightarrow\exists m'(m'\in\bigoplus_{p}T_{(p)}\land\iota(m')=m))$).
+        \end{proof}
+    \end{enumerate}
+\end{problema}
+\begin{problema}
+    Sigui $p$ un primer i $T_{(p)}$ un $R$-mòdul finitament generat, no nul, $(p)$-primari d'acord amb la definició de l'exercici anterior.
+    \begin{enumerate}
+        \item Sigui $\ann_{R}(T_{(p)})=\{r\in R:rt\neq0_{R}\textrm{ per a tot }t\in T_{(p)}\}$. Proveu que és un ideal propi de $R$, generat per $p^{N}$ per algun $N$.
+        \begin{proof}
+            Escrivim $\ann_{R}(T_{(p)}):=\{r\in R:\forall t(t\in T_{(p)}\Rightarrow rt=0_{R})\}$. Per definició, $\ann_{R}(T_{(p)})\subset R$. Siguin $r,r'\in\ann_{R}(T_{(p)}),t\in T_{(p)}$. Tenim que
+            \begin{align*}
+                (r-r')t
+                &=rt-r't
+                &\quad&\textrm{(Distributivitat)}\\
+                &=0_{R}-0_{R}
+                &\quad&\textrm{($r,r'\in\ann_{R}(m)$)}\\
+                &=0_{R}
+                &\quad&\textrm{($0_{R}$ element neutre additiu)}
+            \end{align*}
+            Aleshores, $r-r'\in\ann_{R}(T_{(p)})$, d'on $\ann_{R}(T_{(p)})$ és un subgrup de $R$. Siguin $r\in R,a\in\ann_{R}(T_{(p)}),t\in T_{(p)}$. Tenim que
+            \begin{align*}
+                (ra)t
+                &=r(at)
+                &\quad&\textrm{(Associativitat)}\\
+                &=r0_{R}
+                &\quad&\textrm{($a\in\ann_{R}(m)$)}\\
+                &=0_{R}
+                &\quad&\textrm{($0_{R}$ element neutre additiu)}
+            \end{align*}
+            Aleshores, $ra\in\ann_{R}(T_{(p)})$, d'on deduïm $R\ann_{R}(T_{(p)})\subset\ann_{R}(T_{(p)})$. Per tant, $\ann_{R}(T_{(p)})$ és ideal.\newline
+            Veiem que és propi. Per hipòtesi, $T_{(p)}\neq\{0_{R}\}$. $\exists t(t\in R-\{0_{R}\}\land t\in T_{(p)})$. Com $1_{R}\notin\ann_{R}(t)$, deduïm que $\ann_{R}(t)\subsetneq R$. Ara,
+            \begin{align*}
+                \ann_{R}(T_{(p)})
+                &=\{r\in R:\forall t(t\in T_{(p)}\Rightarrow rt=0_{R})\}
+                &\quad&\textrm{(Per definició de $\ann_{R}(T_{(p)})$)}\\
+                &=\{r\in R:\forall t(t\in T_{(p)}\Rightarrow r\in\ann_{R}(t))\}
+                &\quad&\textrm{(Per definició de $\ann_{R}(t)$)}\\
+                &=\bigcap_{t\in T_{(p)}}\ann_{R}(t)
+                &\quad&\textrm{(Per definició de $\cap$)}\\
+                &\subset\ann_{R}(t)
+                &\quad&\textrm{($t\neq0_{R}$)}\\
+                &\subsetneq R
+            \end{align*}
+            com volíem veure.\newline
+            Veiem que $\exists N(N\in\mathbb{N}\land\ann_{R}(T_{(p)})=(p^{N}))$. Com $\ann_{R}(T_{(p)})$ és ideal de $R$ i $R$ és DIP, $\exists r(r\in R\land\ann_{R}(T_{(p)})=(r))$. Sigui $r'\in\ann_{R}(T_{(p)})$. Tenim que $\forall t(t\in T_{(p)}\Rightarrow r't=0_{R})$, $\exists r''(r''\in R\land r'=rr'')$ i $\exists n(n\in\mathbb{N}\land p^{n}t=0_{R})$ (ja que $t\in T_{(p)}$). Aleshores,
+            \begin{align*}
+                (p^{n}-rr'')t
+                &=p^{n}t-rr''t
+                &\quad&\textrm{()}\\
+                &=p^{n}t-r't
+                &\quad&\textrm{()}\\
+                &=0_{R}-0_{R}
+                &\quad&\textrm{()}\\
+                &=0_{R}
+            \end{align*}
+            Sense pèrdua de la generalitat podem suposar que $t\neq0_{R}$ ($T_{(p)}\neq\{0_{R}\}$). Com $R$ és domini, deduïm que $p^{n}-rr''=0_{R}$ (d'on $p^{n}=rr'$). Com $p$ primer i $R$ DFU, $\exists u\exists n'(u\in U(R),n'\leq n\land r=up^{n'})$. Per tant,
+            \begin{align*}
+                \ann_{R}(T_{(p)})
+                &=(r)\\
+                &=(up^{n'})
+                &\quad&\textrm{($r=up^{n'}$)}\\
+                &=(p^{n'})
+                &\quad&\textrm{($u\in U(R)$)}
+            \end{align*}
+            com volíem veure.
+        \end{proof}
+        \item Suposem que $T_{(p)}$ està generat per $\{t_{1},\ldots,t_{s}\}$. Proveu que hi ha un conjunt de generadors $\{y_{1},\ldots,y_{s}\}$ de $T_{(p)}$ tal que $\ann_{R}(y_{1})=\ann_{R}(T_{(p)})$ ($=(p^{N})$).
+        \begin{proof}
+            Com $T_{(p)}$ $R$-mòdul finitament generat, $\exists t_{1}\ldots\exists t_{s}(t_{1},\ldots,t_{s}\in T_{(p)}\land T_{(p)}=(t_{1},\ldots,t_{s}))$.\newline
+            Demostraré una igualtat que potser no és necessària, però la utilitzaré. Sigui $r\in\bigcap_{i=1}^{s}\ann_{R}(t_{i}),t\in T_{(p)}$. Tenim
+            \begin{align*}
+                rt
+                &=r\Big(\sum_{i=1}^{s}r_{i}t_{i}\Big)
+                &\quad&\textrm{\Big($t\in T_{(p)}\implies\exists r_{1}\ldots\exists r_{s}(r_{1},\ldots,r_{s}\in R\land t=\sum_{i=1}^{s}r_{i}t_{i})$\Big)}\\
+                &=\sum_{i=1}^{s}r_{i}(rt_{i})\\
+                &=\sum_{i=1}^{s}r_{i}0_{R}
+                &\quad&\textrm{\Big($r\in\bigcap_{i=1}^{s}\ann_{R}(t_{i})$\Big)}\\
+                &=0_{R}
+            \end{align*}
+            Per tant, $\forall t(t\in T_{(p)}\Rightarrow r\in\ann_{R}(t))$, és a dir, $r\in\bigcap_{t\in T_{(p)}}\ann_{R}(t)$, d'on deduïm $\bigcap_{i=1}^{s}\ann_{R}(t_{i})\subset\bigcap_{t\in T_{(p)}}\ann_{R}(t_{i})$. La inclusió $\bigcap_{t\in T_{(p)}}\ann_{R}(t_{i})\subset\bigcap_{i=1}^{s}\ann_{R}(t_{i})$ és clara ja que $t_{1},\ldots,t_{s}\in T_{(p)}$. Per doble inclusió, $\bigcap_{i=1}^{s}\ann_{R}(t_{i})=\bigcap_{t\in T_{(p)}}\ann_{R}(t)$.\newline
+            Per un argument similar a la demostració de $\exists N(N\in\mathbb{N}\land\ann_{R}(T_{(p)})=(p^{N}))$, podem fer-ho per $\ann_{R}(t)$, $t\in T_{(p)}$. Per tant, $\forall i(i\in\{1,\ldots,s\}\Rightarrow\exists n_{i}(n_{i}\in\mathbb{N}\land\ann_{R}(t_{i})=(p^{n_{i}})))$. Sense pèrdua de la generalitat, suposem que $n_{s}\leq\ldots\leq n_{1}$. Aleshores,
+            \begin{equation*}
+                (p^{n_{1}})\subset\cdots\subset(p^{n_{s}})
+            \end{equation*}
+            d'on
+            \begin{equation*}
+                \ann_{R}(t_{1})\subset\cdots\subset\ann_{R}(t_{s})
+            \end{equation*}
+            Aleshores, $\bigcap_{i=1}^{s}\ann_{R}(t_{i})=\ann_{R}(t_{s})$ ($=\ann_{R}(T_{(p)})$) i escollint el sistema generador $\{t_{s},\ldots,t_{1}\}$ l'enunciat segueix.
+        \end{proof}
+        \item Sigui $T_{(p)}'=T_{(p)}/\langle y_{1}\rangle$. Proveu que $T_{(p)}'$ és també finitament generat i $(p)$-primari. Si $y'\in T_{(p)}'$ satisfà $\ann_{R}(y')=(p^{m})$, llavors $m\leq N$ i existeix $y\in T_{(p)}$ tal que la seva classe mòdul $\langle y_{1}\rangle$ és $y'$ i $\ann_{R}(y)=(p^{m})$.
+        \begin{proof}
+            Com $T_{(p)}=(y_{1},\ldots,y_{s})$, $T_{(p)}/\langle y_{1}\rangle=(y_{2}+\langle y_{1}\rangle,\ldots,y_{s}+\langle y_{1}\rangle)$ (també és finitament generat). Podem escriure
+            \begin{align*}
+                T_{(p)}/\langle y_{1}\rangle
+                &=\{m+\langle y_{1}\rangle:m\in T_{(p)}\}\\
+                &=\{m+\langle y_{1}\rangle:m\in\{m\in M:\exists n(n\in\mathbb{N}\land p^{n}m=0_{R})\}\}\\
+                &=\{m+\langle y_{1}\rangle:\exists n(n\in\mathbb{N}\land p^{n}(m+\langle y_{1}\rangle)=\langle y_{1}\rangle)\}
+            \end{align*}
+            Per tant, $T_{(p)}/\langle y_{1}\rangle$ és $(p)$-primari.\newline
+            Veiem que si $y'\in T_{(p)}/\langle y_{1}\rangle$ satisfà $\ann_{R}(y')=(p^{m})$, llavors $m\leq N$. Sigui $\pi:T_{(p)}\twoheadrightarrow T_{(p)}/\langle y_{1}\rangle$. Per exhaustivitat de $\pi$, $\exists y(t\in T_{(p)}\land\pi(y)=y')$. Tenim que
+            \begin{align*}
+                (p^{N})
+                &=\bigcap_{t\in T_{(p)}}\ann_{R}(t)\\
+                &\subset\ann_{R}(y)
+                &\quad&\textrm{($y\in T_{(p)}$)}\\
+                &=\{r\in R:ry=0_{R}\}
+                &\quad&\textrm{(Per definició de $\ann_{R}(y)$)}\\
+                &\subset\{r\in R:ry\in\langle y_{1}\rangle\}
+                &\quad&\textrm{($0_{R}\in\langle y_{1}\rangle$)}\\
+                &=\ann_{R}(y')
+                &\quad&\textrm{(Per definició de $\ann_{R}(y')$ i $\pi(y)=y'$)}\\
+                &=(p^{m})
+                &\quad&\textrm{(Per hipòtesi)}
+            \end{align*}
+            Com $(p^{N})\subset(p^{m})$, $m\leq N$, com volíem.\newline
+            Veiem que existeix $y\in T_{(p)}$ tal que la seva classe mòdul $\langle y_{1}\rangle$ és $y'$ i $\ann_{R}(y)=(p^{m})$. Tenim que $p^{m}\in\ann_{R}(y')$ ($\ann_{R}(y')=(p^{m})$). Aleshores, $\exists r(r\in R\land p^{m}r=ry_{1})$. Tenim que
+            \begin{align*}
+                p^{N-m}ry_{1}
+                &=p^{N-m}p^{m}y
+                &\quad&\textrm{($p^{m}y=ry_{1}$)}\\
+                &=p^{N}y\\
+                &=0_{R}
+                &\quad&\textrm{($y\in T_{(p)}$ i $\ann_{R}(T_{(p)})$)}
+            \end{align*}
+            Per tant, $p^{N-m}r\in\ann_{R}(y_{1})=(p^{N})$, d'on $\exists r'(r'\in R\land p^{N-m}r=r'p^{N})$. Ara,
+            \begin{align*}
+                p^{N-m}(r-r'p^{m})
+                &=p^{N-m}r-r'p^{m}
+                &\quad&\textrm{(Distributivitat)}\\
+                &=0_{R}
+                &\quad&\textrm{($p^{N-m}r=r'p^{m}$)}
+            \end{align*}
+            Com $R$ és domini i $p$ primer, $r-r'p^{m}=0_{R}$ (d'on $r=r'p^{m}$). Tenim que
+            \begin{align*}
+                p^{m}(y-r'y_{1})
+                &=p^{m}y-(r'p^{m})y_{1}\\
+                &=p^{m}y-ry_{1}
+                &\quad&\textrm{($r'p^{m}=r$)}\\
+                &=0_{R}
+                &\quad&\textrm{($p^{m}y=ry_{1}$)}
+            \end{align*}
+            d'on $p^{m}\in\ann_{R}(y-r'y_{1})$ i, en conseqüència, $(p^{m})\subset\ann_{R}(y-r'y_{1})$. Per un argument similar que abans hem vist (quan veiem que $m\leq N$), deduïm que $\ann_{R}(y-r'y_{1})\subset\ann_{R}(\pi(y-r'y_{1}))$. Com $\pi(y-r'y_{1})=\pi(y)=y'$ i $\ann_{R}(y')=(p^{m})$, obtenim $\ann_{R}(y-r'y_{1})\subset(p^{m})$. Per doble inclusió, $\ann_{R}(y-r'y_{1})\subset(p^{m})$. $y-r'y_{1}$ és l'element que busquem.
+        \end{proof}
+        \item Proveu que existeixen enters positius $m_{1}\leq m_{2}\leq\cdots\leq m_{s}$ tals que $\ann_{R}(T_{(p)})=(p^{m_{s}})$ i un isomorfisme de mòduls $T_{(p)}\cong R/(p^{m_{1}})\oplus\cdots\oplus R/(p^{m_{s}})$.
+        \begin{proof}
+            Procedim per inducció en $s$.\newline
+            Sigui $s=1$. Sigui $f:R\rightarrow T_{(p)}$ el morfisme de $R$-mòduls exhaustiu definit per $f(r):=ry_{1}$ (ben definit: $T_{(p)}=(y_{1})$). Tenim que $\ker{f}=\ann_{R}(y_{1})=(p^{N})$. Aleshores, pel primer teorema d'isomorfisme, $R/(p^{N})\cong\im{f}=T_{(p)}$.\newline
+            Suposem el resultat cert per $<s$. Tenim que $T_{(p)}/\langle y_{1}\rangle=(y_{2}+\langle y_{1}\rangle,\ldots,y_{s}+\langle y_{1}\rangle)$. Per hipòtesi d'inducció, $\exists m_{1}\ldots\exists m_{s-1}(m_{1}\leq\ldots\leq m_{s}\land T_{(p)}/\langle y_{1}\rangle\cong\bigoplus_{i=1}^{s-1}R/(p^{m_{i}}))$. Per l'apartat anterior, $\forall y'(y'\in T_{(p)}/\langle y_{1}\rangle\Rightarrow\exists y(y\in T_{(p)}\land(\pi(y)=y'\land\ann_{R}(y)=\ann_{R}(y'))))$ (recordem que podem trobar $n(y')\in\mathbb{N}$ tal que $\ann_{R}(y')=(p^{n(y')})$). Aleshores, definim $\beta:T_{(p)}/\langle y_{1}\rangle\rightarrow T_{(p)}$ definida per $\beta(y')=y$ (ben definida per l'elecció de $y$). Es comprova que $\beta$ és morfisme de $R$-mòduls ja que $\pi:T_{(p)}\twoheadrightarrow T_{(p)}/\langle y_{1}\rangle$ és morfisme de $R$-mòduls. També es comprova que $\pi\circ\beta=id_{T_{(p)}/\langle y_{1}\rangle}$. Aleshores,
+            \begin{center}
+            \begin{tikzcd}
+                0
+                \arrow{r}
+                &\langle y_{1}\rangle
+                \arrow{r}
+                &T_{(p)}
+                \arrow{r}
+                &T_{(p)}/\langle y_{1}\rangle
+                \arrow{r}
+                &0
+            \end{tikzcd}
+            \end{center}
+            escindeix, d'on $T_{(p)}\cong(T_{(p)}/\langle y_{1}\rangle)\oplus\langle y_{1}\rangle$. Del cas $s=1$, $\langle y_{1}\rangle\cong R/(p^{m_{s}})$ amb $m_{1}\leq\cdots\leq m_{s-1}\leq m_{s}$. Per tant,
+            \begin{align*}
+                T_{(p)}
+                &\cong(T_{(p)}/\langle y_{1}\rangle)\oplus\langle y_{1}\rangle\\
+                &\cong\bigoplus_{i=1}^{s-1}R/(p^{m_{i}})\oplus R/(p^{m_{s}})\\
+                &\cong\bigoplus_{i=1}^{s}R/(p^{m_{i}})
+            \end{align*}
+            i l'enunciat segueix.
+        \end{proof}
+    \end{enumerate}
+\end{problema}
+\begin{problema}
+    Sigui $M$ un $R$-mòdul finitament generat. Aleshores $M\cong F\oplus T$ on $F$ és lliure i $T\cong\bigoplus_{p}T_{(p)}$. A més, per a cada $p$, tenim $T_{(p)}\cong\bigoplus_{i=1}^{s}R/(p^{m_{i}})$ per certs $m_{1},\ldots,m_{s}$.
+    \begin{proof}
+        Concloem:
+        \begin{align*}
+            M
+            &\cong(M/T(M))\oplus T(M)
+            &\quad&\textrm{(Exercici 3.)}\\
+            &\cong(M/T(M))\oplus\bigoplus_{p}T_{(p)}
+            &\quad&\textrm{(Exercici 4.3.)}\\
+            &\cong(M/T(M))\oplus\bigoplus_{p}\bigoplus_{i=1}^{s}R/(p^{m_{i},p})
+            &\quad&\textrm{(Exercici 5.4.)}
+        \end{align*}
+    \end{proof}
+\end{problema}
+\end{document}

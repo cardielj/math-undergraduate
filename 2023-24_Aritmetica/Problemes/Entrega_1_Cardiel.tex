@@ -1,0 +1,476 @@
+\documentclass[compress]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{tikz-cd}
+\usepackage{fancyhdr}
+\usepackage[catalan]{babel}
+\usepackage[document]{ragged2e}
+\usepackage{appendix}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+% Bibliography
+\usepackage[backend=biber,style=alphabetic,sorting=ynt]{biblatex}
+\addbibresource{bibliografia.bib}
+
+\usepackage{silence}
+%\WarningFilter{latex}{Citation}
+%\WarningFilter{latex}{Reference}
+%\WarningFilter{latex}{There were undefined references}
+\WarningFilter{newunicodechar}{Redefining Unicode character}
+\WarningFilter{hyperref}{Token not allowed in a PDF string}
+\overfullrule=5pt
+
+\usepackage[margin=0.9in]{geometry}
+
+\usepackage[T1]{fontenc}
+\usepackage{newunicodechar}
+\usepackage[mathscr]{euscript}
+\usepackage{adjustbox}
+
+%% Definicions, proposicions, etc. %%
+\newtheorem{definicio}{Definició}
+\newtheorem{lema}{Lema}
+\newtheorem{proposicio}{Proposició}
+\newtheorem{corolari}{Corol·lari}
+\newtheorem{teorema}{Teorema}
+\newtheorem{problema}{Problema}
+\newtheorem*{claim}{Claim}
+\newtheorem{enunciat}{}
+\theoremstyle{definition}
+\newtheorem{idea}{\color{gray}Idea}
+\newtheorem{exemple}{Exemple}
+
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\Spec}{Spec}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\car}{car}
+\DeclareMathOperator{\Gal}{Gal}
+\DeclareMathOperator{\Obj}{Obj}
+\DeclareMathOperator{\Ann}{Ann}
+
+\usepackage{mathrsfs}
+\usepackage[scr=rsfs,cal=boondox]{mathalfa}
+%\usepackage{lineno}
+%\linenumbers
+
+\fancyhead[L]{\textbf{100113. Aritmètica.}}
+
+\fancyhead[R]{\textit{Jordi Cardiel}}
+
+\begin{document}
+\pagestyle{fancy}
+$(C,D,U)=(7,8,7)$.
+\begin{problema}
+    Considerem l'equació $C:X^{2}-3(U+1)XY+3Y^{2}+(D+1)X-2Y-1=0$ (escrivim $C:f(X,Y)=0$ amb $f\in\mathbb{R}[X,Y]$). Intenta fer un canvi de variables on s'escrigui l'equació com $a(X')^{2}+b(Y')^{2}=1$ per certes constants $a$ i $b$ i variables $X',Y'$. Intenteu donar una paremetrització de la corba. Estudieu si $L:=\mathbb{R}(X)[Y]/(f(X,Y))$ és un cos, i en cas de ser-ho, decidiu si existeix $t$ on $L=\mathbb{R}(t)$. Podem fer el mateix enunciat i preguntes amb $\mathbb{Q}$ enlloc de $\mathbb{R}$?
+    \begin{proof}[Solució]
+        Projectivitzem $C$ a $\mathbb{P}^{2}(K)$, $K=\mathbb{Q},\mathbb{R}$ ($\car(K)\neq2$). Considerem la corba $f(X,Y,Z):=aX^{2}+bY^{2}+cZ^{2}+dXY+eYZ+fXZ$, on $(a,b,c,d,e,f):=(1,3,-1,-24,-2,9)\in\mathbb{R}^{6}$. Tenim que $a\neq0_{\mathbb{R}}$. Aleshores, fent el canvi de variable $X\rightarrow\mathscr{X}:=X+\frac{d}{2a}Y+\frac{f}{2a}Z$ obtenim
+        \begin{equation*}
+            f(\mathscr{X},Y,Z)
+            =a\mathscr{X}^{2}
+            +\big(b-\tfrac{d^{2}}{4a}\big)Y^{2}
+            +\big(c-\tfrac{f^{2}}{4a}\big)Z^{2}
+            +\big(e-\tfrac{fd}{2a}\big)YZ
+        \end{equation*}
+        Com $e-\frac{fd}{2a}=106\neq0_{K}$ i $b-\frac{d^{2}}{4a}=-141\neq0_{K}$, fent el canvi de variable $Y\rightarrow\mathscr{Y}:=Y+\frac{(e-\frac{fd}{2a})}{2(b-\frac{d^{2}}{4a})}Z$ obtenim
+        \begin{align*}
+            f(\mathscr{X},\mathscr{Y},Z)
+            &=a\mathscr{X}^{2}
+            +\big(b-\tfrac{d^{2}}{4a}\big)\mathscr{Y}^{2}
+            +\big(\big(c-\tfrac{f^{2}}{4a}\big)-\tfrac{(e-\frac{fd}{2a})^{2}}{4(b-\frac{d^{2}}{4a})}\big)Z^{2}\\
+            &=\mathscr{X}^{2}-141\mathscr{Y}^{2}-\tfrac{749}{564}Z^{2}
+        \end{align*}
+        Imposant $Z=1$, resulta l'equació $a'\mathscr{X}^{2}-b'\mathscr{Y}^{2}=1$, on $(a',b'):=(\frac{564}{749},\frac{79524}{749})$.\newline
+        Una parametrització real de $f(\mathscr{X},\mathscr{Y})=a'\mathscr{X}^{2}+b'\mathscr{Y}^{2}-1=0$ és $\varphi(t):=(\frac{\cosh{t}}{\sqrt{a'}},\frac{\sinh{t}}{\sqrt{b'}})$ ($=(\mathscr{X},\mathscr{Y})$). Aleshores,
+        \begin{align*}
+            \{(X,Y)\in\mathbb{R}^{2}:f(X,Y)=0\}
+            &=\{\big(\tfrac{\cosh{t}}{\sqrt{a'}}
+            -\tfrac{d}{2a}\big(\tfrac{\sinh{t}}{\sqrt{b'}}-\tfrac{(e-\frac{fd}{2a})}{2(b-\frac{d^{2}}{4a})}\big)
+            -\tfrac{f}{2a},
+            \tfrac{\sinh{t}}{\sqrt{b'}}
+            -\tfrac{(e-\frac{fd}{2a})}{2(b-\frac{d^{2}}{4a})}\big):t\in\mathbb{R}\}\\
+            &=\{\big(\sqrt{\tfrac{749}{564}}\cosh{t}-\tfrac{\sqrt{2247}}{141}\sinh{t}+\tfrac{212}{47},\sqrt{\tfrac{749}{79524}}\sinh{t}+\tfrac{53}{141}\big):t\in\mathbb{R}\}
+        \end{align*}
+        dona la parametrització real de $f(X,Y)$. Ara, per donar una parametrització racional, necessitem un punt racional de $f(X,Y)$. Podem comprovar que $(0,1)\in\{(X,Y)\in\mathbb{Q}^{2}:f(X,Y)=0\}$. Amb els canvis de variable anteriors, obtenim que $(-\frac{15}{2},\frac{88}{141})\in\{(\mathscr{X},\mathscr{Y})\in\mathbb{Q}^{2}:f(\mathscr{X},\mathscr{Y})=0\}$. Considerem la recta $\ell$ que passa per $(-\frac{15}{2},\frac{88}{141})$ i té pendent $m$. Tenim que
+        \begin{align*}
+            \ell\cap\{(\mathscr{X},\mathscr{Y})\in\mathbb{Q}^{2}:f(\mathscr{X},\mathscr{Y})=0\}-\{(-\tfrac{15}{2},\tfrac{88}{141})\}
+            =\{(-\tfrac{2115m^{2}+352m+15}{2(141m^{2}-1)},-\tfrac{12408m^{2}+2115m+88}{141(141m^{2}-1)}):m\in\mathbb{Q}\}
+        \end{align*}
+        que ens dona una parametrització racional de $f(\mathscr{X},\mathscr{Y})$. Desfent els canvis de variable, donat $m\in\mathbb{Q}$,\newline
+        $(\frac{-397056m^{2}-66928m-2820}{188(141m^{2}-1)},\frac{-4935m^{2}-2115m-141}{144(144m^{2}-1)})$ dona una parametrització racional de $f(X,Y)$.\newline
+        $L:=K(\mathscr{X})[\mathscr{Y}]/(f(\mathscr{X},\mathscr{Y}))$ és cos si i només si $f(\mathscr{X},\mathscr{Y})\in K(\mathscr{X})[\mathscr{Y}]$ és irreductible sobre $K(\mathscr{X})$.
+        \begin{enumerate}
+            \item Si $K=\mathbb{R}$, $f(\mathscr{X},\mathscr{Y})=-141\mathscr{Y}^{2}+(\mathscr{X}-\sqrt{(a')^{-1}})(\mathscr{X}+\sqrt{(a')^{-1}})$, d'on deduïm per Eisenstein que $f(\mathscr{X},\mathscr{Y})$ és irreductible sobre $\mathbb{R}(\mathscr{X})$.
+            \item Si $K=\mathbb{Q}$, $f(\mathscr{X},\mathscr{Y})=-141\mathscr{Y}^{2}+(\mathscr{X}^{2}-a')$, d'on deduïm per Eisenstein que $f(\mathscr{X},\mathscr{Y})$ és irreductible sobre $\mathbb{Q}(\mathscr{X})$.
+        \end{enumerate}
+        Per tant, $L$ és un cos.\newline
+        Ara, fixem-nos que $f(\mathscr{X},\mathscr{Y})$ té solució a $K$. Sabem que si $K$ és un cos amb $\car(K)\neq2$, considerem l'extensió de cossos $K\subset K(x)\subset K(x,y)$ on $x$ és transcendent sobre $K$ i $ax^{2}+by^{2}=c$ amb $(a,b,c)\in K^{3}$ té una solució en $K$, aleshores existeix $u\in K(x,y)$ transcendent sobre $K$ tal que $K(u)=K(x,y)$\footnote{Teorema 1.21., peu de pàgina.}. En el nostre cas,
+        \begin{enumerate}
+            \item Si $K=\mathbb{R}$, existeix $u\in K(\cosh{t},\sinh{t})$ tal que $K(u)=K(\cosh{t},\sinh{t})\cong L$.
+            \item Si $K=\mathbb{Q}$, existeix $u\in K(-\tfrac{2115m^{2}+352m+15}{2(141m^{2}-1)},-\tfrac{12408m^{2}+2115m+88}{141(141m^{2}-1)})$ tal que $K(u)=K(-\tfrac{2115m^{2}+352m+15}{2(141m^{2}-1)},\newline-\tfrac{12408m^{2}+2115m+88}{141(141m^{2}-1)})\cong L$.
+        \end{enumerate}
+        Per tant, en ambdós casos existeix $u$ on $L=K(u)$
+    \end{proof}
+\end{problema}
+\begin{problema}
+    Doneu un criteri per existir l'arrel quadrada de $-(U+3)$ en un cos finit $\mathbb{F}_{p}$.
+    \begin{proof}[Solució]
+        Donar un criteri per a que $-(U+3):=-10$ sigui un quadrat a $\mathbb{F}_{p}$ és equivalent a decidir per quins $p$ tenim $\big(\frac{-10}{p}\big)=1$ (per $p=5$, tenim que $-10=0$, un quadrat). El problema es redueix a trobar una expressió per $\big(\frac{5}{p}\big)$, ja que, per multiplicitat del símbol de Legendre, $\big(\frac{-10}{p}\big)
+        =\big(\frac{-1}{p}\big)
+        \big(\frac{10}{p}\big)
+        =\big(\frac{-1}{p}\big)
+        \big(\frac{2}{p}\big)
+        \big(\frac{5}{p}\big)$ i sabem que $\big(\frac{-1}{p}\big)=(-1)^{\alpha(p)}$ i $\big(\frac{2}{p}\big)=(-1)^{\omega(p)}$, on
+        \begin{equation*}
+            \alpha(p)
+            =\begin{cases}
+                0&\textrm{si }p\equiv1\pmod{4}\\
+                1&\textrm{si }p\equiv-1\pmod{4}
+            \end{cases},\,\,
+            \omega(p)
+            =\begin{cases}
+                0&\textrm{si }p\equiv\pm1\pmod{8}\\
+                1&\textrm{si }p\equiv-\pm5\pmod{4}
+            \end{cases}
+        \end{equation*}
+        Per la llei de reciprocitat quadràtica, tenim que $\big(\frac{5}{p}\big)
+        =\big(\frac{p}{5}\big)(-1)^{\frac{p-1}{2}\frac{5-1}{2}}
+        =\big(\frac{p}{5}\big)$. Aleshores, $(\frac{1}{5}\big)=1$, $(\frac{2}{5}\big)=(-1)^{\omega(5)}=-1$, $(\frac{3}{5}\big)=(\frac{5}{3}\big)(-1)^{\frac{3-1}{2}\frac{5-1}{2}}=(\frac{5}{3}\big)=(\frac{2}{3}\big)=(-1)^{\omega(3)}=-1$ i $(\frac{4}{5}\big)=(\frac{2}{5}\big)(\frac{2}{5}\big)=(-1)(-1)=1$. Si definim
+        \begin{equation*}
+            \beta(p)
+            =\begin{cases}
+                0&\textrm{si }p\equiv\pm1\pmod{5}\\
+                1&\textrm{si }p\equiv\pm2\pmod{5}
+            \end{cases},
+        \end{equation*}
+        $\big(\frac{5}{p}\big)=(-1)^{\beta(p)}$. Tot plegat tenim que $\big(\frac{-10}{p}\big)
+        =\big(\frac{-1}{p}\big)
+        \big(\frac{2}{p}\big)
+        \big(\frac{5}{p}\big)
+        =(-1)^{\alpha(p)}(-1)^{\omega(p)}(-1)^{\beta(p)}=(-1)^{\alpha(p)+\omega(p)+\beta(p)}$. Aleshores, $-10$ és un quadrat a $\mathbb{F}_{p}$ si i només si $\alpha(p)+\omega(p)+\beta(p)\equiv0\pmod{2}$.
+    \end{proof}
+\end{problema}
+\begin{problema}
+    Trobeu una successió de nombres racionals que convergeixin a $(U+1)(C+1)$ a $\mathbb{Q}_{p}$ però no convergeixi als nombres reals.
+    \begin{proof}[Solució]
+        $(U+1)(C+1):=2^{6}$. Considerem $\{x_{n}:=2^{6}+n!\}_{n\in\mathbb{N}}$. Tenim que $|x_{n}-2^{6}|_{p}
+            =|n!|_{p}
+            =p^{-v_{p}(n!)}
+            =p^{-\sum_{i=1}^{\lfloor\log_{p}{n}\rfloor}\lfloor\frac{n}{p^{i}}\rfloor}\rightarrow0$, d'on $\{x_{n}\}_{n\in\mathbb{N}}$ convergeix a $2^{6}$ a $\mathbb{Q}_{p}$. Però, $\{x_{n}\}_{n\in\mathbb{N}}$ clarament no convergeix a $\mathbb{R}$.
+    \end{proof}
+\end{problema}
+\begin{problema}
+    Trieu el primer més petit $p$ complint $p>(C+D+10U)$ i calculeu els enters $a$ que són un quadrat en $\mathbb{Q}_{p}$.
+    \begin{proof}[Solució]
+        Tenim que $89=\min\{p:p\textrm{ primer}\land p>(C+D+10U)=85\}$. Sigui $p:=89>2$. Pel problema 35 sabem que tot element $\mathbb{Q}_{p}^{*}$ s'escriu com $p^{n}u$ amb $n\in\mathbb{Z}$ i $u\in\mathbb{Z}_{p}^{*}$ de manera única. Pel problema 37, si $p>2$, $p^{n}u\in(\mathbb{Q}_{p}^{*})^{2}$ si i només si $n\equiv0\pmod{2}$ i (la imatge de) $u$ és un quadrat a $\mathbb{F}_{p}$, és a dir, si $\pi:\mathbb{Z}_{p}\twoheadrightarrow\mathbb{Z}/(p)=:\mathbb{F}_{p}$ és la projecció, $\big(\frac{\pi(u)}{p}\big)=1$. Aleshores,
+        \begin{align*}
+            (\mathbb{Q}_{p}^{*})^{2}
+            &=\{p^{2n}u\in\mathbb{Q}_{p}^{*}:
+            n\in\mathbb{Z}
+            \land u\in\pi^{-1}(\{\alpha\in\mathbb{F}_{p}:\big(\tfrac{\alpha}{p}\big)=1\})\}\\
+            &=\{p^{2n}\big(\textstyle{\sum_{i\geq0}a_{i}p^{i}}\big)\in\mathbb{Q}_{p}^{*}:
+            n\in\mathbb{Z}
+            \land\textstyle{\sum_{i\geq0}a_{i}p^{i}}\neq0
+            \land\big(\tfrac{\pi(a_{0})}{p}\big)=1\}
+        \end{align*}
+        on $\{\alpha\in\mathbb{F}_{p}:\big(\frac{\alpha}{p}\big)=1\}=\{\overline{1},\overline{2},\overline{4},\overline{5},\overline{8},\overline{9},\overline{10},\overline{11},\overline{16},\overline{17},\overline{18},\overline{20},\overline{21},\overline{22},\overline{25},\overline{32},\overline{34},\overline{36},\overline{39},\overline{40},\overline{42},\overline{44},\overline{45},\overline{47},\overline{49},\overline{50},\overline{53},\newline
+        \overline{55},\overline{57},\overline{64},\overline{67},\overline{68},\overline{69},\overline{71},\overline{72},\overline{73},\overline{78},\overline{79},\overline{80},\overline{81},\overline{84},\overline{85},\overline{87},\overline{88}\}$. $0\in\mathbb{Q}_{p}$ també és un quadrat.
+    \end{proof}
+\end{problema}
+\begin{problema}
+    Trobeu totes les extensions quadràtiques de $\mathbb{Q}_{p}$ amb el primer $p$ que useu en l’exercici anterior.
+    \begin{proof}[Solució]
+        Sigui $u\in\{u\in\mathbb{Q}_{p}^{*}:\big(\frac{\pi(u)}{p}\big)=-1\}$, on $\pi:\mathbb{Z}_{p}\twoheadrightarrow\mathbb{Z}/(p)$ és la projecció. Veiem que totes les extensions quadràtiques de $\mathbb{Q}_{p}$ són $\mathbb{Q}_{p}(\sqrt{u}),\mathbb{Q}_{p}(\sqrt{p}),\mathbb{Q}_{p}(\sqrt{up})$. Considerem $p^{2n}(\sum_{i\geq0}a_{i}p^{i})\in\mathbb{Q}_{p}^{*}$ i $X^{2}-p^{2n}(\sum_{i\geq0}a_{i}p^{i})\in\mathbb{Q}_{p}[X]$. Sense pèrdua de la generalitat, podem suposar que o bé $a_{0}\neq0$ o bé $a_{1}\neq0$. Suposem que $a_{0}\neq0$.
+        \begin{enumerate}
+            \item Si $\big(\frac{\pi(a_{0})}{p}\big)=1$, aleshores $p^{2n}(\sum_{i\geq0}a_{i}p^{i})\in(\mathbb{Q}_{p}^{*})^{2}$, d'on $x\in\mathbb{Q}_{p}$ solució de $X^{2}-p^{2n}(\sum_{i\geq0}a_{i}p^{i})$.
+            \item Si $\big(\frac{\pi(a_{0})}{p}\big)=-1$, aleshores $\big(\frac{\pi(a_{0}u)}{p}\big)
+            =\big(\frac{\pi(a_{0})}{p}\big)\big(\frac{\pi(u)}{p}\big)
+            =(-1)(-1)=1$, d'on $p^{2n}(\sum_{i\geq0}a_{i}up^{i})\in(\mathbb{Q}_{p}^{*})^{2}$ i $\sqrt{u}x\in\mathbb{Q}_{p}$ solució $uX^{2}-p^{2n}(\sum_{i\geq0}a_{i}up^{i})\in\mathbb{Q}_{p}[X]$ (i, per tant, $x\in\mathbb{Q}_{p}(\sqrt{u})$ solució de $X^{2}-p^{2n}(\sum_{i\geq0}a_{i}p^{i})$).
+        \end{enumerate}
+        Suposem que $a_{0}=0$. Aleshores, $a_{1}\neq0$.
+        \begin{enumerate}
+            \item Si $\big(\frac{\pi(a_{1})}{p}\big)=1$, aleshores $p^{2n}(\sum_{i\geq0}a_{i+1}p^{i})\in(\mathbb{Q}_{p}^{*})^{2}$, d'on $\frac{x}{\sqrt{p}}\in\mathbb{Q}_{p}$ solució de $\frac{1}{p}X^{2}-p^{2n}(\sum_{i\geq0}a_{i+1}p^{i})\in\mathbb{Q}_{p}[X]$ (i, per tant, $x\in\mathbb{Q}_{p}(\sqrt{p})$ solució de $X^{2}-p\big(p^{2n}(\sum_{i\geq0}a_{i+1}p^{i})\big)=X^{2}-(p^{2n}(\sum_{i\geq0}a_{i}p^{i})$)
+            \item Si $\big(\frac{\pi(a_{1})}{p}\big)\neq1$, aleshores $\big(\frac{\pi(a_{1}u)}{p}\big)
+            =\big(\frac{\pi(a_{1})}{p}\big)\big(\frac{\pi(u)}{p}\big)
+            =(-1)(-1)=1$, d'on $p^{2n}(\sum_{i\geq0}a_{i+1}up^{i})\in(\mathbb{Q}_{p}^{*})^{2}$ i $\frac{x\sqrt{u}}{\sqrt{p}}\in\mathbb{Q}_{p}$ solució de $\frac{u}{p}X^{2}-p^{2n}(\sum_{i\geq0}a_{i+1}up^{i})\in\mathbb{Q}_{p}[X]$ (i, per tant, $x\in\mathbb{Q}_{p}(\sqrt{up})$ solució de $X^{2}-p\big(p^{2n}(\sum_{i\geq0}a_{i+1}up^{i})\big)=X^{2}-(p^{2n}(\sum_{i\geq0}a_{i}up^{i})$)
+        \end{enumerate}
+        Veiem que aquestes extensions quadràtiques i $\mathbb{Q}_{p}$ són totes diferents. Suposem que $\mathbb{Q}_{p}=\mathbb{Q}_{p}(\sqrt{p})$. Aleshores, $\sqrt{p}\in\mathbb{Q}_{p}$, d'on $v_{p}(\sqrt{p})=\frac{v_{p}(\sqrt{p})+v_{p}(\sqrt{p})}{2}=\frac{v_{p}(\sqrt{p}\sqrt{p})}{2}=\frac{v_{p}(p)}{2}=\frac{1}{2}\notin\mathbb{Z}$, contradicció. Aleshores, $\mathbb{Q}_{p}\neq\mathbb{Q}_{p}(\sqrt{p})$. Com $u\notin(\mathbb{Q}_{p}^{*})^{2}$, clarament $\mathbb{Q}_{p}\neq\mathbb{Q}_{p}(\sqrt{u})$. Per arguments similars, $\mathbb{Q}_{p}\neq\mathbb{Q}_{p}(\sqrt{up})$.\newline
+        Suposem que $\mathbb{Q}_{p}(\sqrt{u})=\mathbb{Q}_{p}(\sqrt{p})$. Aleshores, $\sqrt{u}\in\mathbb{Q}_{p}(\sqrt{p})$, d'on $\exists a\exists b(a,b\in\mathbb{Q}_{p}\land\sqrt{u}=a+b\sqrt{p})$. Obtenim $u=(a^{2}+pb^{2})+2ab\sqrt{p}\in\mathbb{Q}_{p}$. Com $\sqrt{p}\notin\mathbb{Q}_{p}$, o bé $a=0$ o bé $b=0$.
+        \begin{enumerate}
+            \item Si $a=0$, $u=pb^{2}$. Obtenim $-1=\big(\frac{\pi(u)}{p}\big)=\frac{\pi(pb^{2})}{p}=0$, contradicció.
+            \item Si $b=0$, $u=a^{2}\in(\mathbb{Q}_{p}^{*})^{2}$, contradicció.
+        \end{enumerate}
+        Per tant, $\mathbb{Q}_{p}(\sqrt{u})\neq\mathbb{Q}_{p}(\sqrt{p})$. Suposem que $\mathbb{Q}_{p}(\sqrt{u})=\mathbb{Q}_{p}(\sqrt{up})$. Aleshores, $\sqrt{p}=\frac{\sqrt{up}}{\sqrt{u}}\in\mathbb{Q}_{p}(\sqrt{u})$, contradicció. Aleshores, $\mathbb{Q}_{p}(\sqrt{u})\neq\mathbb{Q}_{p}(\sqrt{up})$. Suposem que $\mathbb{Q}_{p}(\sqrt{p})=\mathbb{Q}_{p}(\sqrt{up})$. Aleshores, $\sqrt{u}=\frac{\sqrt{up}}{\sqrt{p}}\in\mathbb{Q}_{p}(\sqrt{p})$, contradicció. Aleshores, $\mathbb{Q}_{p}(\sqrt{p})\neq\mathbb{Q}_{p}(\sqrt{up})$. Per tant, les extensions quadràtiques $\mathbb{Q}_{p}(\sqrt{u}),\mathbb{Q}_{p}(\sqrt{p}),\mathbb{Q}_{p}(\sqrt{up})$ i $\mathbb{Q}_{p}$ són totes diferents. Especialitzant-nos amb $p:=89$, tenim que totes les extensions quadràtiques són $\mathbb{Q}_{89}(\sqrt{3}),\mathbb{Q}_{89}(\sqrt{89}),\mathbb{Q}_{89}(\sqrt{267})$, on $\pi(3)\in\{u\in\mathbb{Q}_{p}^{*}:\big(\frac{\pi(u)}{p}\big)=-1\}$.
+    \end{proof}
+\end{problema}
+\begin{problema}
+    Considera l'equació $Y^{2}-pX^{2}=-1$ amb $p$ un primer congruent amb $1$ mòdul $4$. Demostreu que l'equació té infinites solucions a $\mathbb{Z}$.
+    \begin{proof}
+        Sigui $p\equiv1\pmod{4}$ i $(u,v)\in\{(X,Y)\in\mathbb{Z}^{2}:Y^{2}-pX^{2}=1\}-\{(0,1),(0,-1)\}$ tal que $|u|$ és mínima. Volem veure que $u\equiv0\pmod{2}$ i $v\equiv1\pmod{2}$. En efecte,
+        \begin{enumerate}
+            \item Suposem $u\equiv0\pmod{2}$ i $v\equiv0\pmod{2}$. Aleshores, $1\equiv v^{2}-pu^{2}\equiv0\pmod{2}$, contradicció.
+            \item Suposem $u\equiv1\pmod{2}$ i $v\equiv1\pmod{2}$. Aleshores, $1\equiv v^{2}-pu^{2}\equiv1-1\equiv0\pmod{2}$, contradicció.
+            \item Suposem $u\equiv1\pmod{2}$ i $v\equiv0\pmod{2}$. Aleshores, $u^{2}\equiv1\pmod{4}$ i $v^{2}\equiv0\pmod{4}$, d'on $1\equiv v^{2}-pu^{2}\equiv v^{2}-u^{2}\equiv-1\pmod{4}$, contradicció.
+        \end{enumerate}
+        Aleshores, la única possibilitat és que $u\equiv0\pmod{2}$ i $v\equiv1\pmod{2}$.\newline
+        Com $(u,v)\in\{(X,Y)\in\mathbb{Z}^{2}:Y^{2}-pX^{2}=1\}$, $v^{2}-pu^{2}=1$ podem escriure $pu^{2}=v^{2}-1=(v-1)(v+1)$. Tenim que $u\equiv0\pmod{2}\land v\equiv1\pmod{2}\iff\exists\ell(\ell\in\mathbb{Z}\land u=2\ell)\land\exists k(k\in\mathbb{Z}\land v=2k+1)$. Aleshores, $4p\ell^{2}=pu^{2}=(v-1)(v+1)=4k(k+1)$, d'on deduïm $ p\ell^{2}=k(k+1)$. Tenim que $k(k+1)\in(p)\in\Spec(\mathbb{Z})$. Per tant, o bé $k\in(p)$ o bé $k+1\in(p)$. Suposem que $k\in(p)$. Com $\mathbb{Z}$ és un domini de factorització única, $\ell$ admet una descomposició en elements primers $\ell=\prod_{i=1}^{n}p_{i}^{e_{i}}$. Com $\gcd(k,k+1)=1$, existeix $\mathscr{I}\subset\{1,\ldots,n\}$ tal que $k=p\big(\prod_{i\in\mathscr{I}}p_{i}^{e_{i}}\big)^{2}$ i $k+1=\big(\prod_{i\notin\mathscr{I}}p_{i}^{e_{i}}\big)^{2}$. Aleshores, $\big(\prod_{i\notin\mathscr{I}}p_{i}^{e_{i}}\big)^{2}-p\big(\prod_{i\in\mathscr{I}}p_{i}^{e_{i}}\big)^{2}=(k+1)-k=1$, d'on
+        \begin{align*}
+            \textstyle{\big(\big(\prod_{i\in\mathscr{I}}p_{i}^{e_{i}}\big)^{2},\big(\prod_{i\notin\mathscr{I}}p_{i}^{e_{i}}\big)^{2}\big)}
+            \in\{(X,Y)\in\mathbb{Z}^{2}:Y^{2}-pX^{2}=1\}
+        \end{align*}
+        Però, $|\prod_{i\in\mathscr{I}}p_{i}^{e_{i}}|\leq|\prod_{i=1}^{n}p_{i}^{e_{i}}|=|\ell|=|\frac{u}{2}|<|u|$, contradient la minimalitat d'$u$. Aleshores, $k+1\in(p)$. Similarment, com $\gcd(k,k+1)=1$, existeix $\mathscr{I}'\subset\{1,\ldots,n\}$ tal que $k+1=p\big(\prod_{i\in\mathscr{I}'}p_{i}^{e_{i}}\big)^{2}$ i $k=\big(\prod_{i\notin\mathscr{I}'}p_{i}^{e_{i}}\big)^{2}$. Aleshores, $\big(\prod_{i\notin\mathscr{I}'}p_{i}^{e_{i}}\big)^{2}-p\big(\prod_{i\in\mathscr{I}'}p_{i}^{e_{i}}\big)^{2}=k-(k+1)=-1$. Per tant,
+        \begin{align*}
+            \textstyle{\big(\big(\prod_{i\in\mathscr{I}'}p_{i}^{e_{i}}\big)^{2},\big(\prod_{i\notin\mathscr{I}'}p_{i}^{e_{i}}\big)^{2}\big)}
+            \in\{(X,Y)\in\mathbb{Z}^{2}:Y^{2}-pX^{2}=-1\}
+        \end{align*}
+        Sigui $(r_{1},s_{1})\in\{(X,Y)\in\mathbb{Z}^{2}:Y^{2}-pX^{2}=-1\}$ amb $|r_{1}|$ mínim i $(r_{1},s_{1})\in\mathbb{N}^{2}$. Veiem que $(r_{n},s_{n})\in\mathbb{Z}^{2}$ definit per $r_{n}+\sqrt{p}s_{n}:=(r_{1}+\sqrt{p}s_{1})^{2n+1}\in\mathbb{Z}[\sqrt{p}]$ és solució de $Y^{2}-pX^{2}=-1$. En efecte, si $\sigma\in\Gal(\mathbb{Q}(\sqrt{p})/\mathbb{Q})$ és la conjugació, $s_{n}^{2}-pr_{n}^{2}
+            =(s_{n}-\sqrt{p}r_{n})(s_{n}+\sqrt{p}r_{n})
+            =\sigma(s_{n}+\sqrt{p}r_{n})(s_{n}+\sqrt{p}r_{n})
+            =\sigma\big((s_{1}+\sqrt{p}r_{1})^{2n+1}\big)(s_{1}+\sqrt{p}r_{1})^{2n+1}
+            =\sigma(s_{1}+\sqrt{p}r_{1})^{2n+1}(s_{1}+\sqrt{p}r_{1})^{2n+1}
+            =(\sigma(s_{1}+\sqrt{p}r_{1})(s_{1}+\sqrt{p}r_{1}))^{2n+1}
+            =((s_{1}-\sqrt{p}r_{1})(s_{1}+\sqrt{p}r_{1}))^{2n+1}
+            =(-1)^{2n+1}=-1$. Aleshores, $Y^{2}-pX^{2}=-1$ té infinites solucions.
+    \end{proof}
+\end{problema}
+\begin{problema}
+    Proveu un isomorfisme d'anells: $\mathbb{Z}_{p}\cong\Hom_{\mathbb{Z}}(\mathbb{Z}[\frac{1}{p}]/\mathbb{Z},\mathbb{Z}[\frac{1}{p}]/\mathbb{Z})$.
+\end{problema}
+Seguirem un argument similar a \cite{Lam1999}. Donat $R$ anell (commutatiu amb unitat), direm que un $R$-mòdul $J$ és injectiu si el functor $\Hom_{R}(-,J):\textrm{Mod}_{R}\rightarrow\textrm{Mod}_{R}$ és exacte. Equivalentment, $J$ és injectiu si i només si per tot ideal $I\subset R$ i $f\in\Hom_{R}(I,J)$ existeix $g\in\Hom_{R}(R,J)$ tal que $g|_{I}=f$. Donats $M\subset N$ $R$-mòduls, direm que $M\subset N$ és una extensió essencial de $M$ si tot $R$-submòdul no trivial interseca $M$ no trivialment o, equivalentment, $\forall n(n\in N-\{0_{N}\}\Rightarrow\exists r(r\in R\land ar\in M-\{0\}))$. Donem la següent caracterització sense demostració: donats $M\subset I$ $R$-mòduls, $I$ és l'injectiu més petit que conté $M$ si i només si $I$ és injectiu i $M\subset I$ és una extensió sobre $M$. Si $I$ $R$-mòdul satisfà qualsevol de les propietats anteriors, direm que $I$ és l'envolvent injectiu de $M$ sobre $R$. L'envolvent injectiu de $M$ sobre $R$ és únic llevat isomorfisme. Volem demostrar el següent: \textit{Sigui $(R,\mathfrak{m})$ anell noetherià local, $E$ envolvent injectiu de $R/\mathfrak{m}$ sobre $R$. Aleshores, $\Hom_{R}(E,E)\cong\varprojlim_{n\in\mathbb{N}} R/\mathfrak{m}^{n}$}.\newline
+Amb el darrer isomorfisme, serà suficient veure que $\mathbb{Z}[\frac{1}{p}]/\mathbb{Z}$ és l'envolvent injectiu de $\mathbb{Z}/(p)$ sobre $\mathbb{Z}$. Recordem que un grup abelià (o $\mathbb{Z}$-mòdul) $G$ és divisible si $\forall x\forall n((x\in G\land n\in\mathbb{N})\Rightarrow\exists y(y\in G\land ny=x))$.
+\begin{proposicio}
+    Tot $\mathbb{Z}$-mòdul $J$ divisible és injectiu.
+    \begin{proof}
+        Siguin $A\subset B$ $\mathbb{Z}$-mòduls i $\varphi\in\Hom_{\mathbb{Z}}(A,J)$. Volem estendre $\varphi$ a un element de $\Hom_{\mathbb{Z}}(B,J)$.\newline
+        Sigui $\mathcal{S}:=\{(A',\varphi')\in\Obj(\textrm{Mod}_{\mathbb{Z}})\times\Hom_{\mathbb{Z}}(A',J):A\subset A'\subset B\land\varphi'|_{A}=\varphi\}$ conjunt parcialment ordenat per l'ordre $\leq$ definit per $(A',\varphi')\leq(A'',\varphi''):\iff A'\subset A''\land\varphi''|_{A'}=\varphi'$. $\mathcal{S}\neq\emptyset$, ja que $(A,\varphi)\in\mathcal{S}$. Considerem una cadena $\{(A_{i},\varphi_{i}):i\in\mathscr{I}\}$ de $\mathcal{S}$. Tenim que $(\bigcup_{i\in\mathscr{I}}A_{i},\varphi)\in\mathcal{S}$ és una cota superior de $\{(A_{i},\varphi_{i}):i\in\mathscr{I}\}$, on $\varphi\in\Hom_{\mathbb{Z}}(\bigcup_{i\in\mathscr{I}}A_{i},J)$ ve definida per $\varphi(x):=\varphi_{i}(x)$ si $x\in A_{i}$. Aleshores, pel lema de Zorn, $\mathcal{S}$ té un element maximal $(A',\varphi')\in\mathcal{S}$.\newline
+        Volem veure que $A'=B$. Suposem que $A'\subsetneq B$. Sigui $x\in B-A'$. Suposem que $\forall n(n\in\mathbb{Z}\Rightarrow nx\notin A')$. Definim $\varphi''\in\Hom_{\mathbb{Z}}(A'+\mathbb{Z}x,J)$ per $\varphi''(a+nx):=\varphi(a)$. Tenim que $(A',\varphi')\leq(A'+\mathbb{Z}x,\varphi'')\in\mathcal{S}$, contradicció amb la maximalitat de $(A',\varphi')$. Suposem que $\exists n(n\in\mathbb{Z}\land nx\in A')$ A més, imposem que $n$ sigui mínima. Per divisibilitat de $J$, $\forall x(x\in A'\Rightarrow\exists y(y\in J\land ny=\varphi(nx)))$. Considerem $\varphi''\in\Hom_{\mathbb{Z}}(A'\oplus\mathbb{Z},J)$ definit per $\varphi''(a,m):=\varphi(a)+mny$. Considerem $\varphi_{0}\in\Hom_{\mathbb{Z}}(A'\oplus\mathbb{Z},B)$ definit per $\varphi_{0}(a,m):=a+mnx$. Si $(a,m)\in\ker{\varphi_{0}}$, $\varphi''(a,m)=\varphi(a)+mny=\varphi(a)+m\varphi(nx)=\varphi(a+mnx)=\varphi(0)=0$. Per tant, $\ker{\varphi_{0}}\subset\ker{\varphi''}$, d'on tenim la factorització
+        \begin{equation*}
+        \begin{tikzcd}
+            A'\oplus\mathbb{Z}
+            \arrow{rr}{\varphi''}
+            \arrow[swap]{rd}{\varphi_{0}}
+            &&J\\
+            &A'+x(n)
+            \arrow[dotted, swap]{ru}{\overline{\varphi}_{0}}
+        \end{tikzcd}
+        \end{equation*}
+        $\overline{\varphi}_{0}\in\Hom_{\mathbb{Z}}(A'+x(n),J)$ definida per $\overline{\varphi}_{0}(a+mnx):=\varphi(a)+mnz$. Obtenim $(A',\varphi')\leq(A'+x(n),\overline{\varphi}_{0})\in\mathcal{S}$, contradicció amb la maximalitat de $(A',\varphi')$. Per tant, $A'=B$.
+    \end{proof}
+\end{proposicio}
+El recíproc també és cert. És fàcil veure que $\mathbb{Z}[\frac{1}{p}]/\mathbb{Z}$ és $p$-divisible i, per tant, divisible. Com $\mathbb{Z}[\frac{1}{p}]/\mathbb{Z}$ és un $\mathbb{Z}$-mòdul, deduïm que $\mathbb{Z}[\frac{1}{p}]/\mathbb{Z}$ és injectiu. A més, $\mathbb{Z}[\frac{1}{p}]/\mathbb{Z}$ és essencial sobre $\mathbb{Z}/(p)$ ($\cong\mathbb{Z}_{(p)}/(p)\mathbb{Z}_{(p)}$) ja que $p(\sum_{j=0}^{i}a_{j}p^{-j}+\mathbb{Z})=\sum_{j=0}^{i-1}a_{j-1}p^{-j}+(p^{i})\in\mathbb{Z}/(p)$. Per tant,
+        \begin{align*}
+            \Hom_{\mathbb{Z}}(\mathbb{Z}[\tfrac{1}{p}]/\mathbb{Z},\mathbb{Z}[\tfrac{1}{p}]/\mathbb{Z})
+            &=\Hom_{\mathbb{Z}_{(p)}}(\mathbb{Z}[\tfrac{1}{p}]/\mathbb{Z},\mathbb{Z}[\tfrac{1}{p}]/\mathbb{Z})
+            &\quad&\textrm{(Hom-sets coincideixen)}\\
+            &\cong\varprojlim_{i\in\mathbb{N}}\mathbb{Z}_{(p)}/\big((p)\mathbb{Z}_{(p)}\big)^{i}
+            &\quad&\textrm{($(\mathbb{Z}_{(p)},\mathbb{Z}_{(p)}/(p)\mathbb{Z}_{(p)})$ anell noetherià local)}\\
+            &\cong\varprojlim_{i\in\mathbb{N}}\mathbb{Z}/(p^{i})
+            \cong\mathbb{Z}_{p}
+            &\quad&\textrm{($\mathbb{Z}_{(p)}/\big((p)\mathbb{Z}_{(p)}\big)^{i}\cong\mathbb{Z}/(p^{i})$)}
+        \end{align*}
+        d'on resulta el problema. Ara, ens centrem en demostrar l'isomorfisme $\Hom_{R}(E,E)\cong\varprojlim_{n\in\mathbb{N}} R/\mathfrak{m}^{n}$. Veiem uns resultat sobre mòduls injectius.
+        \begin{lema}
+            Sigui $R\rightarrow S$ un morfisme d'anells. Si $E$ és un $R$-mòdul injectiu, aleshores $\Hom_{R}(S,E)$ és un $S$-mòdul injectiu.
+            \begin{proof}
+                Donat un $S$-mòdul $M$, tenim la correspondència $\Hom_{R}(M_{R},E)\leftrightarrow\Hom_{S}(M,\Hom_{R}(S,E))$ donada per $\alpha\mapsto(n\mapsto(s\mapsto\alpha(sn)))$ amb inversa $\beta\mapsto(n\mapsto\beta(n)(1_{S}))$. Com $E$ és $R$-mòdul injectiu, $\Hom_{R}(-,E)$ és exacte. Per la correspondència, $\Hom_{R}(-,E)=\Hom_{S}(-,\Hom_{R}(S,E))$, d'on deduïm que $\Hom_{S}(-,\Hom_{R}(S,E))$ és exacte i, per tant, $\Hom_{R}(S,E)$ és $S$-mòdul injectiu.
+            \end{proof}
+        \end{lema}
+        \begin{lema}
+            Sigui $f:(R,\mathfrak{m}_{R})\rightarrow(S,\mathfrak{m}_{S})$ un epimorfisme d'anells locals, $E$ envolvent injectiu de $R/\mathfrak{m}_{R}$ sobre $R$. Aleshores $\Ann_{E}(\ker{f})$ és l'envolvent injectiu de $S/\mathfrak{m}_{S}$ sobre $S$.
+            \begin{proof}
+                Veure \cite{SP2024}, 47.7.1.
+            \end{proof}
+        \end{lema}
+        \begin{lema}
+            Sigui $I$ $R$-mòdul injectiu, $E\subset I$ $R$-submòdul. Són equivalents:
+            \begin{enumerate}
+                \item $E$ injectiu.
+                \item Per tot $E\subset E'\subset I$ amb $E\subset E'$ extensió essencial, $E=E'$.
+            \end{enumerate}
+            \begin{proof}
+                Suposem $E$ injectiu. Sigui $E'\subset I$ amb $E\subset E'$ extensió essencial. Per injectivitat d'$E$, $id_{E}\in\Hom_{R}(E,E)$ es pot estendre a $\alpha\in\Hom_{R}(E',E)$. Com $\alpha|_{E}=id_{E}$, $\ker{\alpha}=\{0\}$. Com $E\subset E'$ extensió essencial i $\ker{\alpha}=\{0\}$, $\ker{\alpha}=\{0\}$. Aleshores, $E'\cong E'/\ker{\alpha}\cong\im{\alpha}\subset E$, d'on deduïm que $E=E'$.\newline
+                Suposem que per tot $E\subset E'\subset I$ amb $E\subset E'$ extensió essencial, $E=E'$. Siguin $M\subset N$ $R$-mòduls i $\varphi\in\Hom_{R}(M,E)$. Sigui $\mathcal{S}:=\{(M',\varphi')\in\Obj(\textrm{Mod}_{R})\times\Hom_{\mathbb{Z}}(M',J):M\subset M'\subset N\land\varphi'|_{M}=\varphi\}$ conjunt parcialment ordenat per l'ordre $\leq$ definit per $(M',\varphi')\leq(M'',\varphi''):\iff M'\subset M''\land\varphi''|_{M'}=\varphi'|$. $\mathcal{S}\neq\emptyset$, ja que $(M,\varphi)\in\mathcal{S}$. Considerem una cadena $\{(M_{i},\varphi_{i}):i\in\mathscr{I}\}$ de $\mathcal{S}$. Tenim que $(\bigcup_{i\in\mathscr{I}}M_{i},\varphi)\in\mathcal{S}$ és una cota superior de $\{(M_{i},\varphi_{i}):i\in\mathscr{I}\}$, on $\varphi\in\Hom_{R}(\bigcup_{i\in\mathscr{I}}A_{i},J)$ ve definida per $\varphi(x):=\varphi_{i}(x)$ si $x\in M_{i}$. Aleshores, pel lema de Zorn, $\mathcal{S}$ té un element maximal $(M',\varphi')\in\mathcal{S}$.\newline
+                Sigui $\iota:E\hookrightarrow I$ la inclusió. Com $I$ és un $R$-mòdul injectiu, podem estendre $\iota\circ\varphi'\in\Hom_{R}(M',I)$ a $\psi\in\Hom_{R}(N,I)$. Suposem que $\psi(N)\subset E$. Aleshores, $\psi:N\rightarrow\psi(N)\hookrightarrow E$ i $\psi|_{M}=(\iota\circ\varphi')|_{M}=\varphi'|_{M}=\phi$, d'on deduïm que $E$ és injectiu ($\psi\in\Hom_{R}(N,E)$ esten $\varphi\in\Hom_{R}(M,E)$). Suposem que $\psi(N)\not\subset E$. Tenim $E\subsetneq E+\psi(N)\subset I$, d'on $E\subset E+\psi(N)$ no és essencial. Aleshores, existeix $K\subset E+\psi(N)$ no trivial tal que $K\cap E=\{0\}$. Com $M'\subset\psi^{-1}(E)\subsetneq\psi^{-1}(E+K)$, $\pi\circ\psi|_{\psi^{-1}(E+K)}:\psi^{-1}(E+K)\rightarrow E+K\twoheadrightarrow E$ és tal que $(\pi\circ\psi|_{\psi^{-1}(E+K)})|_{M'}=\varphi'$ i $\psi^{-1}(E+K)\subset N$, tenim que $(M',\varphi')\leq(\psi^{-1}(E+K),\pi\circ\psi|_{\psi^{-1}(E+K)})\in\mathcal{S}$, contradicció amb la maximalitat de $(M',\varphi')$.
+            \end{proof}
+        \end{lema}
+\begin{lema}
+    Sigui $R$ anell noetherià, $I$ $R$-mòdul injectiu.
+    \begin{enumerate}
+        \item Sigui $f\in R$. Aleshores, $\bigcup_{n>0}\Ann_{I}(f^{n})$ $R$-submòdul injectiu de $I$.
+        \begin{proof}
+            Sigui $E'\subset I$ amb $\bigcup_{n>0}\Ann_{I}(f^{n})\subset E'$ extensió essencial. Suposem que $\bigcup_{n>0}\Ann_{I}(f^{n})\newline\subsetneq E'$. Aleshores, $\exists x(x\in E'-\bigcup_{n>0}\Ann_{I}(f^{n}))$. Considerem l'ideal $\bigcup_{n>0}\Ann_{R}(f^{n}x)\subset R$. Com $R$ és noetherià, $\exists g_{1}\ldots\exists g_{t}(g_{1},\ldots,g_{t}\in R\land\bigcup_{n>0}\Ann_{I}(f^{n}x)=(g_{1},\ldots,g_{t}))$. Com $g_{1},\ldots,g_{t}\in\bigcup_{n>0}\Ann_{I}(f^{n}x)$, $\exists n_{1}\ldots\exists n_{t}(n_{1},\ldots,n_{t}>0\land\forall i(g_{i}f^{n_{i}}x=0))$. Definim $x':=f^{\max\{n_{i}\}}x\in E'-\bigcup_{n>0}\Ann_{I}(f^{n})$. Sigui $r\in\bigcup_{n>0}\Ann_{I}(f^{n}x)$. Com $\bigcup_{n>0}\Ann_{I}(f^{n}x)=(g_{1},\ldots,g_{t})$, $\exists a_{1}\ldots\exists a_{t}(a_{1},\ldots,a_{t}\in R\land r=\sum_{i=1}^{t}a_{i}g_{i})$, d'on $rx'=\sum_{i=1}^{t}a_{i}(g_{i}f^{\max\{n_{i}\}}x)=\sum_{i=1}^{t}a_{i}0=0$. Per tant, $r\in\Ann_{R}(x')$ i $\bigcup_{n>0}\Ann_{I}(f^{n}x)\subset\Ann_{R}(x')$. Com $\Ann_{R}(x')=\Ann_{R}(f^{\max\{n_{i}\}}x)\subset\bigcup_{n>0}\Ann_{R}(f^{n}x)$, deduïm que
+            \begin{equation*}
+                \Ann_{R}(x')
+                =\bigcup_{n>0}\Ann_{R}(f^{n}x)
+            \end{equation*}
+            Sigui $r\in\bigcup_{n>0}\Ann_{R}(f^{n}x)$. Com $\bigcup_{n>0}\Ann_{R}(f^{n}x)=(g_{1},\ldots,g_{t})$, $\exists a_{1}\ldots\exists a_{t}(a_{1},\ldots,a_{t}\in R\land r=\sum_{i=1}^{t}a_{i}g_{i})$, d'on $r(f^{n}x')=\sum_{i=1}^{t}a_{i}g_{i}f^{n}f^{\max\{n_{i}\}}x=0$ i $r\in\bigcap_{n>0}\Ann_{R}(f^{n}x')\subset\bigcup_{n>0}\Ann_{R}(f^{n}x')$. Per tant, $\bigcup_{n>0}\Ann_{R}(f^{n}x)\subset\bigcup_{n>0}\Ann_{R}(f^{n}x')$. Com $\bigcup_{n>0}\Ann_{R}(f^{n}x')=\bigcup_{n>0}\Ann_{R}(f^{n+\max\{n_{i}\}}x)\subset\bigcup_{n>0}\Ann_{R}(f^{n}x)$, deduïm que
+            \begin{equation*}
+                \bigcup_{n>0}\Ann_{R}(f^{n}x)
+                =\bigcup_{n>0}\Ann_{R}(f^{n}x')
+            \end{equation*}
+            Per transitivitat de $=$,
+            \begin{equation*}
+                \Ann_{R}(x')
+                =\bigcup_{n>0}\Ann_{R}(f^{n}x')
+            \end{equation*}
+            Sigui $r\in Rx'\cap\bigcup_{n>0}\Ann_{R}(f^{n})$. Aleshores, $\exists n(n>0\land rf^{n}=0)$ i $\exists r'(r'\in R\land r'x'=r)$, d'on $r'f^{n}x'=rf^{n}=0$ i $r'\in\bigcup_{n>0}\Ann_{R}(f^{n}x')$. Com $\Ann_{R}(x')=\bigcup_{n>0}\Ann_{R}(f^{n}x')$, $r'\in\Ann_{R}(x')$, d'on $r=r'x'=0$. Per tant, $Rx'\cap\bigcup_{n>0}\Ann_{R}(f^{n})=\{0\}$, d'on deduïm que $\bigcup_{n>0}\Ann_{R}(f^{n})\subset E'$ no és una extensió essencial, contradicció. Per tant, $\bigcup_{n>0}\Ann_{R}(f^{n})=E'$ i, pel lema anterior, $\bigcup_{n>0}\Ann_{R}(f^{n})$ és $R$-submòdul injectiu de $I$.
+        \end{proof}
+        \item Sigui $J\subset R$ ideal. Aleshores, $\bigcup_{n>0}\Ann_{I}(J^{n})$ $R$-submòdul injectiu de $I$.
+        \begin{proof}
+            Com $R$ és noetherià, $\exists f_{1}\ldots\exists f_{t}(f_{1},\ldots f_{t}\in R\land J=(f_{1},\ldots,f_{t}))$. Aleshores, com
+            \begin{equation*}
+                \bigcup_{n>0}\Ann_{I}(J^{n})
+                =\bigcup_{n>0}\Ann_{\bigcup_{n>0}\Ann_{\cdots_{(\bigcup_{n>0}\Ann_{(\bigcup_{n>0}\Ann_{I}(f_{1}^{n}))}(f_{2}^{n}))}\cdots}(f_{t-1}^{n})}(f_{t}^{n})
+            \end{equation*}
+            ens reduïm al cas anterior i procedim per inducció.
+        \end{proof}
+    \end{enumerate}
+\end{lema}
+\begin{lema}
+    Sigui $(R,\mathfrak{m})$ un anell noetherià local, $E$ envolvent injectiu de $R/\mathfrak{m}$ sobre $R$, $E_{n}$ envolvent injectiu de $R/\mathfrak{m}$ sobre $R/\mathfrak{m}^{n}$. Aleshores, $E\cong\bigcup_{n>0}E_{n}$ i $E_{n}\cong\Ann_{E}(\mathfrak{m}^{n})$.
+    \begin{proof}
+        Com $E$ és l'envolvent injectiu de $R/\mathfrak{m}$ sobre $R$, $\pi:R\twoheadrightarrow R/\mathfrak{m}^{n}$ és un epimorfisme d'anells locals amb $\ker{\pi}=\mathfrak{m}^{n}$ i el cos residual de $R/\mathfrak{m}^{n}$ és $R/\mathfrak{m}\cong(R/\mathfrak{m}^{n})/(\mathfrak{m}/\mathfrak{m}^{n})$, tenim que $\Ann_{E}(\mathfrak{m}^{n})$ és l'envolvent injectiu de $R/\mathfrak{m}$ sobre $R/\mathfrak{m}^{n}$. Per tant, $E_{n}\cong\Ann_{E}(\mathfrak{m}^{n})$.\newline
+        Ara, com $R$ és noetherià i $E$ és un $R$-mòdul injectiu, $\bigcup_{n>0}\Ann_{E}(\mathfrak{m}^{n})$ és un $R$-submòdul injectiu d'$E$. Fixem-nos que $R/\mathfrak{m}\subset\bigcup_{n>0}\Ann_{E}(\mathfrak{m}^{n})$. Com $E$ és l'envolvent injectiu de $R/\mathfrak{m}$, $E$ és l'injectiu més petit que conté $R/\mathfrak{m}$, d'on resulta $E\subset\bigcup_{n>0}\Ann_{E}(\mathfrak{m}^{n})$ i, per tant, $E\cong\bigcup_{n>0}\Ann_{E}(\mathfrak{m}^{n})$.
+    \end{proof}
+\end{lema}
+Fixem-nos que $\varinjlim_{n\in\mathbb{N}}\Ann_{E}(\mathfrak{m}^{n})\cong\bigcup_{n>0}\Ann_{E}(\mathfrak{m}^{n})$ via la propietat universal del límit directe. Aleshores, obtenim $E\cong\varinjlim_{n\in\mathbb{N}}\Ann_{E}(\mathfrak{m}^{n})$.
+\begin{teorema}
+    Sigui $(R,\mathfrak{m})$ anell noetherià local, $E$ envolvent injectiu de $R/\mathfrak{m}$ sobre $R$. Aleshores, $\Hom_{R}(E,E)\newline\cong\varprojlim_{n\in\mathbb{N}} R/\mathfrak{m}^{n}$.
+    \begin{proof}
+        Fixem-nos que $\Hom_{R}(R/\mathfrak{m}^{n},E)\cong\Ann_{E}(\mathfrak{m}^{n})$ via $\varphi\mapsto\varphi(1_{R}+\mathfrak{m}^{n})$. Tenim la successió exacta curta
+        \begin{equation*}
+        \begin{tikzcd}
+            0
+            \arrow{r}
+            &\mathfrak{m}^{n-1}/\mathfrak{m}^{n}
+            \arrow{r}
+            &R/\mathfrak{m}^{n}
+            \arrow{r}
+            &R/\mathfrak{m}^{n-1}
+            \arrow{r}
+            &0
+        \end{tikzcd}
+        \end{equation*}
+        Com $E$ és l'envolvent injectiu de $R/\mathfrak{m}$ sobre $R$, en particular $E$ és injectiu, és a dir, el functor contravariant $\Hom_{R}(-,E)$ és exacte, d'on tenim la successió exacta curta
+        \begin{equation*}
+        \begin{tikzcd}
+            0
+            \arrow{r}
+            &\Hom_{R}(R/\mathfrak{m}^{n-1},E)
+            \arrow{r}
+            &\Hom_{R}(R/\mathfrak{m}^{n},E)
+            \arrow{r}
+            &\Hom_{R}(\mathfrak{m}^{n-1}/\mathfrak{m}^{n},E)
+            \arrow{r}
+            &0
+        \end{tikzcd}
+        \end{equation*}
+        Per exactitud, obtenim els isomorfismes
+        \begin{align*}
+            \Hom_{R}(\mathfrak{m}^{n-1}/\mathfrak{m}^{n},E)
+            &\cong\Hom_{R}(R/\mathfrak{m}^{n},E)/\ker(\Hom_{R}(R/\mathfrak{m}^{n},E)\rightarrow\Hom_{R}(\mathfrak{m}^{n-1}/\mathfrak{m}^{n},E))\\
+            &=\Hom_{R}(R/\mathfrak{m}^{n},E)/\im(\Hom_{R}(R/\mathfrak{m}^{n-1},E)\rightarrow\Hom_{R}(R/\mathfrak{m}^{n},E))\\
+            &\cong\Hom_{R}(R/\mathfrak{m}^{n},E)/\Hom_{R}(R/\mathfrak{m}^{n-1},E)\\
+            &\cong\Ann_{E}(\mathfrak{m}^{n})/\Ann_{E}(\mathfrak{m}^{n-1})
+        \end{align*}
+        d'on deduïm
+        \begin{align*}
+            \mathfrak{m}^{n-1}/\mathfrak{m}^{n}
+            &\cong\Hom_{R}(\Hom_{R}(\mathfrak{m}^{n-1}/\mathfrak{m}^{n},E),E)
+            &\quad&\textrm{($x\mapsto ev_{x}$, $ev_{x}(f):=f(x)$)}\\
+            &\cong\Hom_{R}(\Ann_{E}(\mathfrak{m}^{n})/\Ann_{E}(\mathfrak{m}^{n-1}),E)
+            &\quad&\textrm{($\Hom_{R}(\mathfrak{m}^{n-1}/\mathfrak{m}^{n},E)\cong\Ann_{E}(\mathfrak{m}^{n})/\Ann_{E}(\mathfrak{m}^{n-1})$)}
+        \end{align*}
+        En particular, $\mathfrak{m}^{n-1}/\mathfrak{m}^{n}$ i $\Hom_{R}(\Ann_{E}(\mathfrak{m}^{n})/\Ann_{E}(\mathfrak{m}^{n-1}),E)$ tenen la mateixa dimensió com $R/\mathfrak{p}$-espai vectorial. Definim $\varphi_{n}\in\Hom_{R}(R/\mathfrak{m}^{n},\Hom_{R}(\Ann_{E}(\mathfrak{m}^{n}),E))$ per $\varphi_{n}(r+\mathfrak{m}^{n})(x):=rx$. Si $r+\mathfrak{m}^{n}\in\ker{\varphi_{n}}$, per tot $x\in\Ann_{E}(\mathfrak{m}^{n})$ tenim $\varphi_{n}(r+\mathfrak{m}^{n})(x)=rx=0$, d'on $r\Ann_{E}(\mathfrak{m}^{n})=0$ i $r\in\mathfrak{m}^{n}$. Per tant, $\ker{\varphi_{n}}=\{0\}$ i $\varphi_{n}$ és monomorfisme. Clarament $\varphi_{0}$ és isomorfisme. Suposem que $\varphi_{n-1}$ és isomorfisme. Considerem els següent diagrama commutatiu:
+        \begin{equation*}
+        \begin{tikzcd}
+            0
+            \arrow{r}
+            &\mathfrak{m}^{n-1}/\mathfrak{m}^{n}
+            \arrow{r}
+            \arrow{d}{\varphi_{n}|_{\mathfrak{m}^{n-1}/\mathfrak{m}^{n-1}}}
+            &R/\mathfrak{m}^{n}
+            \arrow{r}
+            \arrow{d}{\varphi_{n}}
+            &R/\mathfrak{m}^{n-1}
+            \arrow{r}
+            \arrow{d}{\varphi_{n-1}}
+            &0\\
+            0
+            \arrow{r}
+            &\Hom_{R}(\tfrac{\Ann_{E}(\mathfrak{m}^{n})}{\Ann_{E}(\mathfrak{m}^{n-1})},E)
+            \arrow{r}
+            &\Hom_{R}(\Ann_{E}(\mathfrak{m}^{n}),E)
+            \arrow{r}
+            &\Hom_{R}(\Ann_{E}(\mathfrak{m}^{n-1}),E)
+            \arrow{r}
+            &0
+        \end{tikzcd}
+        \end{equation*}
+        Com les files són exactes, $\varphi_{n}|_{\mathfrak{m}^{n-1}/\mathfrak{m}^{n-1}}$ és isomorfisme (ja que $\varphi_{n}|_{\mathfrak{m}^{n-1}/\mathfrak{m}^{n-1}}$ és monomorfisme i el domini i la imatge tenen la mateixa $R/\mathfrak{m}$-dimensió) i $\varphi_{n-1}$ és isomorfisme, pel lema dels cinc, $\varphi_{n}$ és isomorfisme. Aleshores,
+        \begin{align*}
+            \Hom_{R}(E,E)
+            &\cong\Hom_{R}(\varinjlim\Ann_{E}(\mathfrak{m}^{n}),E)\\
+            &\cong\varprojlim\Hom_{R}(\Ann_{E}(\mathfrak{m}^{n}),E)\\
+            &\cong\varprojlim R/\mathfrak{m}^{n}
+        \end{align*}
+        com volíem veure.
+        \end{proof}
+\end{teorema}
+\printbibliography
+\end{document}
+\begin{proof}
+        
+    
+        $\mathbb{Z}[\frac{1}{p}]/\mathbb{Z}$ és l'envolvent injectiu de $\mathbb{Z}/(p^{i})$:\newline
+        $\mathbb{Z}[\frac{1}{p}]/\mathbb{Z}$ és $p$-divisible ($p(\mathbb{Z}[\frac{1}{p}]/\mathbb{Z})=\mathbb{Z}[\frac{1}{p}]/\mathbb{Z}$)\newline
+        $\mathbb{Z}[\frac{1}{p}]/\mathbb{Z}$ és divisible\newline
+        $\mathbb{Z}[\frac{1}{p}]/\mathbb{Z}$ és injectiu (Un grup abelià és injectiu si i només si és divisible)\newline
+        $\mathbb{Z}[\frac{1}{p}]/\mathbb{Z}$ és essencial sobre $\mathbb{Z}/(p^{i})$ ($p^{i}(\sum_{j=0}^{i}a_{j}p^{-j}+\mathbb{Z})=\sum_{j=0}^{i-1}a_{i-j}p^{j}+(p^{i})\in\mathbb{Z}/(p^{i})$)\newline
+        $\mathbb{Z}[\frac{1}{p}]/\mathbb{Z}$ és injectiu i essencial sobre $\mathbb{Z}/(p^{i})$ (definició d'envolvent injectiu)
+
+        Aleshores,
+        \begin{align*}
+            \Hom_{\mathbb{Z}}(\mathbb{Z}[\tfrac{1}{p}]/\mathbb{Z},\mathbb{Z}[\tfrac{1}{p}]/\mathbb{Z})
+            &=\Hom_{\mathbb{Z}_{(p)}}(\mathbb{Z}[\tfrac{1}{p}]/\mathbb{Z},\mathbb{Z}[\tfrac{1}{p}]/\mathbb{Z})
+            &\quad&\textrm{()}\\
+            &\cong\varprojlim_{i\in\mathbb{N}}\mathbb{Z}_{(p)}/\big((p)\mathbb{Z}_{(p)}\big)^{i}
+            &\quad&\textrm{(\cite{Lam1999}, 3.84.)}\\
+            &\cong\varprojlim_{i\in\mathbb{N}}\mathbb{Z}/(p^{i})
+            &\quad&\textrm{()}\\
+            &\cong\mathbb{Z}_{p}
+            &\quad&\textrm{()}
+        \end{align*}
+    \end{proof}
+
+Considerem $(\mathbb{N},\leq)$ amb l'ordre usual $\leq$. Si $i\leq j$, sigui $f_{ij}:\mathbb{Z}/(p^{i})\rightarrow\mathbb{Z}/(p^{j})$ definit per $f_{ij}(1+(p^{i})):=1+(p^{j})$ i considerem el sistema dirigit $\{\mathbb{Z}/(p^{i}),f_{ij}\}_{i\in\mathbb{N}}$. Sigui $g_{i}:\mathbb{Z}/(p^{i})\rightarrow\mathbb{Z}[\frac{1}{p}]/\mathbb{Z}$ definit per $g_{i}(1+(p^{i})):=\frac{1}{p^{i}}+\mathbb{Z}$. Clarament $f_{ij},g_{i}$ són morfismes d'anells. Veiem que $\mathbb{Z}[\frac{1}{p}]/\mathbb{Z}$ satisfà la propietat universal del límit directe. En efecte, si $A$ és un anell i $h_{i}:\mathbb{Z}/(p^{i})\rightarrow A$ són morfismes d'anells, podem definir el (únic) morfisme d'anells $\varphi:\mathbb{Z}[\frac{1}{p}]/\mathbb{Z}\rightarrow A$ definit per $\varphi(\frac{1}{p^{i}}+\mathbb{Z}):=h_{i}(1+(p^{i}))$, d'on el diagrama
+        \begin{equation*}
+        \begin{tikzcd}
+            \mathbb{Z}/(1)
+            \arrow{rr}{f_{0,1}}
+            \arrow{dd}[description]{g_{0}}
+            \arrow[bend right = 40, swap]{dddd}[description]{h_{0}}
+            &&\mathbb{Z}/(p)
+            \arrow{rr}{f_{1,2}}
+            \arrow{ddll}[description]{g_{1}}
+            \arrow{ddddll}[description]{h_{1}}
+            &&\mathbb{Z}/(p^{2})
+            \arrow{rr}{f_{2,3}}
+            \arrow{ddllll}[description]{g_{2}}
+            \arrow{ddddllll}[description]{h_{2}}
+            &&\mathbb{Z}/(p^{3})
+            \arrow{rr}{f_{3,4}}
+            \arrow{ddllllll}[description]{g_{3}}
+            \arrow{ddddllllll}[description]{h_{3}}
+            &&\cdots
+            \arrow{ddllllllll}{\cdots}
+            \arrow{ddddllllllll}{\cdots}\\ \\
+            \mathbb{Z}[\frac{1}{p}]/\mathbb{Z}
+            \arrow{dd}[description]{\exists!\varphi}
+            &&&&&&&&\\ \\
+            A
+        \end{tikzcd}
+        \end{equation*}
+        commuta. Aleshores, $\mathbb{Z}[\frac{1}{p}]/\mathbb{Z}\cong\varinjlim\mathbb{Z}/(p^{i})$.
