@@ -5,7 +5,7 @@
 \usepackage{amsthm}
 \usepackage{tikz-cd}
 \usepackage{fancyhdr}
-\usepackage[catalan]{babel}
+\usepackage[english]{babel}
 \usepackage[document]{ragged2e}
 \usepackage{appendix}
 
@@ -59,7 +59,10 @@
 
 \begin{document}
 \maketitle
-Denotarem per $\mathscr{T},\mathscr{K}$ les categories d'espais topològics i de complexos de cadenes (no-negatius). L'objectiu és generalitzar les idees de la demostració de l'axioma d'homotopia (per homologia singular) en un context categòric.\newline
+\begin{abstract}
+    We motivate and give a detailed proof of the acyclic model theorem, whose idea is that functors defined on truncated chain complexes (in our case, non-negative) can be extended in higher dimensions. As a consequence, we deduce the homotopy axiom for singular homology and the Eilenberg-Zilber theorem, which provides a natural equivalence between the chain complex of the product of topological spaces $X$ and $Y$ and the tensor product the chain complexes of $X$ and $Y$.
+\end{abstract}
+Denotarem per $\mathscr{T},\mathscr{K}$ les categories d'espais topològics i de complexos de cadenes no-negatius. L'objectiu és generalitzar les idees de la demostració de l'axioma d'homotopia (per homologia singular) en un context categòric.\newline
 Per demostrar l'axioma d'homotopia, és suficient veure que existeix una homotopia de cadenes $D=\{D_{n}^{X}:C_{n}(X)\rightarrow C_{n+1}(X\times\mathbb{I})\}$ entre $C_{\bullet}(\iota_{0}^{X}),C_{\bullet}(\iota_{1}^{X}):C_{\bullet}(X)\rightarrow C_{\bullet}(X\times\mathbb{I})$, on $\iota_{i}^{X}(x)=(x,i)$. L'aciclicitat de $H_{\bullet}(\Delta^{n}\times\mathbb{I})$, estendre per linealitat de $\mathscr{T}(\Delta^{n},X)$ a $C_{n}(X)$ i la naturalitat dels morfismes de $\mathscr{K}$ són els detalls tècnics cabdals per la construcció de l'homotopia de cadenes natural entre $C_{\bullet}(\iota_{0}^{X})$, $C_{\bullet}(\iota_{1}^{X})$. Donem una formulació més general.
 \begin{definicio}
     Sigui $\mathscr{C}$ una categoria, $\mathscr{M}$ una col·lecció  d'objectes de $\mathscr{C}$ i $F:\mathscr{C}\rightarrow\mathscr{K}$ un functor covariant.
@@ -68,7 +71,7 @@ Per demostrar l'axioma d'homotopia, és suficient veure que existeix una homotop
         \item $F$ és lliure en $\mathscr{M}$ si existeixen $M_{j}\in\mathscr{M}$ i $m_{j}\in F(M_{j})$ tals que $\mathscr{B}=\{F(f)(m_{j}):f\in\mathscr{C}(M_{j},X)\}$ és una base de $F(X)$ per tot $X\in\mathscr{C}$.
     \end{enumerate}
 \end{definicio}
-Direm que $\mathscr{C}$ és una categoria amb models $\mathscr{M}$ si $\mathscr{M}$ és una col·lecció d'objectes de $\mathscr{C}$. La condició d'aciclicitat ve motivada per l'aciclicitat de $H_{\bullet}(\Delta^{n}\times\mathbb{I})$; la condició de llibertat, per l'extensió per linealitat de $\mathscr{T}(\Delta^{n},X)$ a $C_{n}(X)$.
+Direm que $\mathscr{C}$ és una categoria amb models $\mathscr{M}$ si $\mathscr{M}$ és una col·lecció d'objectes de $\mathscr{C}$. La aciclicitat ve motivada per l'aciclicitat de $H_{\bullet}(\Delta^{n}\times\mathbb{I})$; la condició de llibertat, per l'extensió per linealitat de $\mathscr{T}(\Delta^{n},X)$ a $C_{n}(X)$.
 \begin{exemple}
     Sigui $\mathscr{C}=\mathscr{T}$, $\mathscr{M}=\{\Delta^{n}:n\geq0\}$ i $F=C_{\bullet}$. Com $\Delta^{n}$ són contràctils per tot $n\geq0$, $H_{\bullet}(\Delta^{n})$ és acíclic. Aleshores, $C_{\bullet}$ és acíclic en $\mathscr{M}$. Sigui $id_{\Delta^{n}}\in C_{\bullet}(\Delta^{n})$ la identitat. Tenim que
     \begin{align*}
@@ -144,7 +147,7 @@ Ara, veiem una conseqüència dels models acíclics que estableix una relació e
     Siguin $X,Y\in\mathscr{T}$ i $\{X_{i},i\in\mathscr{I}\},\{Y_{j},j\in\mathscr{J}\}$ les famílies de components arc-connexes de $X,Y$, respectivament. Aleshores, $\{X_{i}\times Y_{j}:(i,j)\in\mathscr{I}\times\mathscr{J}\},\{X_{i}\otimes Y_{j}:(i,j)\in\mathscr{I}\times\mathscr{J}\}$ són bases de $H_{0}(X\times Y),H_{0}(C_{\bullet}(X)\otimes C_{\bullet}(Y))(\cong H_{0}(X)\otimes H_{0}(Y))$, respectivament. Definim les transformacions naturals $\rho_{-1}:H_{0}(X\times Y)\rightarrow H_{0}(C_{\bullet}(X)\otimes C_{\bullet}(Y)),\eta_{-1}:H_{0}(C_{\bullet}(X)\otimes C_{\bullet}(Y))\rightarrow H_{0}(X\times Y)$ com $\rho_{-1}(X_{i}\times Y_{j})=X_{i}\otimes Y_{j},\eta_{-1}(X_{i}\otimes Y_{j})=X_{i}\times Y_{j}$ i estenent per linealitat. Fixem-nos que $\eta_{-1}\circ\rho_{-1}=id_{H{0}(X\times Y)},\rho_{-1}\circ\eta_{-1}=id_{H_{0}(C_{\bullet}(X)\otimes C_{\bullet}(Y))}$.\newline
     Pel teorema dels models acíclics, existeixen transformacions naturals $\rho:C_{\bullet}(X\times Y)\rightarrow C_{\bullet}(X)\otimes C_{\bullet}(Y),\eta:C_{\bullet}(X)\otimes C_{\bullet}(Y)\rightarrow C_{\bullet}(X\times Y)$ que indueixen $\rho_{-1},\eta_{-1}$, respectivament. A més, $\eta\circ\rho$ i $id_{C_{\bullet}(X\times Y)}$ indueixen $id_{H_{0}(X\times Y)}$ (similarment, $\rho\circ\eta$ i $id_{C_{\bullet}(X)\otimes C_{\bullet}(Y)}$ indueixen $id_{H_{0}(C_{\bullet}(X)\otimes C_{\bullet}(Y))}$). Aleshores, pel teorema dels models acíclics, existeix una homotopia de cadenes natural entre $\eta\circ\rho$ i $id_{C_{\bullet}(X\times Y)}$ (similarment, existeix una homotopia de cadenes natural entre $\rho\circ\eta$ i $id_{C_{\bullet}(X)\otimes C_{\bullet}(Y)}$), com volíem veure.
 \end{proof}
-Ara, demostrem el teorema del models acíclics. La idea és la següent: construirem nivell a nivell la transformació natural $F\rightarrow G$ mitjançant inducció, com si a un gratacel fiquéssim pas a pas cada pis. El següent diagrama potser ajuda al enteniment del pas inductiu:
+Ara, demostrem el teorema del models acíclics. La idea és la següent: construirem dimensió a dimensió la transformació natural $F\rightarrow G$ mitjançant inducció, com si a un gratacel fiquéssim pas a pas cada pis. El següent diagrama potser ajuda al enteniment del pas inductiu:
 \begin{center}
     \begin{tikzcd}[row sep=scriptsize, column sep=scriptsize]
     &\vdots
